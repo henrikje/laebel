@@ -11,7 +11,6 @@
 
 {{ if .ContainersGroupedByServiceName }}
 {{ range $serviceName, $containersInService := .ContainersGroupedByServiceName }}
-<hr/>
 <div class="service">
     <h2>Service: {{ $serviceName }}</h2>
     {{ $linksForService := index $.LinksByService $serviceName }}
@@ -24,32 +23,34 @@
     </ul>
     {{ end}}
 
-    <h3>Containers</h3>
-    <ul>
-        {{ range $containersInService }}
-        <li>
-            <div class="container">
-                <h3>Container ID: {{ .ID }}</h3>
-                <p><strong>Image:</strong> {{ .Image }}</p>
-                <p><strong>State:</strong> {{ .State }}</p>
+    <details>
+        <summary><h3>Containers</h3></summary>
+        <ul>
+            {{ range $containersInService }}
+            <li>
+                <div class="container">
+                    <h3>Container ID: {{ .ID }}</h3>
+                    <p><strong>Image:</strong> {{ .Image }}</p>
+                    <p><strong>State:</strong> {{ .State }}</p>
 
-                {{ if .Labels }}
-                <details>
-                    <summary><h4>Labels:</h4></summary>
-                    <ul>
-                        {{ range $key, $value := .Labels }}
-                        <li><strong>{{ $key }}:</strong> {{ $value }}</li>
-                        {{ end }}
-                    </ul>
-                </details>
-                {{ else }}
-                <p>No labels</p>
-                {{ end }}
-            </div>
+                    {{ if .Labels }}
+                    <details>
+                        <summary><h4>Labels:</h4></summary>
+                        <ul>
+                            {{ range $key, $value := .Labels }}
+                            <li><strong>{{ $key }}:</strong> {{ $value }}</li>
+                            {{ end }}
+                        </ul>
+                    </details>
+                    {{ else }}
+                    <p>No labels</p>
+                    {{ end }}
+                </div>
 
-        </li>
-        {{ end }}
-    </ul>
+            </li>
+            {{ end }}
+        </ul>
+    </details>
 </div>
 {{ end }}
 {{ else }}
