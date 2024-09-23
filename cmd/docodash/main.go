@@ -11,7 +11,7 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	// Route to handle dynamic pages
-	http.HandleFunc("/", handler)
+	http.HandleFunc("/", RenderDocumentation)
 
 	// Start the server
 	log.Println("Starting server on :8080")

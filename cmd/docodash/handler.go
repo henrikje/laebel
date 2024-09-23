@@ -1,116 +1,77 @@
 package main
 
 import (
-	"docodash/internal/docker"
 	"github.com/docker/docker/api/types"
-	"html/template"
 	"net/http"
-	"path/filepath"
-	"strings"
 )
 
-func handler(w http.ResponseWriter, r *http.Request) {
+func RenderDocumentation(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
 		return
 	}
 
 	// Get the current container ID
-	containerID, err := docker.GetContainerID()
-	println("containerID:", containerID)
+	containerID, err := GetContainerID()
 	if err != nil {
-		http.Error(w, "Unable to determine current container ID: "+err.Error(), http.StatusInternalServerError)
+		InternalServerError(w, err, "Could not determine current container ID", "Are you sure you are running docodash as a container?")
 		return
 	}
+	println("Docodash container ID:", containerID)
 
-	// Check if it’s part of a Compose cluster
-	inComposeCluster, projectName, err := docker.IsInComposeCluster(containerID)
-	println("inComposeCluster:", inComposeCluster)
-	println("projectName:", projectName)
+	// Check if it’s part of a Compose project
+	projectName, err := IsPartOfComposeProject(containerID)
 	if err != nil {
-		http.Error(w, "Failed to determine Compose project: "+err.Error(), http.StatusInternalServerError)
+		InternalServerError(w, err, "Could not determine current project name", "Ensure docodash has the Docker socket mounted as a volume: \"/var/run/docker.sock:/var/run/docker.sock:ro\"")
 		return
 	}
-	if !inComposeCluster {
-		http.Error(w, "Not part of a Docker Compose cluster!", http.StatusBadRequest)
+	println("Current project name:", projectName)
+	if projectName == "" {
+		NoProjectError(w)
 		return
 	}
 
 	// Get all containers
-	containers, err := docker.GetAllContainers()
-	println("containers:", containers)
+	containers, err := GetAllContainers()
 	if err != nil {
-		http.Error(w, "Unable to list containers: "+err.Error(), http.StatusInternalServerError)
+		InternalServerError(w, err, "Unable to list containers", "")
 		return
 	}
 
-	// Filter containers by the same Compose project
-	filteredContainers := docker.FilterOnlyContainersInProject(projectName, containers)
-	println("filteredContainers:", filteredContainers)
+	// Filter containers that are part of the project
+	projectContainers := FilterOnlyContainersInProject(containers, projectName)
 
-	// Group containers by service name
-	containersGroupedByServiceName := docker.GroupContainersByServiceName(filteredContainers)
-	println("containersGroupedByServiceName:", containersGroupedByServiceName)
+	// Transform containers to project
+	project := TransformContainersToProject(projectContainers, projectName)
 
-	// Extract links from container labels
-	linksByService := ExtractServiceLinksFromLabels(containersGroupedByServiceName)
-	println("linksByService:", linksByService)
+	RenderDocument(w, err, project)
+}
 
-	// Render template
-	tmpl, err := template.ParseFiles(filepath.Join("web", "templates", "index.html"))
-	if err != nil {
-		http.Error(w, "Unable to load template: "+err.Error(), http.StatusInternalServerError)
-		return
+func FilterOnlyContainersInProject(containers []types.Container, projectName string) []types.Container {
+	var filteredContainers []types.Container
+	for _, container := range containers {
+		containerProject := container.Labels["com.docker.compose.project"]
+		if containerProject == projectName {
+			filteredContainers = append(filteredContainers, container)
+		}
 	}
+	return filteredContainers
+}
 
-	templateData := struct {
-		ContainersGroupedByServiceName map[string][]types.Container
-		LinksByService                 map[string][]map[string]string
-	}{
-		ContainersGroupedByServiceName: containersGroupedByServiceName,
-		LinksByService:                 linksByService,
+func InternalServerError(w http.ResponseWriter, err error, message string, hint string) {
+	println("INTERNAL SERVER ERROR:", message, err)
+	if hint != "" {
+		println("Hint:", hint)
 	}
-
-	err = tmpl.Execute(w, templateData)
-	if err != nil {
-		http.Error(w, "Unable to render template: "+err.Error(), http.StatusInternalServerError)
+	http.Error(w, "INTERNAL SERVER ERROR: "+message+"\n\nCause: "+err.Error(), http.StatusInternalServerError)
+	if hint != "" {
+		_, _ = w.Write([]byte("Hint: " + hint))
 	}
 }
 
-func ExtractServiceLinksFromLabels(containersGroupedByServiceName map[string][]types.Container) map[string][]map[string]string {
-	// Links are defined in container labels as follows:
-	// net.henko.docodash.link.<key>.url = <url>
-	// net.henko.docodash.link.<key>.label = <label>
-	linksByService := make(map[string][]map[string]string)
-	for serviceName, containers := range containersGroupedByServiceName {
-		container := containers[0] // We only need one container to extract the links - they should all be the same
-		for key, value := range container.Labels {
-			if !strings.HasPrefix(key, "net.henko.docodash.link.") {
-				continue
-			}
-
-			parts := strings.Split(key, ".")
-			if len(parts) != 6 {
-				println("Invalid link:", key)
-				continue
-			}
-
-			linkKey := parts[4]
-			linkType := parts[5]
-
-			if linkType == "url" {
-				if _, ok := linksByService[serviceName]; !ok {
-					linksByService[serviceName] = make([]map[string]string, 0)
-				}
-				label := container.Labels["net.henko.docodash.link."+linkKey+".label"]
-				println("link", linkKey, "url:", value, "label:", label)
-				link := map[string]string{
-					"url":   value,
-					"label": label,
-				}
-				linksByService[serviceName] = append(linksByService[serviceName], link)
-			}
-		}
-	}
-	return linksByService
+func NoProjectError(w http.ResponseWriter) {
+	println("BAD REQUEST: Current container is not part of a Docker Compose project.")
+	println("Hint: Are you running docodash as a service in a Docker Compose project?")
+	http.Error(w, "BAD REQUEST: Current container is not part of a Docker Compose project.\n", http.StatusBadRequest)
+	_, _ = w.Write([]byte("Hint: Are you running docodash as a service in a Docker Compose project?"))
 }

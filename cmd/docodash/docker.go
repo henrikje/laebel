@@ -1,4 +1,4 @@
-package docker
+package main
 
 import (
 	"context"
@@ -10,11 +10,8 @@ import (
 	"strings"
 )
 
-// GetContainerID retrieves the current container ID
 func GetContainerID() (string, error) {
-	// cat /proc/self/mountinfo | grep "/docker/containers/" | head -1 | awk '{print $4}' | sed 's/\/var\/lib\/docker\/containers\///g' | sed 's/\/resolv.conf//g'
 
-	// Read /proc/self/mountinfo
 	data, err := os.ReadFile("/proc/self/mountinfo")
 	if err != nil {
 		return "", err
@@ -37,29 +34,31 @@ func GetAllContainers() ([]types.Container, error) {
 		return nil, err
 	}
 
-	containers, err := cli.ContainerList(context.Background(), container.ListOptions{})
+	containers, err := cli.ContainerList(context.Background(), container.ListOptions{
+		All: true,
+	})
 	if err != nil {
 		return nil, err
 	}
 	return containers, nil
 }
 
-// IsInComposeCluster checks if the container is part of a Docker Compose cluster
-func IsInComposeCluster(containerID string) (bool, string, error) {
+// IsPartOfComposeProject checks if the container is part of a Docker Compose cluster
+func IsPartOfComposeProject(containerID string) (string, error) {
 	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
 	if err != nil {
-		return false, "", err
+		return "", err
 	}
 
-	container, err := cli.ContainerInspect(context.Background(), containerID)
+	containerInfo, err := cli.ContainerInspect(context.Background(), containerID)
 	if err != nil {
-		return false, "", err
+		return "", err
 	}
 
-	projectName, ok := container.Config.Labels["com.docker.compose.project"]
+	projectName, ok := containerInfo.Config.Labels["com.docker.compose.project"]
 	if !ok {
-		return false, "", nil
+		return "", nil
 	}
 
-	return true, projectName, nil
+	return projectName, nil
 }

@@ -15,7 +15,6 @@ RUN go mod download
 
 # Copy the entire project
 COPY cmd/ ./cmd/
-COPY internal/ ./internal/
 COPY web/ ./web/
 
 # Build the Go binary
