@@ -3,17 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Running Docker Containers</title>
+    <title>Docodash</title>
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
-<h1>Running Docker Containers</h1>
+<h1>Docodash</h1>
 
-{{ if . }}
-{{ range $serviceName, $containersInService := . }}
+{{ if .ContainersGroupedByServiceName }}
+{{ range $serviceName, $containersInService := .ContainersGroupedByServiceName }}
+<hr/>
 <div class="service">
     <h2>Service: {{ $serviceName }}</h2>
-    {{ if $containersInService }}
+    {{ $linksForService := index $.LinksByService $serviceName }}
+    {{ if $linksForService }}
+    <h3>Links</h3>
+    <ul>
+        {{ range $linksForService }}
+        <li><a href="{{ .url }}">{{ .label }}</a></li>
+        {{ end }}
+    </ul>
+    {{ end}}
+
+    <h3>Containers</h3>
     <ul>
         {{ range $containersInService }}
         <li>
@@ -39,9 +50,7 @@
         </li>
         {{ end }}
     </ul>
-    {{ end }}
 </div>
-<hr/>
 {{ end }}
 {{ else }}
 <p>No containers are currently running.</p>

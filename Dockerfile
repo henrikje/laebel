@@ -19,7 +19,7 @@ COPY internal/ ./internal/
 COPY web/ ./web/
 
 # Build the Go binary
-RUN go build -o docodash ./cmd/docodash/main.go
+RUN go build -o bin/docodash ./cmd/docodash
 
 # Step 2: Create a minimal image to run the application
 FROM alpine:latest AS docodash
@@ -31,7 +31,7 @@ RUN apk add --no-cache ca-certificates
 WORKDIR /app
 
 # Copy the Go binary from the builder stage
-COPY --from=builder /app/docodash .
+COPY --from=builder /app/bin/docodash .
 
 # Copy the web folder with templates and static files
 COPY --from=builder /app/web ./web

@@ -4,11 +4,17 @@ services:
     build:
       target: docodash
     ports:
-      - "8080:8080"
+      - "9090:8080"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    labels:
+      - "net.henko.docodash.link.author.url=https://henko.net/"
+      - "net.henko.docodash.link.author.label=Created by Henrik Jernevad"
   nginx:
     image: nginx:alpine
     scale: 3
     ports:
       - "80"
+    labels:
+      - "net.henko.docodash.link.homepage.url=http://localhost/"
+      - "net.henko.docodash.link.homepage.label=Homepage"

@@ -10,3 +10,6 @@ summary::after {
 details[open] > summary::after {
     content: " (collapse)";
 }
+summary {
+    cursor: pointer;
+}
