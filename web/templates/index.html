@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Running Docker Containers</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+<h1>Running Docker Containers</h1>
+
+{{ if . }}
+{{ range $serviceName, $containersInService := . }}
+<div class="service">
+    <h2>Service: {{ $serviceName }}</h2>
+    {{ if $containersInService }}
+    <ul>
+        {{ range $containersInService }}
+        <li>
+            <div class="container">
+                <h3>Container ID: {{ .ID }}</h3>
+                <p><strong>Image:</strong> {{ .Image }}</p>
+                <p><strong>State:</strong> {{ .State }}</p>
+
+                {{ if .Labels }}
+                <details>
+                    <summary><h4>Labels:</h4></summary>
+                    <ul>
+                        {{ range $key, $value := .Labels }}
+                        <li><strong>{{ $key }}:</strong> {{ $value }}</li>
+                        {{ end }}
+                    </ul>
+                </details>
+                {{ else }}
+                <p>No labels</p>
+                {{ end }}
+            </div>
+
+        </li>
+        {{ end }}
+    </ul>
+    {{ end }}
+</div>
+<hr/>
+{{ end }}
+{{ else }}
+<p>No containers are currently running.</p>
+{{ end }}
+</body>
+</html>

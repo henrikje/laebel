@@ -1,0 +1,12 @@
+body {
+    font-family: monospace;
+}
+summary * {
+    display: inline;
+}
+summary::after {
+    content: " (expand)";
+}
+details[open] > summary::after {
+    content: " (collapse)";
+}
