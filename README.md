@@ -4,7 +4,7 @@ Displays a dashboard with information about all services running in a Docker Com
 
 ## TODO
 
-- [ ] Make the display nicer visually
+- [ ] Make the display nicer visually, perhaps something like GitHub READMEs
 - [ ] Load the current container id on startup (it won't change)
 - [x] Add special labels that services can use to display clickable links
   - For example, a basic web server can link to its homepage
@@ -14,3 +14,5 @@ Displays a dashboard with information about all services running in a Docker Com
 - [ ] Display a nice error message if the container is not run as part of a Docker Compose cluster
 - [ ] Display the project name in the title
 - [ ] Introduce a proper struct hierarchy to hold the information passed to the template.
+- [ ] Display container names as well as their id
+- [ ] Add a custom "description" label that can be used to display a short description of the service.

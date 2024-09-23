@@ -53,6 +53,32 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	println("containersGroupedByServiceName:", containersGroupedByServiceName)
 
 	// Extract links from container labels
+	linksByService := ExtractServiceLinksFromLabels(containersGroupedByServiceName)
+	println("linksByService:", linksByService)
+
+	// Render template
+	tmpl, err := template.ParseFiles(filepath.Join("web", "templates", "index.html"))
+	if err != nil {
+		http.Error(w, "Unable to load template: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	templateData := struct {
+		ContainersGroupedByServiceName map[string][]types.Container
+		LinksByService                 map[string][]map[string]string
+	}{
+		ContainersGroupedByServiceName: containersGroupedByServiceName,
+		LinksByService:                 linksByService,
+	}
+
+	err = tmpl.Execute(w, templateData)
+	if err != nil {
+		http.Error(w, "Unable to render template: "+err.Error(), http.StatusInternalServerError)
+	}
+}
+
+func ExtractServiceLinksFromLabels(containersGroupedByServiceName map[string][]types.Container) map[string][]map[string]string {
+	// Links are defined in container labels as follows:
 	// net.henko.docodash.link.<key>.url = <url>
 	// net.henko.docodash.link.<key>.label = <label>
 	linksByService := make(map[string][]map[string]string)
@@ -86,25 +112,5 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	}
-	println("linksByService:", linksByService)
-
-	// Render template
-	tmpl, err := template.ParseFiles(filepath.Join("web", "templates", "index.html"))
-	if err != nil {
-		http.Error(w, "Unable to load template: "+err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	templateData := struct {
-		ContainersGroupedByServiceName map[string][]types.Container
-		LinksByService                 map[string][]map[string]string
-	}{
-		ContainersGroupedByServiceName: containersGroupedByServiceName,
-		LinksByService:                 linksByService,
-	}
-
-	err = tmpl.Execute(w, templateData)
-	if err != nil {
-		http.Error(w, "Unable to render template: "+err.Error(), http.StatusInternalServerError)
-	}
+	return linksByService
 }

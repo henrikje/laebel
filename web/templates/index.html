@@ -23,34 +23,28 @@
     </ul>
     {{ end}}
 
-    <details>
-        <summary><h3>Containers</h3></summary>
-        <ul>
-            {{ range $containersInService }}
-            <li>
-                <div class="container">
-                    <h3>Container ID: {{ .ID }}</h3>
-                    <p><strong>Image:</strong> {{ .Image }}</p>
-                    <p><strong>State:</strong> {{ .State }}</p>
-
-                    {{ if .Labels }}
-                    <details>
-                        <summary><h4>Labels:</h4></summary>
-                        <ul>
-                            {{ range $key, $value := .Labels }}
-                            <li><strong>{{ $key }}:</strong> {{ $value }}</li>
-                            {{ end }}
-                        </ul>
-                    </details>
-                    {{ else }}
-                    <p>No labels</p>
+    <h3>Containers</h3>
+    <ul id="containers">
+        {{ range $containersInService }}
+        <li>
+            <details class="container">
+                <summary><h3>{{ .ID }}</h3></summary>
+                <p><strong>Image:</strong> {{ .Image }}</p>
+                <p><strong>State:</strong> {{ .State }}</p>
+                {{ if .Labels }}
+                <h4>Labels:</h4>
+                <ul>
+                    {{ range $key, $value := .Labels }}
+                    <li><strong>{{ $key }}:</strong> {{ $value }}</li>
                     {{ end }}
-                </div>
-
-            </li>
-            {{ end }}
-        </ul>
-    </details>
+                </ul>
+                {{ else }}
+                <p>No labels</p>
+                {{ end }}
+            </details>
+        </li>
+        {{ end }}
+    </ul>
 </div>
 {{ end }}
 {{ else }}

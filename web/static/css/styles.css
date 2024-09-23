@@ -13,3 +13,30 @@ details[open] > summary::after {
 summary {
     cursor: pointer;
 }
+.service h2 {
+    margin-top: 0;
+}
+
+.service {
+    background: aliceblue;
+    padding: 1em;
+    margin: 1em;
+    border: 2px solid #98c9f4;
+    border-radius: 1em;
+}
+
+.container h3 {
+    margin-top: 0;
+}
+.container {
+    background: white;
+    padding: 0.5em;
+    margin: 0.5em;
+    border: 2px solid lightgray;
+    border-radius: 1em;
+}
+
+#containers {
+    list-style: none;
+    padding: 0;
+}
