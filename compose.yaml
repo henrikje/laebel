@@ -21,6 +21,7 @@ services:
       - "org.opencontainers.image.url=https://docodash.henko.net/"
       - "net.henko.docodash.link.author.url=https://henko.net/"
       - "net.henko.docodash.link.author.label=Created by Henrik Jernevad"
+      - "net.henko.docodash.group=Documentation"
 
   nginx:
     image: nginx:alpine
@@ -43,3 +44,7 @@ services:
       - "org.opencontainers.image.source=https://example.com/"
       - "net.henko.docodash.link.homepage.url=http://localhost/"
       - "net.henko.docodash.link.homepage.label=Homepage"
+      - "net.henko.docodash.group=Frontend"
+
+  traefik:
+    image: traefik:v3.1.4

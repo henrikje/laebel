@@ -1,10 +1,15 @@
 package main
 
 type Project struct {
-	Name        string // Label: com.docker.compose.project
-	Title       string // Env: DOCODASH_PROJECT_TITLE
-	Description string // Env: DOCODASH_PROJECT_DESCRIPTION
-	Services    []Service
+	Name          string // Label: com.docker.compose.project
+	Title         string // Env: DOCODASH_PROJECT_TITLE
+	Description   string // Env: DOCODASH_PROJECT_DESCRIPTION
+	ServiceGroups []ServiceGroup
+}
+
+type ServiceGroup struct {
+	Name     string // Label: net.henko.docodash.group
+	Services []Service
 }
 
 type Service struct {

@@ -3,6 +3,7 @@ body {
 }
 
 footer p {
+    margin-top: 1em;
     font-style: italic;
     color: gray;
 }

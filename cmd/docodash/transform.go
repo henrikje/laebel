@@ -3,13 +3,14 @@ package main
 import (
 	"github.com/docker/docker/api/types"
 	"os"
+	"sort"
 )
 
 func TransformContainersToProject(containers []types.Container, projectName string) Project {
 	// TODO Where do I get the project description from?
-	containersByServiceName := make(map[string][]types.Container)
 
 	// Group containers by service name
+	containersByServiceName := make(map[string][]types.Container)
 	for _, container := range containers {
 		serviceName := container.Labels["com.docker.compose.service"]
 		containersByServiceName[serviceName] = append(containersByServiceName[serviceName], container)
@@ -82,10 +83,56 @@ func TransformContainersToProject(containers []types.Container, projectName stri
 		}
 		services = append(services, service)
 	}
+
+	// Extract group-to-service mapping
+	groupNameByServiceName := make(map[string]string)
+	for _, container := range containers {
+		groupName := container.Labels["net.henko.docodash.group"]
+		serviceName := container.Labels["com.docker.compose.service"]
+		groupNameByServiceName[serviceName] = groupName
+	}
+
+	// Group services by category
+	servicesByGroupName := make(map[string][]Service)
+	for _, service := range services {
+		category := groupNameByServiceName[service.Name]
+		servicesByGroupName[category] = append(servicesByGroupName[category], service)
+	}
+
+	// Create a service group for each group of services
+	var serviceGroups []ServiceGroup
+	for category, categoryServices := range servicesByGroupName {
+		sort.Slice(categoryServices, func(i, j int) bool {
+			return categoryServices[i].Name < categoryServices[j].Name
+		})
+		serviceGroup := ServiceGroup{
+			Name:     category,
+			Services: categoryServices,
+		}
+		serviceGroups = append(serviceGroups, serviceGroup)
+	}
+
+	// Sort service groups by name
+	sort.Slice(serviceGroups, func(i, j int) bool {
+		return serviceGroups[i].Name < serviceGroups[j].Name
+	})
+
+	// Special treatment for nameless categories
+	if len(serviceGroups) == 1 && serviceGroups[0].Name == "" {
+		serviceGroups[0].Name = "Services"
+	} else {
+		for i := range serviceGroups {
+			if serviceGroups[i].Name == "" {
+				serviceGroups[i].Name = "Other"
+			}
+		}
+	}
+
+	// Return project
 	return Project{
-		Name:        projectName,
-		Title:       os.Getenv("DOCODASH_PROJECT_TITLE"),
-		Description: os.Getenv("DOCODASH_PROJECT_DESCRIPTION"),
-		Services:    services,
+		Name:          projectName,
+		Title:         os.Getenv("DOCODASH_PROJECT_TITLE"),
+		Description:   os.Getenv("DOCODASH_PROJECT_DESCRIPTION"),
+		ServiceGroups: serviceGroups,
 	}
 }

@@ -12,42 +12,45 @@
     {{ if .Description }}<p class="description">{{ .Description }}</p>{{ end }}
 </header>
 <main id="services">
-    <h2 class="category">Services</h2>
-    {{ range .Services }}
-        <section class="service">
-            <h3 class="title">{{ if .Title }}{{ .Title }} (<code>{{ .Name }}</code>){{ else }}{{ .Name }}{{ end }}</h3>
-            {{ if .Description }}<p class="description">{{ .Description }}</p>{{ end }}
-            <ul>
-                <li class="image"><strong>Image</strong>: <code>{{ .Image }}</code></li>
-                <li class="status"><strong>Status</strong>:{{ template "serviceStatus" .Status }}</li>
-                {{ if .Links }}
-                    <li class="links">
-                        <strong>Links</strong>: {{ range $index, $link := .Links }}{{ if $index }}, {{ end }}<a
-                        href="{{ $link.URL }}">{{ $link.Label }}</a>{{end}}
-                    </li>
-                {{ end }}
-            </ul>
-            <details class="containers">
-                {{ $count := len .Containers }}
-                <summary>Expand for details on {{ $count }} container{{ if ne $count 1 }}s{{ end }}.</summary>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Names</th>
-                        <th>ID</th>
-                        <th>Status</th>
-                    </tr>
-                    </thead>
-                    {{ range .Containers }}
-                        <tr class="container">
-                            <td><code>{{ .ID }}</code></td>
-                            <td>{{ range $index, $name := .Names}}{{ if $index }}, {{ end }}{{ $name }}{{ end }}</td>
-                            <td>{{ .Status }}</td>
-                        </tr>
+    {{ range .ServiceGroups }}
+        <h2 class="group">{{ .Name }}</h2>
+        {{ range .Services }}
+            <section class="service">
+                <h3 class="title">{{ if .Title }}{{ .Title }} (<code>{{ .Name }}</code>){{ else }}{{ .Name }}{{ end }}
+                </h3>
+                {{ if .Description }}<p class="description">{{ .Description }}</p>{{ end }}
+                <ul>
+                    <li class="image"><strong>Image</strong>: <code>{{ .Image }}</code></li>
+                    <li class="status"><strong>Status</strong>:{{ template "serviceStatus" .Status }}</li>
+                    {{ if .Links }}
+                        <li class="links">
+                            <strong>Links</strong>: {{ range $index, $link := .Links }}{{ if $index }}, {{ end }}<a
+                            href="{{ $link.URL }}">{{ $link.Label }}</a>{{end}}
+                        </li>
                     {{ end }}
-                </table>
-            </details>
-        </section>
+                </ul>
+                <details class="containers">
+                    {{ $count := len .Containers }}
+                    <summary>Expand for details on {{ $count }} container{{ if ne $count 1 }}s{{ end }}.</summary>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Names</th>
+                            <th>ID</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        {{ range .Containers }}
+                            <tr class="container">
+                                <td><code>{{ .ID }}</code></td>
+                                <td>{{ range $index, $name := .Names}}{{ if $index }}, {{ end }}{{ $name }}{{ end }}</td>
+                                <td>{{ .Status }}</td>
+                            </tr>
+                        {{ end }}
+                    </table>
+                </details>
+            </section>
+        {{ end }}
     {{ end }}
 </main>
 <footer>
