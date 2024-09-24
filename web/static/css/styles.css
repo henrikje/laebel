@@ -43,9 +43,6 @@ code {
 a {
     color: rgb(57, 113, 243);
 }
-a:visited {
-    color: rgb(141, 57, 243);
-}
 
 table {
     margin: 1em 2em;
