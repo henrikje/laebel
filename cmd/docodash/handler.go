@@ -5,6 +5,9 @@ import (
 	"net/http"
 )
 
+var containerID string
+var projectName string
+
 func RenderDocumentation(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
@@ -12,23 +15,29 @@ func RenderDocumentation(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Get the current container ID
-	containerID, err := GetContainerID()
-	if err != nil {
-		InternalServerError(w, err, "Could not determine current container ID", "Are you sure you are running docodash as a container?")
-		return
+	if containerID == "" {
+		newContainerID, err := GetContainerID()
+		if err != nil {
+			InternalServerError(w, err, "Could not determine current container ID", "Are you sure you are running docodash as a container?")
+			return
+		}
+		println("Docodash container ID:", newContainerID)
+		containerID = newContainerID
 	}
-	println("Docodash container ID:", containerID)
 
 	// Check if it’s part of a Compose project
-	projectName, err := IsPartOfComposeProject(containerID)
-	if err != nil {
-		InternalServerError(w, err, "Could not determine current project name", "Ensure docodash has the Docker socket mounted as a volume: \"/var/run/docker.sock:/var/run/docker.sock:ro\"")
-		return
-	}
-	println("Current project name:", projectName)
 	if projectName == "" {
-		NoProjectError(w)
-		return
+		newProjectName, err := IsPartOfComposeProject(containerID)
+		if err != nil {
+			InternalServerError(w, err, "Could not determine current project name", "Ensure docodash has the Docker socket mounted as a volume: \"/var/run/docker.sock:/var/run/docker.sock:ro\"")
+			return
+		}
+		if newProjectName == "" {
+			NoProjectError(w)
+			return
+		}
+		println("Current project name:", newProjectName)
+		projectName = newProjectName
 	}
 
 	// Get all containers
