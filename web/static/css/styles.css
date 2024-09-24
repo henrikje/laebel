@@ -11,26 +11,33 @@ footer p {
 table {
     margin: 1em 2em;
 }
-
 th {
     text-align: left;
 }
-
 td {
     padding-right: 0.5em;
 }
 
-.service {
-    padding: 0 1em;
-}
-
-h2, h3 {
+h2 {
     border-bottom: 1px solid lightgray;
-    padding-bottom: 0.5em;
-    margin-top: 1.5em;
 }
-
+h3:before {
+    content: "▶️ "
+}
+h2, h3 {
+    margin-top: 1em;
+}
+li {
+    margin-bottom: 0.25em;
+}
 summary {
     font-style: italic;
     cursor: pointer;
+}
+
+.service {
+    padding-left: 1em;
+}
+.service details {
+    margin-left: 1.5em;
 }
