@@ -24,4 +24,6 @@ Displays a dashboard with information about all services running in a Docker Com
 - [ ] Find a way to set an icon/logo for the project (and services?).
 - [ ] Make service title a clickable link to the "website" if present?
 - [ ] Create a /health endpoint and configure HEALTHCHECK in the Dockerfile
-- [ ] Embed Mermaid.js script
+- [ ] Embed Mermaid.js script to avoid external dependency
+- [ ] Add status icons for each service, both in the graph and in the list:
+   🟢=healthy, ▶️=running, ⏸️=paused, ⏹️=stopped/exited, 🚫=unhealthy, 🔄=restarting, *️⃣=mixed
