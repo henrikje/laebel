@@ -21,19 +21,7 @@ func TransformContainersToProject(projectContainers []types.Container, currentCo
 	for serviceName, serviceContainers := range containersByServiceName {
 		container := serviceContainers[0] // Use the first container to extract metadata
 		image := container.Image
-		links := make([]Link, 0)
-		url := container.Labels["org.opencontainers.image.url"]
-		if url != "" {
-			links = append(links, Link{Label: "Website", URL: url})
-		}
-		documentation := container.Labels["org.opencontainers.image.documentation"]
-		if documentation != "" {
-			links = append(links, Link{Label: "Documentation", URL: documentation})
-		}
-		source := container.Labels["org.opencontainers.image.source"]
-		if source != "" {
-			links = append(links, Link{Label: "Source code", URL: source})
-		}
+		links := ExtractLinks(container)
 		containerStructs := make([]Container, 0)
 		for _, serviceContainer := range serviceContainers {
 			containerStructs = append(containerStructs, Container{
@@ -42,36 +30,7 @@ func TransformContainersToProject(projectContainers []types.Container, currentCo
 				Status: serviceContainer.Status,
 			})
 		}
-		status := Status{
-			Created:    0,
-			Running:    0,
-			Paused:     0,
-			Restarting: 0,
-			Exited:     0,
-			Removing:   0,
-			Dead:       0,
-			Stopped:    0,
-		}
-		for index, _ := range containerStructs {
-			switch serviceContainers[index].State {
-			case "created":
-				status.Created++
-			case "running":
-				status.Running++
-			case "paused":
-				status.Paused++
-			case "restarting":
-				status.Restarting++
-			case "exited":
-				status.Exited++
-			case "removing":
-				status.Removing++
-			case "dead":
-				status.Dead++
-			case "stopped":
-				status.Stopped++
-			}
-		}
+		status := ExtractStatus(containerStructs, serviceContainers)
 		service := Service{
 			Name:        serviceName,
 			Title:       container.Labels["org.opencontainers.image.title"],
@@ -135,4 +94,72 @@ func TransformContainersToProject(projectContainers []types.Container, currentCo
 		Description:   os.Getenv("DOCODASH_PROJECT_DESCRIPTION"),
 		ServiceGroups: serviceGroups,
 	}
+}
+
+func ExtractLinks(container types.Container) []Link {
+	links := make([]Link, 0)
+	// Extract OpenContainers links
+	url := container.Labels["org.opencontainers.image.url"]
+	if url != "" {
+		links = append(links, Link{Label: "Website", URL: url})
+	}
+	documentation := container.Labels["org.opencontainers.image.documentation"]
+	if documentation != "" {
+		links = append(links, Link{Label: "Documentation", URL: documentation})
+	}
+	source := container.Labels["org.opencontainers.image.source"]
+	if source != "" {
+		links = append(links, Link{Label: "Source code", URL: source})
+	}
+	// Extract docodash links
+	// net.henko.docodash.link.<key>.url
+	// net.henko.docodash.link.<key>.label
+	for key, value := range container.Labels {
+		if len(key) > 24 && key[:24] == "net.henko.docodash.link." {
+			linkKey := key[24:]
+			if linkKey[len(linkKey)-4:] == ".url" {
+				labelKey := "net.henko.docodash.link." + linkKey[:len(linkKey)-4] + ".label"
+				label := container.Labels[labelKey]
+				if label == "" {
+					label = linkKey[:len(linkKey)-4]
+				}
+				links = append(links, Link{Label: label, URL: value})
+			}
+		}
+	}
+	return links
+}
+
+func ExtractStatus(containerStructs []Container, serviceContainers []types.Container) Status {
+	status := Status{
+		Created:    0,
+		Running:    0,
+		Paused:     0,
+		Restarting: 0,
+		Exited:     0,
+		Removing:   0,
+		Dead:       0,
+		Stopped:    0,
+	}
+	for index, _ := range containerStructs {
+		switch serviceContainers[index].State {
+		case "created":
+			status.Created++
+		case "running":
+			status.Running++
+		case "paused":
+			status.Paused++
+		case "restarting":
+			status.Restarting++
+		case "exited":
+			status.Exited++
+		case "removing":
+			status.Removing++
+		case "dead":
+			status.Dead++
+		case "stopped":
+			status.Stopped++
+		}
+	}
+	return status
 }
