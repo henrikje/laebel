@@ -19,7 +19,7 @@
                 <h3 class="title">{{ if .Title }}{{ .Title }}{{ else }}<code>{{ .Name }}</code>{{ end }}</h3>
                 {{ if .Description }}<p class="description">{{ .Description }}</p>{{ end }}
                 <ul>
-                    {{ if .Title }}<li class="service"><strong>Service</strong>: <code>{{ .Name }}</code></li>{{ end }}
+                    {{ if .Title }}<li class="name"><strong>Service</strong>: <code>{{ .Name }}</code></li>{{ end }}
                     <li class="image"><strong>Image</strong>: <code>{{ .Image }}</code></li>
                     <li class="status"><strong>Status</strong>:{{ template "serviceStatus" .Status }}</li>
                     {{ if .Links }}
