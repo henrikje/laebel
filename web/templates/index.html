@@ -8,7 +8,7 @@
 </head>
 <body>
 <header id="project">
-    <h1 class="title">{{ if .Title }}{{ .Title }} (<code>{{ .Name }}</code>){{ else }}{{ .Name }}{{ end }}</h1>
+    <h1 class="title">{{ if .Title }}{{ .Title }}{{ else }}<code>{{ .Name }}</code>{{ end }}</h1>
     {{ if .Description }}<p class="description">{{ .Description }}</p>{{ end }}
 </header>
 <main id="services">
@@ -16,10 +16,10 @@
         <h2 class="group">{{ .Name }}</h2>
         {{ range .Services }}
             <section class="service">
-                <h3 class="title">{{ if .Title }}{{ .Title }} (<code>{{ .Name }}</code>){{ else }}{{ .Name }}{{ end }}
-                </h3>
+                <h3 class="title">{{ if .Title }}{{ .Title }}{{ else }}<code>{{ .Name }}</code>{{ end }}</h3>
                 {{ if .Description }}<p class="description">{{ .Description }}</p>{{ end }}
                 <ul>
+                    {{ if .Title }}<li class="service"><strong>Service</strong>: <code>{{ .Name }}</code></li>{{ end }}
                     <li class="image"><strong>Image</strong>: <code>{{ .Image }}</code></li>
                     <li class="status"><strong>Status</strong>:{{ template "serviceStatus" .Status }}</li>
                     {{ if .Links }}
@@ -35,8 +35,8 @@
                     <table>
                         <thead>
                         <tr>
-                            <th>Names</th>
                             <th>ID</th>
+                            <th>Names</th>
                             <th>Status</th>
                         </tr>
                         </thead>

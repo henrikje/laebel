@@ -6,12 +6,12 @@ import (
 	"sort"
 )
 
-func TransformContainersToProject(containers []types.Container, projectName string) Project {
+func TransformContainersToProject(projectContainers []types.Container, currentContainer types.Container, projectName string) Project {
 	// TODO Where do I get the project description from?
 
 	// Group containers by service name
 	containersByServiceName := make(map[string][]types.Container)
-	for _, container := range containers {
+	for _, container := range projectContainers {
 		serviceName := container.Labels["com.docker.compose.service"]
 		containersByServiceName[serviceName] = append(containersByServiceName[serviceName], container)
 	}
@@ -74,7 +74,7 @@ func TransformContainersToProject(containers []types.Container, projectName stri
 		}
 		service := Service{
 			Name:        serviceName,
-			Title:       container.Labels["org.opencontainers.image.projectTitle"],
+			Title:       container.Labels["org.opencontainers.image.title"],
 			Description: container.Labels["org.opencontainers.image.description"],
 			Image:       image,
 			Status:      status,
@@ -86,7 +86,7 @@ func TransformContainersToProject(containers []types.Container, projectName stri
 
 	// Extract group-to-service mapping
 	groupNameByServiceName := make(map[string]string)
-	for _, container := range containers {
+	for _, container := range projectContainers {
 		groupName := container.Labels["net.henko.docodash.group"]
 		serviceName := container.Labels["com.docker.compose.service"]
 		groupNameByServiceName[serviceName] = groupName

@@ -38,11 +38,21 @@ func RenderDocumentation(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Remove current container from the list
+	var currentContainer types.Container
+	for i, container := range containers {
+		if container.ID == containerID {
+			currentContainer = container
+			containers = append(containers[:i], containers[i+1:]...)
+			break
+		}
+	}
+
 	// Filter containers that are part of the project
 	projectContainers := FilterOnlyContainersInProject(containers, projectName)
 
 	// Transform containers to project
-	project := TransformContainersToProject(projectContainers, projectName)
+	project := TransformContainersToProject(projectContainers, currentContainer, projectName)
 
 	RenderDocument(w, err, project)
 }
