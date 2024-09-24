@@ -17,6 +17,7 @@ func RenderDocument(w http.ResponseWriter, err error, project Project) {
 			},
 		}).ParseFiles(
 		filepath.Join("web", "templates", "index.html"),
+		filepath.Join("web", "templates", "serviceGraph.html"),
 		filepath.Join("web", "templates", "serviceStatus.html"),
 		filepath.Join("web", "templates", "clipboard.html"),
 	)

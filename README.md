@@ -23,4 +23,5 @@ Displays a dashboard with information about all services running in a Docker Com
 - [ ] Add a sort order label to the services, so they can be displayed in a specific order. Otherwise sort alphanumerically. Perhaps also a sort order for groups?
 - [ ] Find a way to set an icon/logo for the project (and services?).
 - [ ] Make service title a clickable link to the "website" if present?
-
+- [ ] Create a /health endpoint and configure HEALTHCHECK in the Dockerfile
+- [ ] Embed Mermaid.js script

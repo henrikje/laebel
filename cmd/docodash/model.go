@@ -19,6 +19,7 @@ type Service struct {
 	Image       string
 	Status      Status
 	Links       []Link
+	DependsOn   []string // Label: com.docker.compose.depends_on
 	Containers  []Container
 }
 

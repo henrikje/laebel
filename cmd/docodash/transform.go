@@ -4,6 +4,7 @@ import (
 	"github.com/docker/docker/api/types"
 	"os"
 	"sort"
+	"strings"
 )
 
 func TransformContainersToProject(projectContainers []types.Container, currentContainer types.Container, projectName string) Project {
@@ -31,6 +32,7 @@ func TransformContainersToProject(projectContainers []types.Container, currentCo
 			})
 		}
 		status := ExtractStatus(containerStructs, serviceContainers)
+		dependsOn := ExtractDependsOn(container)
 		service := Service{
 			Name:        serviceName,
 			Title:       container.Labels["org.opencontainers.image.title"],
@@ -38,6 +40,7 @@ func TransformContainersToProject(projectContainers []types.Container, currentCo
 			Image:       image,
 			Status:      status,
 			Links:       links,
+			DependsOn:   dependsOn,
 			Containers:  containerStructs,
 		}
 		services = append(services, service)
@@ -162,4 +165,17 @@ func ExtractStatus(containerStructs []Container, serviceContainers []types.Conta
 		}
 	}
 	return status
+}
+
+func ExtractDependsOn(container types.Container) []string {
+	dependsOn := []string{}
+	if dependsOnString, ok := container.Labels["com.docker.compose.depends_on"]; ok {
+		if dependsOnString != "" {
+			dependsOn = strings.Split(dependsOnString, ",")
+			for i, service := range dependsOn {
+				dependsOn[i] = strings.Split(service, ":")[0]
+			}
+		}
+	}
+	return dependsOn
 }
