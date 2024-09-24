@@ -6,9 +6,6 @@ Displays a dashboard with information about all services running in a Docker Com
 
 - [ ] Make the display nicer visually, perhaps something like GitHub READMEs
 - [ ] Load the current container id on startup (it won't change)
-- [x] Add special labels that services can use to display clickable links
-  - For example, a basic web server can link to its homepage
-  - A service can link both to its primary endpoint and to its API documentation
 - [ ] Display a nice error message if the user forgets to mount the Docker socket
 - [ ] Display a nice error message if the user does not mount the Docker socket readonly
 - [ ] Display a nice error message if the container is not run as part of a Docker Compose cluster
@@ -23,3 +20,8 @@ Displays a dashboard with information about all services running in a Docker Com
 - [ ] Change name? Perhaps "docodogen"? "docodoc"? "composedoc"?
 - [ ] Add a sort order label to the services, so they can be displayed in a specific order. Otherwise sort alphanumerically. Perhaps also a sort order for groups?
 - [ ] Hide the Docodash service itself from the list of services
+
+- [ ] Add special labels that services can use to display clickable links
+  - For example, a basic web server can link to its homepage
+  - A service can link both to its primary endpoint and to its API documentation
+- [ ] Make service title a clickable link to the "website" if present?
