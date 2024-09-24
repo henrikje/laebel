@@ -1,8 +1,15 @@
 services:
-  dashboard:
+  docodash:
     image: docodash:latest
     build:
       target: docodash
+    develop:
+      watch:
+        - action: rebuild
+          path: ./cmd
+        - action: sync
+          path: ./web
+          target: /app/web
     ports:
       - "8080:8080"
     volumes:
