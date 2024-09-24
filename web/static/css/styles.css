@@ -1,44 +1,110 @@
 body {
-    font-family: system-ui, sans-serif;
+    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Microsoft YaHei Light", sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    color: rgb(34, 34, 34);
+    padding: 0 2em;
 }
 
-footer p {
-    margin-top: 2em;
-    font-style: italic;
-    color: gray;
+h1 {
+    font-size: 1.8em;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+}
+
+h2 {
+    font-size: 1.6em;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+}
+
+h3 {
+    font-size: 1.425em;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+}
+
+ul, ol {
+    padding-bottom: 1.125px;
+    padding-inline-start: 1.6em;
+    padding-top: 1.125px;
+}
+
+strong {
+    font-weight: 600;
+}
+
+code {
+    background-color: rgb(250, 250, 250);
+    color: rgb(92, 92, 92);
+    font-size: 0.875em;
+}
+
+a {
+    color: rgb(57, 113, 243);
+}
+a:visited {
+    color: rgb(141, 57, 243);
 }
 
 table {
     margin: 1em 2em;
 }
+
 th {
     text-align: left;
 }
+
 td {
-    padding-right: 0.5em;
+    padding-right: 1em;
 }
 
-h2 {
-    border-bottom: 1px solid lightgray;
+.group {
+    margin-top: 2em;
+    border-top: 1px solid lightgray;
 }
-h3:before {
+
+.service .title:before {
     content: "▶️ "
-}
-h2, h3 {
-    margin-top: 1em;
-}
-li {
-    margin-bottom: 0.25em;
-}
-summary {
-    font-style: italic;
-    cursor: pointer;
 }
 
 .service {
-    padding-left: 1em;
-    margin-bottom: 2em;
+    margin-top: 2em;
 }
-.service details {
-    margin-left: 1.5em;
+
+footer {
+    margin-top: 2em;
+    border-top: 1px solid lightgray;
+    padding-top: 1em;
+    font-style: italic;
+    color: rgb(92, 92, 92);
+}
+
+summary {
+    font-style: italic;
+    cursor: pointer;
+    color: rgb(92, 92, 92);
+}
+
+.clipboard {
+    font-size: 0.8em;
+    cursor: pointer;
+    user-select: none;
+}
+
+.clipboard::after {
+    content: "Copy to clipboard";
+    color: rgb(92, 92, 92);
+    padding: 0.25em 1em 0.25em 0.5em;
+    display: none;
+    position: absolute;
+    background-color: white;
+}
+
+.clipboard:hover::after {
+    display: inline;
+}
+
+.clipboard:active::after {
+    content: "Copied!"
 }
