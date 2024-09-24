@@ -37,6 +37,7 @@ summary {
 
 .service {
     padding-left: 1em;
+    margin-bottom: 2em;
 }
 .service details {
     margin-left: 1.5em;
