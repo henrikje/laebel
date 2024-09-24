@@ -21,4 +21,4 @@ Displays a dashboard with information about all services running in a Docker Com
 - [x] Support all relevant [OpenContainer labels](https://github.com/opencontainers/image-spec/blob/main/annotations.md)
 - [ ] Support `net.henko.docodash` alternatives to the opencontainers labels, for those who only would use this tool
 - [ ] Change name? Perhaps "docodogen"? "docodoc"? "composedoc"?
-- [ ] Add a sort order label to the services, so they can be displayed in a specific order
+- [ ] Add a sort order label to the services, so they can be displayed in a specific order. Otherwise sort alphanumerically.

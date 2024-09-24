@@ -2,10 +2,6 @@ body {
     font-family: system-ui, sans-serif;
 }
 
-h3 {
-    color: gray;
-}
-
 footer p {
     font-style: italic;
     color: gray;
@@ -23,8 +19,13 @@ td {
     padding-right: 0.5em;
 }
 
-h2 {
+.service {
+    padding: 0 1em;
+}
+
+h2, h3 {
     border-bottom: 1px solid lightgray;
+    padding-bottom: 0.5em;
     margin-top: 1.5em;
 }
 

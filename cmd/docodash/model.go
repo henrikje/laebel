@@ -1,16 +1,16 @@
 package main
 
 type Project struct {
-	Name        string
-	Title       string // DOCODASH_PROJECT_TITLE
-	Description string // DOCODASH_PROJECT_DESCRIPTION
+	Name        string // Label: com.docker.compose.project
+	Title       string // Env: DOCODASH_PROJECT_TITLE
+	Description string // Env: DOCODASH_PROJECT_DESCRIPTION
 	Services    []Service
 }
 
 type Service struct {
-	Name        string
-	Title       string // org.opencontainers.image.title
-	Description string // org.opencontainers.image.description
+	Name        string // Label: com.docker.compose.service
+	Title       string // Label: org.opencontainers.image.title
+	Description string // Label: org.opencontainers.image.description
 	Image       string
 	Status      Status
 	Links       []Link
@@ -29,8 +29,8 @@ type Status struct {
 }
 
 type Link struct {
-	Label string
-	URL   string
+	Label string // Label: net.henko.docodash.<key>.label
+	URL   string // Label: net.henko.docodash.<key>.url
 }
 
 type Container struct {
