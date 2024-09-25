@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func TransformContainersToProject(projectContainers []types.Container, currentContainer types.Container, projectName string) Project {
+func TransformContainersToProject(projectContainers []types.Container, projectName string) Project {
 	// TODO Where do I get the project description from?
 
 	// Group containers by service name
@@ -144,7 +144,7 @@ func ExtractStatus(containerStructs []Container, serviceContainers []types.Conta
 		Dead:       0,
 		Stopped:    0,
 	}
-	for index, _ := range containerStructs {
+	for index := range containerStructs {
 		switch serviceContainers[index].State {
 		case "created":
 			status.Created++
