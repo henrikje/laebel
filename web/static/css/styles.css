@@ -65,6 +65,14 @@ td {
     margin-top: 2em;
 }
 
+.links a {
+    margin-left: 0.25em;
+}
+.links a:first-of-type {
+    margin-left: 0;
+}
+
+
 footer {
     margin-top: 2em;
     border-top: 1px solid lightgray;
