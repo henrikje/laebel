@@ -87,6 +87,8 @@ they are specified by adding _environment variables_ to the `laebel` service in 
 
 If you have any thoughts or questions, please [reach out to me](https://henko.net/contact/).
 
+_Sidenote_: Why the name _Laebel_? It is basically a reference to the idea that Laebel relies on Docker _labels_ to get information about the project and its services. However, I also wanted to be a cool kid like Traefik and Jaeger. ;-)
+
 ## License
 
 This project is licensed under the terms of the [MIT license](LICENSE.md).
