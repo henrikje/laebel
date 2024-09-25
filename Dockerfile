@@ -35,6 +35,13 @@ HEALTHCHECK \
 # Command to run the Go application
 CMD ["./laebel"]
 
+# Set documentation labels
+LABEL org.opencontainers.image.title="Laebel" \
+    org.opencontainers.image.description="Automatic documentation site for your Docker Compose project." \
+    org.opencontainers.image.authors="Henrik Jernevad <henrik@jernevad.se>" \
+    org.opencontainers.image.url="https://github.com/henrikje/laebel" \
+    net.henko.laebel.group="Documentation"
+
 # Set the working directory inside the container
 WORKDIR /app
 
