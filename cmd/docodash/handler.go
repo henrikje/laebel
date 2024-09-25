@@ -19,10 +19,10 @@ func RenderDocumentation(w http.ResponseWriter, r *http.Request) {
 	if containerID == "" {
 		newContainerID, err := GetContainerID()
 		if err != nil {
-			InternalServerError(w, err, "Could not determine current container ID", "Are you sure you are running docodash as a container?")
+			InternalServerError(w, err, "Could not determine current container ID", "Are you sure you are running Laebel as a container?")
 			return
 		}
-		log.Println("Docodash container ID:", newContainerID)
+		log.Println("Laebel container ID:", newContainerID)
 		containerID = newContainerID
 	}
 
@@ -30,7 +30,7 @@ func RenderDocumentation(w http.ResponseWriter, r *http.Request) {
 	if projectName == "" {
 		newProjectName, err := IsPartOfComposeProject(containerID)
 		if err != nil {
-			InternalServerError(w, err, "Could not determine current project name", "Ensure docodash has the Docker socket mounted as a volume: \"/var/run/docker.sock:/var/run/docker.sock:ro\"")
+			InternalServerError(w, err, "Could not determine current project name", "Ensure Laebel has the Docker socket mounted as a volume: \"/var/run/docker.sock:/var/run/docker.sock:ro\"")
 			return
 		}
 		if newProjectName == "" {
@@ -91,7 +91,7 @@ func InternalServerError(w http.ResponseWriter, err error, message string, hint 
 
 func NoProjectError(w http.ResponseWriter) {
 	log.Println("BAD REQUEST: Current container is not part of a Docker Compose project.")
-	log.Println("Hint: Are you running docodash as a service in a Docker Compose project?")
+	log.Println("Hint: Are you running Laebel as a service in a Docker Compose project?")
 	http.Error(w, "BAD REQUEST: Current container is not part of a Docker Compose project.\n", http.StatusBadRequest)
-	_, _ = w.Write([]byte("Hint: Are you running docodash as a service in a Docker Compose project?"))
+	_, _ = w.Write([]byte("Hint: Are you running Laebel as a service in a Docker Compose project?"))
 }

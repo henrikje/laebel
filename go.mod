@@ -1,4 +1,4 @@
-module docodash
+module laebel
 
 go 1.22
 

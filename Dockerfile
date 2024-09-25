@@ -18,10 +18,10 @@ COPY cmd/ ./cmd/
 COPY web/ ./web/
 
 # Build the Go binary
-RUN go build -o bin/docodash ./cmd/docodash
+RUN go build -o bin/laebel ./cmd/laebel
 
 # Step 2: Create a minimal image to run the application
-FROM alpine:latest AS docodash
+FROM alpine:latest AS laebel
 
 # Expose the port that the application will listen on
 ENV PORT=8080
@@ -33,13 +33,13 @@ HEALTHCHECK \
     CMD wget -q -S -O - http://localhost:$PORT/ || exit 1
 
 # Command to run the Go application
-CMD ["./docodash"]
+CMD ["./laebel"]
 
 # Set the working directory inside the container
 WORKDIR /app
 
 # Copy the Go binary from the builder stage
-COPY --from=builder /app/bin/docodash .
+COPY --from=builder /app/bin/laebel .
 
 # Copy the web folder with templates and static files
 COPY --from=builder /app/web ./web

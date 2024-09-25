@@ -1,4 +1,4 @@
-# docodash
+# Laebel
 
 Displays a dashboard with information about all services running in a Docker Compose cluster. 
 
@@ -14,11 +14,11 @@ Displays a dashboard with information about all services running in a Docker Com
 - [x] Display the project name in the title
 - [x] Introduce a proper struct hierarchy to hold the information passed to the template.
 - [x] Display container names as well as their id
-- [x] Hide the Docodash service itself from the list of services
+- [x] Hide the Laebel service itself from the list of services
 - [ ] Display a nice error message if the user does not mount the Docker socket readonly
 - [ ] Add support for Markdown.
 - [ ] Live-reload the page when the Docker Compose cluster changes
-- [ ] Support `net.henko.docodash` alternatives to the opencontainers labels, for those who only would use this tool
+- [-] Support `net.henko.laebel` alternatives to the opencontainers labels, for those who only would use this tool _No, better to lean on standards._
 - [ ] Change name? Perhaps "docodogen"? "docodoc"? "composedoc"?
 - [ ] Add a sort order label to the services, so they can be displayed in a specific order. Otherwise sort alphanumerically. Perhaps also a sort order for groups?
 - [ ] Find a way to set an icon/logo for the project (and services?).

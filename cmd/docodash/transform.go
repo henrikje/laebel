@@ -49,7 +49,7 @@ func TransformContainersToProject(projectContainers []types.Container, currentCo
 	// Extract group-to-service mapping
 	groupNameByServiceName := make(map[string]string)
 	for _, container := range projectContainers {
-		groupName := container.Labels["net.henko.docodash.group"]
+		groupName := container.Labels["net.henko.laebel.group"]
 		serviceName := container.Labels["com.docker.compose.service"]
 		groupNameByServiceName[serviceName] = groupName
 	}
@@ -93,8 +93,8 @@ func TransformContainersToProject(projectContainers []types.Container, currentCo
 	// Return project
 	return Project{
 		Name:          projectName,
-		Title:         os.Getenv("DOCODASH_PROJECT_TITLE"),
-		Description:   os.Getenv("DOCODASH_PROJECT_DESCRIPTION"),
+		Title:         os.Getenv("LAEBEL_PROJECT_TITLE"),
+		Description:   os.Getenv("LAEBEL_PROJECT_DESCRIPTION"),
 		ServiceGroups: serviceGroups,
 	}
 }
@@ -114,14 +114,14 @@ func ExtractLinks(container types.Container) []Link {
 	if source != "" {
 		links = append(links, Link{Label: "Source code", URL: source})
 	}
-	// Extract docodash links
-	// net.henko.docodash.link.<key>.url
-	// net.henko.docodash.link.<key>.label
+	// Extract laebel links
+	// net.henko.laebel.link.<key>.url
+	// net.henko.laebel.link.<key>.label
 	for key, value := range container.Labels {
-		if len(key) > 24 && key[:24] == "net.henko.docodash.link." {
+		if len(key) > 24 && key[:24] == "net.henko.laebel.link." {
 			linkKey := key[24:]
 			if linkKey[len(linkKey)-4:] == ".url" {
-				labelKey := "net.henko.docodash.link." + linkKey[:len(linkKey)-4] + ".label"
+				labelKey := "net.henko.laebel.link." + linkKey[:len(linkKey)-4] + ".label"
 				label := container.Labels[labelKey]
 				if label == "" {
 					label = linkKey[:len(linkKey)-4]

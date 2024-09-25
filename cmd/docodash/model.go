@@ -2,13 +2,13 @@ package main
 
 type Project struct {
 	Name          string // Label: com.docker.compose.project
-	Title         string // Env: DOCODASH_PROJECT_TITLE
-	Description   string // Env: DOCODASH_PROJECT_DESCRIPTION
+	Title         string // Env: LAEBEL_PROJECT_TITLE
+	Description   string // Env: LAEBEL_PROJECT_DESCRIPTION
 	ServiceGroups []ServiceGroup
 }
 
 type ServiceGroup struct {
-	Name     string // Label: net.henko.docodash.group
+	Name     string // Label: net.henko.laebel.group
 	Services []Service
 }
 
@@ -35,8 +35,8 @@ type Status struct {
 }
 
 type Link struct {
-	Label string // Label: net.henko.docodash.<key>.label
-	URL   string // Label: net.henko.docodash.<key>.url
+	Label string // Label: net.henko.laebel.link.<key>.label
+	URL   string // Label: net.henko.laebel.link.<key>.url
 }
 
 type Container struct {
