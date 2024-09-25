@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/docker/docker/api/types"
+	"log"
 	"net/http"
 )
 
@@ -21,7 +22,7 @@ func RenderDocumentation(w http.ResponseWriter, r *http.Request) {
 			InternalServerError(w, err, "Could not determine current container ID", "Are you sure you are running docodash as a container?")
 			return
 		}
-		println("Docodash container ID:", newContainerID)
+		log.Println("Docodash container ID:", newContainerID)
 		containerID = newContainerID
 	}
 
@@ -36,7 +37,7 @@ func RenderDocumentation(w http.ResponseWriter, r *http.Request) {
 			NoProjectError(w)
 			return
 		}
-		println("Current project name:", newProjectName)
+		log.Println("Current project name:", newProjectName)
 		projectName = newProjectName
 	}
 
@@ -78,9 +79,9 @@ func FilterOnlyContainersInProject(containers []types.Container, projectName str
 }
 
 func InternalServerError(w http.ResponseWriter, err error, message string, hint string) {
-	println("INTERNAL SERVER ERROR:", message, err)
+	log.Println("INTERNAL SERVER ERROR:", message+":", err)
 	if hint != "" {
-		println("Hint:", hint)
+		log.Println("Hint:", hint)
 	}
 	http.Error(w, "INTERNAL SERVER ERROR: "+message+"\n\nCause: "+err.Error(), http.StatusInternalServerError)
 	if hint != "" {
@@ -89,8 +90,8 @@ func InternalServerError(w http.ResponseWriter, err error, message string, hint 
 }
 
 func NoProjectError(w http.ResponseWriter) {
-	println("BAD REQUEST: Current container is not part of a Docker Compose project.")
-	println("Hint: Are you running docodash as a service in a Docker Compose project?")
+	log.Println("BAD REQUEST: Current container is not part of a Docker Compose project.")
+	log.Println("Hint: Are you running docodash as a service in a Docker Compose project?")
 	http.Error(w, "BAD REQUEST: Current container is not part of a Docker Compose project.\n", http.StatusBadRequest)
 	_, _ = w.Write([]byte("Hint: Are you running docodash as a service in a Docker Compose project?"))
 }
