@@ -9,7 +9,6 @@ import (
 func main() {
 	// Serve static files (CSS, JS, etc.)
 	fs := http.FileServer(http.Dir("web/static"))
-	// TODO How do we serve static files with the correct MIME type?
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	// Route to handle dynamic pages
