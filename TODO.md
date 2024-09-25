@@ -2,12 +2,9 @@
 
 ## Version 0.1.0
 
-- [ ] Display a nice error message if the user does not mount the Docker socket readonly
-- [ ] Create a /health endpoint and configure HEALTHCHECK in the Dockerfile
-- [ ] Add a `net.henko.laebel.hidden` label to hide certain services.
-- [ ] Select a license for the project.
-- [ ] Make the GitHub project public.
+- [x] Select a license for the project.
 - [ ] Add a GitHub Actions workflow to build and deploy the project to Docker Hub or GitHub Packages.
+- [ ] Make the GitHub project public.
 
 ## Future
 
@@ -21,3 +18,4 @@
 - [ ] Set up an example Docker Compose project to demonstrate the tool. This can be used in examples and for manual testing.
 - [ ] Ensure the Laebel service itself is displayed last. (Or just go by natural sort?)
 - [ ] Add a favicon to the project.
+- [ ] Add a `net.henko.laebel.hidden` label to hide certain services.
