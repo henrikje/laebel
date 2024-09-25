@@ -20,7 +20,7 @@ The goal is to make it feel like someone wrote a nice README for your project, b
 - **Additional user-configurable metadata**: Allows you to describe your services in more detail, 
   using labels in your Docker Compose project.
   It allows you to specify title, description, group, external links, and more.
-  The meta-data is based on the [OpenContainers Annotations Spec](https://specs.opencontainers.org/image-spec/annotations/) 
+  The metadata is based on the [OpenContainers Annotations Spec](https://specs.opencontainers.org/image-spec/annotations/) 
   extended through a set of Laebel-specific labels. 
 
 ## Usage
@@ -43,8 +43,13 @@ Then run `docker compose up` and open your browser at http://localhost:8080/ (or
 
 ## Configuration
 
-Laebel will work out of the box to provide useful information about your project.
-However, it really shines when you add metadata to your services using labels in your Docker Compose project.
+Laebel will work out of the box and provide useful information about your project.
+However, it really shines when you add additional metadata about your Docker Compose project.
+
+### Service metadata through labels
+
+Laebel reads metadata about each service from labels in the Docker Compose project.
+This is used to describe the services in more detail than just the image name and status.
 
 The following [OpenContainers Annotations Spec](https://specs.opencontainers.org/image-spec/annotations/) labels are supported:
 
@@ -64,7 +69,9 @@ In addition, Laebel supports the following custom labels:
     
   The key can be any string, but it should be unique for each link, and must be the same for both labels of a pair. 
 
-Finally, Laebel supports setting meta-data for the project as a whole.
+### Project metadata through environment variables
+
+Laebel also supports setting metadata for the project as a whole.
 Since these values are not associated with any particular service, 
 they are specified by adding _environment variables_ to the `laebel` service in the Docker Compose project.
 
