@@ -19,3 +19,4 @@
 - [ ] Ensure the Laebel service itself is displayed last. (Or just go by natural sort?)
 - [ ] Add a favicon to the project.
 - [ ] Add a `net.henko.laebel.hidden` label to hide certain services.
+- [ ] Write unit tests for the project.
