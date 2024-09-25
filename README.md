@@ -1,6 +1,6 @@
 # Laebel
 
-_Automatic documentation site for your Docker Compose project._
+_Automatic README-style documentation site for your Docker Compose project._
 
 Laebel is a small server that runs in your Docker Compose project, serving a website that documents your project.
 
@@ -39,7 +39,7 @@ laebel:
     - "/var/run/docker.sock:/var/run/docker.sock:ro"
 ```
 
-Then run `docker compose up` and open your browser at http://localhost:8080/ (or whatever host and port you use).
+Then run `docker compose up` and open your browser at http://localhost:8080/ (or the host and port you use).
 
 ## Configuration
 
