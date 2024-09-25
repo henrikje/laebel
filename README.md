@@ -27,3 +27,11 @@ Displays a dashboard with information about all services running in a Docker Com
 - [ ] Embed Mermaid.js script to avoid external dependency
 - [ ] Add status icons for each service, both in the graph and in the list:
    🟢=healthy, ▶️=running, ⏸️=paused, ⏹️=stopped/exited, 🚫=unhealthy, 🔄=restarting, *️⃣=mixed
+- [ ] Do not hide the Laebel service. It gives free promotion, and it is a good example of how to use the tool.
+- [ ] Add a `net.henko.laebel.hidden` label to hide certain services.
+- [ ] Clean up the README to make it more readable. Remove the example-output.md file.
+- [ ] Select a license for the project.
+- [ ] Make the GitHub project public.
+- [ ] Add a GitHub Actions workflow to build and deploy the project to Docker Hub.
+- [ ] Make http://laebel.henko.net/ the official website for the project.
+- [ ] Set up an example Docker Compose project to demonstrate the tool. This can be used in examples and for manual testing.
