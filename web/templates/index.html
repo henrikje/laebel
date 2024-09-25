@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ if .Title }}{{ .Title }}{{ else }}{{ .Name }}{{ end }} – Laebel</title>
     <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="icon" type="image/png" href="/static/img/laebel.png">
 </head>
 <body>
+<header id="brand">
+    <a href="https://github.com/henrikje/laebel"><img src="/static/img/laebel-gray.png" alt="Laebel logo" id="logo"></a>
+    <p class="title"><a href="https://github.com/henrikje/laebel">Laebel</a></p>
+</header>
 <header id="project">
     <h1 class="title">{{ if .Title }}{{ .Title }}{{ else }}<code>{{ .Name }}</code>{{ end }}</h1>
     {{ if .Description }}<p class="description">{{ .Description }}</p>{{ end }}
