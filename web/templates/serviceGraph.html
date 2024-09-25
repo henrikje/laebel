@@ -9,6 +9,7 @@ graph LR
 {{ range . }}subgraph "{{ .Name | escape }}"{{ range .Services }}
     {{ .Name | escape }}[<a href="#{{ .Name }}">{{ if .Title }}{{ .Title }}{{ else }}{{ .Name }}{{ end }}</a>]{{ end }}
 end
-{{ end }}{{ range . }}{{ range .Services }}{{ $thisServiceName := .Name }}{{ range $index, $otherServiceName := .DependsOn }}{{ $thisServiceName }} --> {{ $otherServiceName }}{{ end }}{{ end }}{{ end }}
+{{ end }}{{ range . }}{{ range .Services }}{{ $thisServiceName := .Name }}{{ range $index, $otherServiceName := .DependsOn }}{{ $thisServiceName }} --> {{ $otherServiceName }}
+{{ end }}{{ end }}{{ end }}
 </pre>
 {{ end }}
