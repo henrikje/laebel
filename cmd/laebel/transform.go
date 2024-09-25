@@ -22,7 +22,7 @@ func TransformContainersToProject(projectContainers []types.Container, projectNa
 	for serviceName, serviceContainers := range containersByServiceName {
 		container := serviceContainers[0] // Use the first container to extract metadata
 		image := container.Image
-		links := ExtractLinks(container)
+		links := ExtractServiceLinks(container)
 		containerStructs := make([]Container, 0)
 		for _, serviceContainer := range serviceContainers {
 			containerStructs = append(containerStructs, Container{
@@ -90,16 +90,20 @@ func TransformContainersToProject(projectContainers []types.Container, projectNa
 		}
 	}
 
+	projectLinks := ExtractProjectLinks()
+
 	// Return project
 	return Project{
 		Name:          projectName,
 		Title:         os.Getenv("LAEBEL_PROJECT_TITLE"),
 		Description:   os.Getenv("LAEBEL_PROJECT_DESCRIPTION"),
+		Links:         projectLinks,
+		Icon:          os.Getenv("LAEBEL_PROJECT_ICON"),
 		ServiceGroups: serviceGroups,
 	}
 }
 
-func ExtractLinks(container types.Container) []Link {
+func ExtractServiceLinks(container types.Container) []Link {
 	links := make([]Link, 0)
 	// Extract OpenContainers links
 	url := container.Labels["org.opencontainers.image.url"]
@@ -178,4 +182,21 @@ func ExtractDependsOn(container types.Container) []string {
 		}
 	}
 	return dependsOn
+}
+
+func ExtractProjectLinks() []Link {
+	projectLinks := make([]Link, 0)
+	url := os.Getenv("LAEBEL_PROJECT_URL")
+	if url != "" {
+		projectLinks = append(projectLinks, Link{Label: "Website", URL: url})
+	}
+	documentation := os.Getenv("LAEBEL_PROJECT_DOCUMENTATION")
+	if documentation != "" {
+		projectLinks = append(projectLinks, Link{Label: "Documentation", URL: documentation})
+	}
+	source := os.Getenv("LAEBEL_PROJECT_SOURCE")
+	if source != "" {
+		projectLinks = append(projectLinks, Link{Label: "Source code", URL: source})
+	}
+	return projectLinks
 }

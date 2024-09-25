@@ -59,10 +59,20 @@ td {
 #brand {
     float: right;
     text-align: center;
+    margin-right: -1em;
+    margin-left: 0.5em;
     color: gray;
 }
-#brand h1 {
+#brand img {
+    max-width: 32px;
+    max-height: 32px;
+}
+#brand p {
     margin-top: 0;
+}
+#brand p a {
+    color: unset;
+    text-decoration: none;
 }
 
 #icon {

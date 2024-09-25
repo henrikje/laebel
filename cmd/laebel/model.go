@@ -4,6 +4,8 @@ type Project struct {
 	Name          string // Label: com.docker.compose.project
 	Title         string // Env: LAEBEL_PROJECT_TITLE
 	Description   string // Env: LAEBEL_PROJECT_DESCRIPTION
+	Links         []Link // Env: LAEBEL_PROJECT_URL, LAEBEL_PROJECT_DOCUMENTATION, LAEBEL_PROJECT_SOURCE
+	Icon          string // Env: LAEBEL_PROJECT_ICON
 	ServiceGroups []ServiceGroup
 }
 
