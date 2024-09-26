@@ -25,6 +25,8 @@ The goal is to make it feel like someone wrote a nice README for your project, b
 
 ## Usage
 
+### As a service in a Docker Compose project
+
 To get started, add the following service to your Docker Compose project:
 
 ```yaml
@@ -40,6 +42,22 @@ laebel:
 ```
 
 Then run `docker compose up` and open your browser at http://localhost:8080/ (or the host and port you use).
+
+### As a stand-alone container
+
+If you do not want to add Laebel to your Compose Project, you can run Laebel as a stand-alone container.
+Then you need to tell Laebel which Compose Project to document using the environment variable `COMPOSE_PROJECT_NAME`.
+
+```bash
+docker run \
+  -e COMPOSE_PROJECT_NAME=<your-project> \
+  -v "/var/run/docker.sock:/var/run/docker.sock:ro" \
+  -p 8080:8080 \
+  laebel
+```
+
+Note that in this case, you cannot put project metadata environment variables in the Compose Project.
+You will have to manage those environment variables yourself.
 
 ## Configuration
 

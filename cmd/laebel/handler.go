@@ -4,9 +4,9 @@ import (
 	"github.com/docker/docker/api/types"
 	"log"
 	"net/http"
+	"os"
 )
 
-var containerID string
 var projectName string
 
 func RenderDocumentation(w http.ResponseWriter, r *http.Request) {
@@ -15,23 +15,24 @@ func RenderDocumentation(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Get the current container ID
-	if containerID == "" {
-		newContainerID, err := GetContainerID()
+	// Determine project to document
+	if projectName == "" {
+		// Get the current container ID
+		containerID, err := GetContainerID()
 		if err != nil {
 			InternalServerError(w, err, "Could not determine current container ID", "Are you sure you are running Laebel as a container?")
 			return
 		}
-		log.Println("Laebel container ID:", newContainerID)
-		containerID = newContainerID
-	}
+		log.Println("Laebel container ID:", containerID)
 
-	// Check if it’s part of a Compose project
-	if projectName == "" {
+		// Check if it’s part of a Compose project
 		newProjectName, err := IsPartOfComposeProject(containerID)
 		if err != nil {
 			InternalServerError(w, err, "Could not determine current project name", "Ensure Laebel has the Docker socket mounted as a volume: \"/var/run/docker.sock:/var/run/docker.sock:ro\"")
 			return
+		}
+		if newProjectName == "" {
+			newProjectName = os.Getenv("COMPOSE_PROJECT_NAME")
 		}
 		if newProjectName == "" {
 			NoProjectError(w)
@@ -81,7 +82,9 @@ func InternalServerError(w http.ResponseWriter, err error, message string, hint 
 
 func NoProjectError(w http.ResponseWriter) {
 	log.Println("BAD REQUEST: Current container is not part of a Docker Compose project.")
-	log.Println("Hint: Are you running Laebel as a service in a Docker Compose project?")
+	log.Println("Hint: Add Laebel as a service in your Docker Compose project.")
+	log.Println("Hint: If you want to run Laebel as a stand-alone container, specify the COMPOSE_PROJECT_NAME environment variable.")
 	http.Error(w, "BAD REQUEST: Current container is not part of a Docker Compose project.\n", http.StatusBadRequest)
-	_, _ = w.Write([]byte("Hint: Are you running Laebel as a service in a Docker Compose project?"))
+	_, _ = w.Write([]byte("Hint: Add Laebel as a service in your Docker Compose project."))
+	_, _ = w.Write([]byte("Hint: If you want to run Laebel as a stand-alone container, specify the COMPOSE_PROJECT_NAME environment variable."))
 }
