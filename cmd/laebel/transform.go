@@ -10,9 +10,17 @@ import (
 func TransformContainersToProject(projectContainers []types.Container, projectName string) Project {
 	// TODO Where do I get the project description from?
 
+	// Filter out hidden containers
+	noHiddenContainers := make([]types.Container, 0)
+	for _, container := range projectContainers {
+		if container.Labels["net.henko.laebel.hidden"] != "true" {
+			noHiddenContainers = append(noHiddenContainers, container)
+		}
+	}
+
 	// Group containers by service name
 	containersByServiceName := make(map[string][]types.Container)
-	for _, container := range projectContainers {
+	for _, container := range noHiddenContainers {
 		serviceName := container.Labels["com.docker.compose.service"]
 		containersByServiceName[serviceName] = append(containersByServiceName[serviceName], container)
 	}
@@ -48,7 +56,7 @@ func TransformContainersToProject(projectContainers []types.Container, projectNa
 
 	// Extract group-to-service mapping
 	groupNameByServiceName := make(map[string]string)
-	for _, container := range projectContainers {
+	for _, container := range noHiddenContainers {
 		groupName := container.Labels["net.henko.laebel.group"]
 		serviceName := container.Labels["com.docker.compose.service"]
 		groupNameByServiceName[serviceName] = groupName

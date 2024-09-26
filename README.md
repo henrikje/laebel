@@ -99,7 +99,7 @@ In addition, Laebel supports the following custom labels:
   - `net.henko.laebel.link.<key>.label`: The title of the link.
     
   The key can be any string, but it should be unique for each link, and must be the same for both labels of a pair. 
-
+- `net.henko.laebel.hidden`: If set to `true`, the service will not be displayed in the graph or the list.
 ### Project metadata through environment variables
 
 Laebel also supports setting metadata for the project as a whole.
