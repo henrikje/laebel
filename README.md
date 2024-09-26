@@ -24,10 +24,10 @@ The goal is to make it feel like someone wrote a nice README for your project, b
 - **Describes each service in your project**: Lists all services and the important information about them.
   The information includes service name, image name, how many containers are running, and the status of the containers.
 - **Additional user-configurable metadata**: Allows you to describe your services in more detail, 
-  using [labels](https://docs.docker.com/reference/compose-file/services/#labels) in your Docker Compose project.
+  using [`labels`](https://docs.docker.com/reference/compose-file/services/#labels) in your Docker Compose project.
   It allows you to specify title, description, group, external links, and more.
   The metadata is based on the [OpenContainers Annotations Spec](https://specs.opencontainers.org/image-spec/annotations/) 
-  extended through a set of Laebel-specific labels. 
+  but is extended through a set of Laebel-specific labels. 
 
 ## Usage
 
@@ -121,7 +121,7 @@ If you have any thoughts or questions, please [reach out to me](https://henko.ne
 _Sidenote_: Why the name _Laebel_? 
 It is a reference to the idea that to label something is to explain what it is,
 combined with the fact that Laebel relies on Docker _labels_ to get information about the project and its services.
-However, I also wanted to be a cool kid like Traefik and Jaeger. ;-)
+However, I also wanted to be a cool kid like Traefik and Jaeger. 😉
 
 ## License
 
