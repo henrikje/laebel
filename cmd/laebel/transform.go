@@ -122,8 +122,13 @@ func ExtractServiceLinks(container types.Container) []Link {
 	// net.henko.laebel.link.<key>.url
 	// net.henko.laebel.link.<key>.label
 	for key, value := range container.Labels {
-		if len(key) > 24 && key[:24] == "net.henko.laebel.link." {
-			linkKey := key[24:]
+		println("- key", key)
+		println("  value", value)
+		if len(key) > 22 && key[:22] == "net.henko.laebel.link." {
+			println("  key[22:]", key[22:])
+			println("  key[24:]", key[24:])
+			linkKey := key[22:]
+			println("  linkKey", linkKey)
 			if linkKey[len(linkKey)-4:] == ".url" {
 				labelKey := "net.henko.laebel.link." + linkKey[:len(linkKey)-4] + ".label"
 				label := container.Labels[labelKey]
