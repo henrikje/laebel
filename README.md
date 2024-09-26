@@ -31,7 +31,7 @@ To get started, add the following service to your Docker Compose project:
 
 ```yaml
 laebel:
-    image: ghcr.io/henrikje/laebel:main
+    image: ghcr.io/henrikje/laebel:latest
     # Expose port 8080 to access the Laebel website (or change to another port if you prefer).
     ports:
     - "8080:8080"
@@ -53,7 +53,7 @@ docker run \
   -e COMPOSE_PROJECT_NAME=<your-project> \
   -v "/var/run/docker.sock:/var/run/docker.sock:ro" \
   -p 8080:8080 \
-  laebel
+  ghcr.io/henrikje/laebel:latest
 ```
 
 Note that in this case, you cannot put project metadata environment variables in the Compose Project.
