@@ -23,7 +23,6 @@ func RenderDocumentation(w http.ResponseWriter, r *http.Request) {
 			InternalServerError(w, err, "Could not determine current container ID", "Are you sure you are running Laebel as a container?")
 			return
 		}
-		log.Println("Laebel container ID:", containerID)
 
 		// Check if it’s part of a Compose project
 		newProjectName, err := IsPartOfComposeProject(containerID)

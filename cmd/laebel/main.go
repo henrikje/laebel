@@ -16,7 +16,10 @@ func main() {
 	http.HandleFunc("/", RenderDocumentation)
 
 	// Start the server
-	log.Println("Starting server on :" + port)
+	log.Println("Serving Laebel documentation site at:")
+	log.Println("")
+	log.Println("  http://localhost:" + port + "/")
+	log.Println("")
 	err := http.ListenAndServe(":"+port, nil)
 	if err != nil {
 		log.Fatal("ListenAndServe:", err)

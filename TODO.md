@@ -2,7 +2,7 @@
 
 ## Version 0.1.1
 
-- [ ] Make Laebel output the full URL to the service, not just the port.
+- [x] Make Laebel output the full URL to the service, not just the port.
 - [ ] Replace default name "Other" with "Services" in the graph.
 - [ ] Try `graph TD` and `direction LR` inside subgraphs.
 - [ ] Document idea to use `compose.override.yaml` for documentation.
