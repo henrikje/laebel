@@ -94,12 +94,17 @@ In addition, Laebel supports the following custom labels:
 
 - `net.henko.laebel.group`: A group name to categorize services.
   Services with the same group name will be displayed together, both in the service graph and in the list.
-- Any number of external links, specified by a pairs of labels:
-  - `net.henko.laebel.link.<key>.url`: The URL of the link.
-  - `net.henko.laebel.link.<key>.label`: The title of the link.
+- `net.henko.laebel.hidden`: If set to `true`, the service will not be displayed in the graph or the list.
+
+You can also add any number of external links.
+These are great for linking to documentation, administration interfaces, or other related services.
+Each link is specified with two labels:
+
+- `net.henko.laebel.link.<key>.url`: The URL of the link.
+- `net.henko.laebel.link.<key>.label`: The title of the link.
     
   The key can be any string, but it should be unique for each link, and must be the same for both labels of a pair. 
-- `net.henko.laebel.hidden`: If set to `true`, the service will not be displayed in the graph or the list.
+
 ### Project metadata through environment variables
 
 Laebel also supports setting metadata for the project as a whole.
