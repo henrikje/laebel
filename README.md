@@ -98,12 +98,10 @@ In addition, Laebel supports the following custom labels:
 
 You can also add any number of external links.
 These are great for linking to documentation, administration interfaces, or other related services.
-Each link is specified with two labels:
+Each link is specified with two labels, where `<key>` can be any string:
 
 - `net.henko.laebel.link.<key>.url`: The URL of the link.
 - `net.henko.laebel.link.<key>.label`: The title of the link.
-    
-  The key can be any string, but it should be unique for each link, and must be the same for both labels of a pair. 
 
 ### Project metadata through environment variables
 
