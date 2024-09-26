@@ -105,7 +105,10 @@ they are specified by adding _environment variables_ to the `laebel` service in 
 
 If you have any thoughts or questions, please [reach out to me](https://henko.net/contact/).
 
-_Sidenote_: Why the name _Laebel_? It is basically a reference to the idea that Laebel relies on Docker _labels_ to get information about the project and its services. However, I also wanted to be a cool kid like Traefik and Jaeger. ;-)
+_Sidenote_: Why the name _Laebel_? 
+It is a reference to the idea that to label something is to explain what it is,
+combined with the fact that Laebel relies on Docker _labels_ to get information about the project and its services.
+However, I also wanted to be a cool kid like Traefik and Jaeger. ;-)
 
 ## License
 
