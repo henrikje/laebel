@@ -1,4 +1,5 @@
 {{ define "serviceGraph" }}
+{{ $no_links := true }}
 <pre class="mermaid">
 ---
 config:
@@ -9,7 +10,10 @@ graph LR
 {{ range . }}subgraph "{{ .Name | escape }}"{{ range .Services }}
     {{ .Name | escape }}[<a href="#{{ .Name }}">{{ if .Title }}{{ .Title }}{{ else }}{{ .Name }}{{ end }}</a>]{{ end }}
 end
-{{ end }}{{ range . }}{{ range .Services }}{{ $thisServiceName := .Name }}{{ range $index, $otherServiceName := .DependsOn }}{{ $thisServiceName }} --> {{ $otherServiceName }}
+{{ end }}{{ range . }}{{ range .Services }}{{ $thisServiceName := .Name }}{{ range $index, $otherServiceName := .DependsOn }}{{ $no_links = false }}{{ $thisServiceName }} --> {{ $otherServiceName }}
 {{ end }}{{ end }}{{ end }}
 </pre>
+{{ if $no_links }}
+    <p class="hint">Hint: To add links to the graph, make sure your services declare <code>depends_on</code> relations.</p>
+{{ end }}
 {{ end }}
