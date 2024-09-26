@@ -5,9 +5,9 @@
 - [x] Make Laebel output the full URL to the service, not just the port.
 - [x] Replace default name "Other" with "Services" in the graph.
 - [x] Try `graph TD` and `direction LR` inside subgraphs.
-- [ ] Document idea to use `compose.override.yaml` for documentation.
+- [x] Document idea to use `compose.override.yaml` for documentation.
 - [ ] Optimize Dockerfile for caching.
-- [ ] Set up an example Docker Compose project to demonstrate the tool.
+- [x] Set up an example Docker Compose project to demonstrate the tool.
   - This can be used in examples and for manual testing.
   - Or can I use an existing public Compose project?
     - https://github.com/docker/awesome-compose/blob/master/elasticsearch-logstash-kibana/compose.yaml

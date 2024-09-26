@@ -1,0 +1,38 @@
+services:
+  laebel:
+    # Use the latest Laebel image.
+    image: ghcr.io/henrikje/laebel:latest
+    # Expose port 8080 to access the Laebel website (or change to another port if you prefer).
+    ports:
+      - "8080:8080"
+    # Mount the Docker socket in read-only mode.
+    # This allows Laebel to read information about the services in your project.
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    # Set project metadata using environment variables.
+    environment:
+      - "LAEBEL_PROJECT_TITLE=Compose sample application"
+      - "LAEBEL_PROJECT_DESCRIPTION=React application with a NodeJS backend and a MySQL database."
+      - "LAEBEL_PROJECT_SOURCE=https://github.com/docker/awesome-compose/tree/master/react-express-mysql"
+      - "LAEBEL_PROJECT_ICON=https://raw.githubusercontent.com/docker/awesome-compose/master/react-express-mysql/frontend/public/favicon.ico"
+
+  # Sets metadata labels for services, e.g. title, description, and links.
+
+  backend:
+    labels:
+      - "org.opencontainers.image.title=Backend (Express.js + Node.js)"
+      - "org.opencontainers.image.description=The backend server running Express.js on Node.js, serving the frontend with messages."
+      - "net.henko.laebel.link.api.url=http://localhost/"
+      - "net.henko.laebel.link.api.label=API Endpoint"
+
+  db:
+    labels:
+      - "org.opencontainers.image.title=Database (MariaDB)"
+      - "org.opencontainers.image.description=The primary database, serving the backend with data. Running MySQL-compatible MariaDB."
+
+  frontend:
+    labels:
+      - "org.opencontainers.image.title=Frontend (React + Nginx)"
+      - "org.opencontainers.image.description=A Nginx server hosts the React-based frontend which displays important messages."
+      - "net.henko.laebel.link.website.url=http://localhost:3000/"
+      - "net.henko.laebel.link.website.label=Webpage"
