@@ -85,7 +85,7 @@ func TransformContainersToProject(projectContainers []types.Container, projectNa
 	} else {
 		for i := range serviceGroups {
 			if serviceGroups[i].Name == "" {
-				serviceGroups[i].Name = "Other"
+				serviceGroups[i].Name = "Services"
 			}
 		}
 	}

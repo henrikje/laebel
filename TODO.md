@@ -3,7 +3,7 @@
 ## Version 0.1.1
 
 - [x] Make Laebel output the full URL to the service, not just the port.
-- [ ] Replace default name "Other" with "Services" in the graph.
+- [x] Replace default name "Other" with "Services" in the graph.
 - [ ] Try `graph TD` and `direction LR` inside subgraphs.
 - [ ] Document idea to use `compose.override.yaml` for documentation.
 - [ ] Optimize Dockerfile for caching.
@@ -23,19 +23,3 @@
 - [ ] Add a favicon to the project.
 - [ ] Add a `net.henko.laebel.hidden` label to hide certain services.
 - [ ] Write unit tests for the project.
-
-
-```mermaid
-graph TD
-subgraph "Other"
-    direction LR
-    backend[backend]
-    db[db]
-    frontend[frontend]
-end
-subgraph "Documentation"
-    laebel[laebel]
-end
-backend --> db
-frontend --> backend
-```
