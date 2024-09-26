@@ -7,14 +7,13 @@ import (
 	"strings"
 )
 
+var escapeReplacer = strings.NewReplacer(".", "#46;", "(", "#40;", ")", "#41;")
+
 func RenderDocument(w http.ResponseWriter, err error, project Project) {
 	// Load template
 	tmpl, err := template.New("index.html").Funcs(
 		template.FuncMap{
-			"escape": func(raw string) string {
-				// TODO Use a markdown escape function instead
-				return strings.Replace(raw, ".", "#46;", -1)
-			},
+			"escape": func(raw string) string { return escapeReplacer.Replace(raw) },
 		}).ParseFiles(
 		filepath.Join("web", "templates", "index.html"),
 		filepath.Join("web", "templates", "serviceGraph.html"),

@@ -6,10 +6,10 @@ config:
     fontFamily: "system-ui, sans-serif"
     fontSize: 15px
 ---
-graph TD
+graph LR
 {{ range . }}subgraph "{{ .Name | escape }}"
     direction LR{{ range .Services }}
-    {{ .Name | escape }}[<a href="#{{ .Name }}">{{ if .Title }}{{ .Title }}{{ else }}{{ .Name }}{{ end }}</a>]{{ end }}
+    {{ .Name }}[<a href="#{{ .Name }}">{{ if .Title }}{{ .Title | escape }}{{ else }}{{ .Name }}{{ end }}</a>]{{ end }}
 end
 {{ end }}{{ range . }}{{ range .Services }}{{ $thisServiceName := .Name }}{{ range $index, $otherServiceName := .DependsOn }}{{ $no_links = false }}{{ $thisServiceName }} --> {{ $otherServiceName }}
 {{ end }}{{ end }}{{ end }}
