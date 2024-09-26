@@ -20,11 +20,11 @@ The goal is to make it feel like someone wrote a nice README for your project, b
 ## Features
 
 - **Displays a service graph**: An easy-to-understand, visual representation of how the services in your project are connected. 
-  It is based on `depends_on` relations in your Docker Compose project.
+  It is based on [`depends_on`](https://docs.docker.com/reference/compose-file/services/#depends_on) relations in your Docker Compose project.
 - **Describes each service in your project**: Lists all services and the important information about them.
   The information includes service name, image name, how many containers are running, and the status of the containers.
 - **Additional user-configurable metadata**: Allows you to describe your services in more detail, 
-  using labels in your Docker Compose project.
+  using [labels](https://docs.docker.com/reference/compose-file/services/#labels) in your Docker Compose project.
   It allows you to specify title, description, group, external links, and more.
   The metadata is based on the [OpenContainers Annotations Spec](https://specs.opencontainers.org/image-spec/annotations/) 
   extended through a set of Laebel-specific labels. 
@@ -49,7 +49,7 @@ laebel:
 
 Then run `docker compose up` and open your browser at http://localhost:8080/ (or the host and port you use).
 
-_Hint_: If you don't want to add documentation metadata to your production `compose.yaml` file, you can use a `compose.override.yaml` file. Docker Compose will automatically [merge](https://docs.docker.com/compose/how-tos/multiple-compose-files/merge/) the two files when you run `docker compose`.
+For a full example, see the [React-Express-MySQL example](./examples/react-express-mysql/README.md).
 
 ### As a stand-alone container
 
@@ -71,6 +71,11 @@ You will have to manage those environment variables yourself.
 
 Laebel will work out of the box and provide useful information about your project.
 However, it really shines when you add additional metadata about your Docker Compose project.
+
+The most straight-forward way to add documentation is to add labels in your primary `compose.yaml` file.
+If you want to keep the labels separate from the main configuration, you can use a `compose.override.yaml` file.
+Docker Compose will automatically [merge](https://docs.docker.com/compose/how-tos/multiple-compose-files/merge/) the two files
+when you run `docker compose`.
 
 ### Service metadata through labels
 
@@ -109,9 +114,7 @@ they are specified by adding _environment variables_ to the `laebel` service in 
 - `LAEBEL_PROJECT_ICON`: A URL to an image file to use as the logo of the project.
   Can be a `data:` URL to avoid external dependencies.
 
-## Misc
-
-For a full example, see the [React-Express-MySQL example](./examples/react-express-mysql/README.md).
+## Feedback
 
 If you have any thoughts or questions, please [reach out to me](https://henko.net/contact/).
 
