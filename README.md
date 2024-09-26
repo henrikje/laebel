@@ -31,7 +31,7 @@ To get started, add the following service to your Docker Compose project:
 
 ```yaml
 laebel:
-    image: laebel:latest
+    image: ghcr.io/henrikje/laebel:main
     # Expose port 8080 to access the Laebel website (or change to another port if you prefer).
     ports:
     - "8080:8080"
