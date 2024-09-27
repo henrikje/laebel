@@ -140,3 +140,13 @@ summary {
 .clipboard:active::after {
     content: "Copied!"
 }
+
+.summary {
+    cursor: help;
+}
+.node:has(.unhealthy) rect {
+    fill: #fee !important;
+}
+.node:has(.healthy) rect {
+    fill: #efe !important;
+}
