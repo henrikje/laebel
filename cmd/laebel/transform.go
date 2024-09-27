@@ -31,10 +31,16 @@ func TransformContainersToProject(projectContainers []types.ContainerJSON, proje
 		links := ExtractServiceLinks(container)
 		containerStructs := make([]Container, 0)
 		for _, serviceContainer := range serviceContainers {
+			containerHealth := "unknown"
+			if serviceContainer.State.Health != nil {
+				health := *serviceContainer.State.Health
+				containerHealth = health.Status
+			}
 			containerStructs = append(containerStructs, Container{
 				ID:     serviceContainer.ID,
 				Name:   serviceContainer.Name,
 				Status: serviceContainer.State.Status,
+				Health: containerHealth,
 			})
 		}
 		status := ExtractStatus(containerStructs, serviceContainers)

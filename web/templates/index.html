@@ -66,6 +66,7 @@
                                     <th>Container ID</th>
                                     <th>Name</th>
                                     <th>Status</th>
+                                    <th>Health</th>
                                 </tr>
                                 </thead>
                                 {{ range .Containers }}
@@ -73,6 +74,7 @@
                                         <td><code>{{ .ID }}</code> {{ template "clipboard" }}</td>
                                         <td>{{ .Name }}</td>
                                         <td>{{ .Status }}</td>
+                                        <td>{{ .Health }}</td>
                                     </tr>
                                 {{ end }}
                             </table>
