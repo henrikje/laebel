@@ -80,11 +80,12 @@ func filterOnlyContainersInProject(containers []types.Container, projectName str
 }
 
 func reportInternalServerError(w http.ResponseWriter, err error, message string, hint string) {
-	log.Println("INTERNAL SERVER ERROR:", message+":", err)
+	log.Println("INTERNAL SERVER ERROR:", message)
+	log.Println("Cause:", err.Error())
 	if hint != "" {
 		log.Println("Hint:", hint)
 	}
-	http.Error(w, "INTERNAL SERVER ERROR: "+message+"\n\nCause: "+err.Error(), http.StatusInternalServerError)
+	http.Error(w, "INTERNAL SERVER ERROR: "+message+"\nCause: "+err.Error(), http.StatusInternalServerError)
 	if hint != "" {
 		_, _ = w.Write([]byte("Hint: " + hint))
 	}
@@ -94,7 +95,7 @@ func reportNoProjectError(w http.ResponseWriter) {
 	log.Println("BAD REQUEST: Current container is not part of a Docker Compose project.")
 	log.Println("Hint: Add Laebel as a service in your Docker Compose project.")
 	log.Println("Hint: If you want to run Laebel as a stand-alone container, specify the COMPOSE_PROJECT_NAME environment variable.")
-	http.Error(w, "BAD REQUEST: Current container is not part of a Docker Compose project.\n", http.StatusBadRequest)
-	_, _ = w.Write([]byte("Hint: Add Laebel as a service in your Docker Compose project."))
+	http.Error(w, "BAD REQUEST: Current container is not part of a Docker Compose project.", http.StatusBadRequest)
+	_, _ = w.Write([]byte("Hint: Add Laebel as a service in your Docker Compose project.\n"))
 	_, _ = w.Write([]byte("Hint: If you want to run Laebel as a stand-alone container, specify the COMPOSE_PROJECT_NAME environment variable."))
 }
