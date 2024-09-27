@@ -27,7 +27,6 @@ func TransformContainersToProject(projectContainers []types.ContainerJSON, proje
 	var services []Service
 	for serviceName, serviceContainers := range containersByServiceName {
 		container := serviceContainers[0] // Use the first container to extract metadata
-		image := container.Image
 		links := extractServiceLinks(container)
 		containerStructs := make([]Container, 0)
 		for _, serviceContainer := range serviceContainers {
@@ -49,7 +48,7 @@ func TransformContainersToProject(projectContainers []types.ContainerJSON, proje
 			Name:        serviceName,
 			Title:       container.Config.Labels["org.opencontainers.image.title"],
 			Description: container.Config.Labels["org.opencontainers.image.description"],
-			Image:       image,
+			Image:       container.Config.Image,
 			Status:      status,
 			Links:       links,
 			DependsOn:   dependsOn,
