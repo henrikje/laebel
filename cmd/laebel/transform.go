@@ -160,41 +160,42 @@ func ExtractStatus(containerStructs []Container, serviceContainers []types.Conta
 		Exited:           0,
 		Removing:         0,
 		Dead:             0,
-		Stopped:          0,
 	}
 	for index := range containerStructs {
 		container := serviceContainers[index]
 		switch container.State.Status {
+		// Can be one of "created", "running", "paused", "restarting", "removing", "exited", or "dead"
 		case "created":
 			status.Created++
 		case "running":
 			status.Running++
+			healthPointer := container.State.Health
+			if healthPointer != nil {
+				// We perform this check inside the "running" case to avoid counting containers that are not running
+				health := *healthPointer
+				switch health.Status {
+				case "healthy":
+					status.RunningHealthy++
+				case "unhealthy":
+					status.RunningUnhealthy++
+				}
+			}
 		case "paused":
 			status.Paused++
 		case "restarting":
 			status.Restarting++
-		case "exited":
-			status.Exited++
 		case "removing":
 			status.Removing++
+		case "exited":
+			status.Exited++
 		case "dead":
 			status.Dead++
-		case "stopped":
-			status.Stopped++
 		}
-		healthPointer := container.State.Health
-		if healthPointer != nil {
-			health := *healthPointer
-			switch health.Status {
-			case "healthy":
-				status.RunningHealthy++
-			case "unhealthy":
-				status.RunningUnhealthy++
-			}
-		}
-
 	}
-	if status.Running == len(containerStructs) {
+	containerCount := len(containerStructs)
+	if status.Created == containerCount {
+		status.Summary = Created
+	} else if status.Running == containerCount {
 		if status.Running == status.RunningHealthy {
 			status.Summary = RunningHealthy
 		} else if status.Running == status.RunningUnhealthy {
@@ -202,10 +203,18 @@ func ExtractStatus(containerStructs []Container, serviceContainers []types.Conta
 		} else {
 			status.Summary = Running
 		}
-	} else if status.Paused+status.Stopped+status.Exited+status.Dead == len(containerStructs) {
-		status.Summary = NotRunning
+	} else if status.Paused == containerCount {
+		status.Summary = Paused
+	} else if status.Restarting == containerCount {
+		status.Summary = Restarting
+	} else if status.Exited == containerCount {
+		status.Summary = Exited
+	} else if status.Removing == containerCount {
+		status.Summary = Removing
+	} else if status.Dead == containerCount {
+		status.Summary = Dead
 	} else {
-		status.Summary = Other
+		status.Summary = Mixed
 	}
 	return status
 }

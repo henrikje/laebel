@@ -35,7 +35,6 @@ type Status struct {
 	Exited           int
 	Removing         int
 	Dead             int
-	Stopped          int
 	Summary          StatusSummary
 }
 
@@ -43,16 +42,18 @@ type Status struct {
 type StatusSummary int
 
 const (
-	// Running means the service is running, but we do not have any information about its health.
-	Running StatusSummary = iota
+	Created StatusSummary = iota
+	Running
 	// RunningHealthy means the service is running and its health checks are passing.
 	RunningHealthy
 	// RunningUnhealthy means the service is running, but its health checks are failing.
 	RunningUnhealthy
-	// NotRunning means the service is not running, because it is paused, stopped, have exited, or is dead.
-	NotRunning
-	// Other means the service is in a state not covered by the other statuses.
-	Other
+	Paused
+	Restarting
+	Exited
+	Removing
+	Dead
+	Mixed
 )
 
 type Link struct {

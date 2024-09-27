@@ -1,6 +1,12 @@
-{{ define "serviceStatusSummary" }}<span class="summary">{{ if eq .Summary 0 }}<span
-            class="running" title="The service is running, but has no health information.">▶️</span>{{ else if eq .Summary 1 }}<span
-            class="healthy" title="The service is running and is healthy. 😀">🟢</span>{{ else if eq .Summary 2 }}<span
-            class="unhealthy" title="The service is running but unhealthy! ☹️">❌</span>{{ else if eq .Summary 3 }}<span
-            class="not-running" title="The service is currently paused, stopped, exited, or dead.">⏹️</span>{{ else }}<span
-            class="other" title="The system is in a temporary state, such as created or restarting, or has containers with different states.">*️⃣</span>{{ end }}</span>{{ end }}
+{{ define "serviceStatusSummary" }}<span class="summary">{{
+    if eq .Summary 0 }}<span class="created" title="The service is created, but not yet running.">🆕</span>{{ else
+    if eq .Summary 1 }}<span class="running" title="The service is running, but has no health information.">▶️</span>{{ else
+    if eq .Summary 2 }}<span class="healthy" title="The service is running and is healthy. 😀">🟢</span>{{ else
+    if eq .Summary 3 }}<span class="unhealthy" title="The service is running but unhealthy! ☹️">❌</span>{{ else
+    if eq .Summary 4 }}<span class="paused" title="The service is paused.">⏸️</span>{{ else
+    if eq .Summary 5 }}<span class="restarting" title="The service is restarting.">🔄</span>{{ else
+    if eq .Summary 6 }}<span class="exited" title="The service has exited.">⏹️</span>{{ else
+    if eq .Summary 7 }}<span class="removing" title="The service is being removed.">🚮</span>{{ else
+    if eq .Summary 8 }}<span class="dead" title="The service is dead.">💀</span>{{ else
+    if eq .Summary 9 }}<span class="mixed" title="The system has containers with different states.">*️⃣</span>{{
+end }}</span>{{ end }}
