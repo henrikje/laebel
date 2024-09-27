@@ -21,3 +21,5 @@
 - [ ] Is it possible to render the Mermaid graph on the server and send it as an image to the client?
 - [ ] Sort service groups by topological order; the main service should be at the top with its dependencies below.
 - [ ] Perhaps add a "hidden details" key/value section, which can be used for any additional information that can be useful, but does not deserve permanent space in the main view. Things like maintainer, and version+revision.
+- [ ] Add a "last updated" timestamp to the page.
+- [ ] Consider changing the default port to 8000 as 8080 is often used by other services.
