@@ -22,13 +22,13 @@ func RenderDocument(w http.ResponseWriter, err error, project Project) {
 		filepath.Join("web", "templates", "clipboard.html"),
 	)
 	if err != nil {
-		InternalServerError(w, err, "Unable to load template", "")
+		reportInternalServerError(w, err, "Unable to load template", "")
 		return
 	}
 
 	// Render template
 	err = tmpl.Execute(w, project)
 	if err != nil {
-		InternalServerError(w, err, "Unable to render template", "")
+		reportInternalServerError(w, err, "Unable to render template", "")
 	}
 }

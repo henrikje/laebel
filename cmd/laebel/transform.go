@@ -28,7 +28,7 @@ func TransformContainersToProject(projectContainers []types.ContainerJSON, proje
 	for serviceName, serviceContainers := range containersByServiceName {
 		container := serviceContainers[0] // Use the first container to extract metadata
 		image := container.Image
-		links := ExtractServiceLinks(container)
+		links := extractServiceLinks(container)
 		containerStructs := make([]Container, 0)
 		for _, serviceContainer := range serviceContainers {
 			containerHealth := "unknown"
@@ -43,8 +43,8 @@ func TransformContainersToProject(projectContainers []types.ContainerJSON, proje
 				Health: containerHealth,
 			})
 		}
-		status := ExtractStatus(containerStructs, serviceContainers)
-		dependsOn := ExtractDependsOn(container)
+		status := extractStatus(containerStructs, serviceContainers)
+		dependsOn := extractDependsOn(container)
 		service := Service{
 			Name:        serviceName,
 			Title:       container.Config.Labels["org.opencontainers.image.title"],
@@ -102,7 +102,7 @@ func TransformContainersToProject(projectContainers []types.ContainerJSON, proje
 		}
 	}
 
-	projectLinks := ExtractProjectLinks()
+	projectLinks := extractProjectLinks()
 
 	// Return project
 	return Project{
@@ -115,7 +115,7 @@ func TransformContainersToProject(projectContainers []types.ContainerJSON, proje
 	}
 }
 
-func ExtractServiceLinks(container types.ContainerJSON) []Link {
+func extractServiceLinks(container types.ContainerJSON) []Link {
 	links := make([]Link, 0)
 	// Extract OpenContainers links
 	url := container.Config.Labels["org.opencontainers.image.url"]
@@ -149,7 +149,7 @@ func ExtractServiceLinks(container types.ContainerJSON) []Link {
 	return links
 }
 
-func ExtractStatus(containerStructs []Container, serviceContainers []types.ContainerJSON) Status {
+func extractStatus(containerStructs []Container, serviceContainers []types.ContainerJSON) Status {
 	status := Status{
 		Created:          0,
 		Running:          0,
@@ -219,7 +219,7 @@ func ExtractStatus(containerStructs []Container, serviceContainers []types.Conta
 	return status
 }
 
-func ExtractDependsOn(container types.ContainerJSON) []string {
+func extractDependsOn(container types.ContainerJSON) []string {
 	var dependsOn []string
 	if dependsOnString, ok := container.Config.Labels["com.docker.compose.depends_on"]; ok {
 		if dependsOnString != "" {
@@ -232,7 +232,7 @@ func ExtractDependsOn(container types.ContainerJSON) []string {
 	return dependsOn
 }
 
-func ExtractProjectLinks() []Link {
+func extractProjectLinks() []Link {
 	projectLinks := make([]Link, 0)
 	url := os.Getenv("LAEBEL_PROJECT_URL")
 	if url != "" {
