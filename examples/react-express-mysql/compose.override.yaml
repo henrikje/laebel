@@ -20,7 +20,7 @@ services:
 
   backend:
     labels:
-      - "org.opencontainers.image.title=Backend (Express.js + Node.js)"
+      - "org.opencontainers.image.title=Backend (Express.js)"
       - "org.opencontainers.image.description=The backend server running Express.js on Node.js, serving the frontend with messages."
       - "net.henko.laebel.link.api.url=http://localhost/"
       - "net.henko.laebel.link.api.label=API Endpoint"
@@ -32,7 +32,7 @@ services:
 
   frontend:
     labels:
-      - "org.opencontainers.image.title=Frontend (React + Nginx)"
+      - "org.opencontainers.image.title=Frontend (React+Nginx)"
       - "org.opencontainers.image.description=A Nginx server hosts the React-based frontend which displays important messages."
       - "net.henko.laebel.link.website.url=http://localhost:3000/"
       - "net.henko.laebel.link.website.label=Webpage"

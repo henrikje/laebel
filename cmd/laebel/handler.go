@@ -51,8 +51,19 @@ func RenderDocumentation(w http.ResponseWriter, r *http.Request) {
 	// Filter containers that are part of the project
 	projectContainers := FilterOnlyContainersInProject(containers, projectName)
 
+	// Inspect each remaining container
+	var projectContainersWithDetails []types.ContainerJSON
+	for _, container := range projectContainers {
+		containerDetails, err := InspectContainer(container.ID)
+		if err != nil {
+			InternalServerError(w, err, "Unable to inspect container", "")
+			return
+		}
+		projectContainersWithDetails = append(projectContainersWithDetails, containerDetails)
+	}
+
 	// Transform containers to project
-	project := TransformContainersToProject(projectContainers, projectName)
+	project := TransformContainersToProject(projectContainersWithDetails, projectName)
 
 	RenderDocument(w, err, project)
 }

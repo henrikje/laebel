@@ -18,6 +18,7 @@ func RenderDocument(w http.ResponseWriter, err error, project Project) {
 		filepath.Join("web", "templates", "index.html"),
 		filepath.Join("web", "templates", "serviceGraph.html"),
 		filepath.Join("web", "templates", "serviceStatus.html"),
+		filepath.Join("web", "templates", "serviceStatusSummary.html"),
 		filepath.Join("web", "templates", "clipboard.html"),
 	)
 	if err != nil {

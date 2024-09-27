@@ -7,21 +7,19 @@ import (
 	"strings"
 )
 
-func TransformContainersToProject(projectContainers []types.Container, projectName string) Project {
-	// TODO Where do I get the project description from?
-
+func TransformContainersToProject(projectContainers []types.ContainerJSON, projectName string) Project {
 	// Filter out hidden containers
-	noHiddenContainers := make([]types.Container, 0)
+	noHiddenContainers := make([]types.ContainerJSON, 0)
 	for _, container := range projectContainers {
-		if container.Labels["net.henko.laebel.hidden"] != "true" {
+		if container.Config.Labels["net.henko.laebel.hidden"] != "true" {
 			noHiddenContainers = append(noHiddenContainers, container)
 		}
 	}
 
 	// Group containers by service name
-	containersByServiceName := make(map[string][]types.Container)
+	containersByServiceName := make(map[string][]types.ContainerJSON)
 	for _, container := range noHiddenContainers {
-		serviceName := container.Labels["com.docker.compose.service"]
+		serviceName := container.Config.Labels["com.docker.compose.service"]
 		containersByServiceName[serviceName] = append(containersByServiceName[serviceName], container)
 	}
 
@@ -35,16 +33,16 @@ func TransformContainersToProject(projectContainers []types.Container, projectNa
 		for _, serviceContainer := range serviceContainers {
 			containerStructs = append(containerStructs, Container{
 				ID:     serviceContainer.ID,
-				Names:  serviceContainer.Names,
-				Status: serviceContainer.Status,
+				Name:   serviceContainer.Name,
+				Status: serviceContainer.State.Status,
 			})
 		}
 		status := ExtractStatus(containerStructs, serviceContainers)
 		dependsOn := ExtractDependsOn(container)
 		service := Service{
 			Name:        serviceName,
-			Title:       container.Labels["org.opencontainers.image.title"],
-			Description: container.Labels["org.opencontainers.image.description"],
+			Title:       container.Config.Labels["org.opencontainers.image.title"],
+			Description: container.Config.Labels["org.opencontainers.image.description"],
 			Image:       image,
 			Status:      status,
 			Links:       links,
@@ -57,8 +55,8 @@ func TransformContainersToProject(projectContainers []types.Container, projectNa
 	// Extract group-to-service mapping
 	groupNameByServiceName := make(map[string]string)
 	for _, container := range noHiddenContainers {
-		groupName := container.Labels["net.henko.laebel.group"]
-		serviceName := container.Labels["com.docker.compose.service"]
+		groupName := container.Config.Labels["net.henko.laebel.group"]
+		serviceName := container.Config.Labels["com.docker.compose.service"]
 		groupNameByServiceName[serviceName] = groupName
 	}
 
@@ -111,35 +109,30 @@ func TransformContainersToProject(projectContainers []types.Container, projectNa
 	}
 }
 
-func ExtractServiceLinks(container types.Container) []Link {
+func ExtractServiceLinks(container types.ContainerJSON) []Link {
 	links := make([]Link, 0)
 	// Extract OpenContainers links
-	url := container.Labels["org.opencontainers.image.url"]
+	url := container.Config.Labels["org.opencontainers.image.url"]
 	if url != "" {
 		links = append(links, Link{Label: "Website", URL: url})
 	}
-	documentation := container.Labels["org.opencontainers.image.documentation"]
+	documentation := container.Config.Labels["org.opencontainers.image.documentation"]
 	if documentation != "" {
 		links = append(links, Link{Label: "Documentation", URL: documentation})
 	}
-	source := container.Labels["org.opencontainers.image.source"]
+	source := container.Config.Labels["org.opencontainers.image.source"]
 	if source != "" {
 		links = append(links, Link{Label: "Source code", URL: source})
 	}
 	// Extract laebel links
 	// net.henko.laebel.link.<key>.url
 	// net.henko.laebel.link.<key>.label
-	for key, value := range container.Labels {
-		println("- key", key)
-		println("  value", value)
+	for key, value := range container.Config.Labels {
 		if len(key) > 22 && key[:22] == "net.henko.laebel.link." {
-			println("  key[22:]", key[22:])
-			println("  key[24:]", key[24:])
 			linkKey := key[22:]
-			println("  linkKey", linkKey)
 			if linkKey[len(linkKey)-4:] == ".url" {
 				labelKey := "net.henko.laebel.link." + linkKey[:len(linkKey)-4] + ".label"
-				label := container.Labels[labelKey]
+				label := container.Config.Labels[labelKey]
 				if label == "" {
 					label = linkKey[:len(linkKey)-4]
 				}
@@ -150,19 +143,22 @@ func ExtractServiceLinks(container types.Container) []Link {
 	return links
 }
 
-func ExtractStatus(containerStructs []Container, serviceContainers []types.Container) Status {
+func ExtractStatus(containerStructs []Container, serviceContainers []types.ContainerJSON) Status {
 	status := Status{
-		Created:    0,
-		Running:    0,
-		Paused:     0,
-		Restarting: 0,
-		Exited:     0,
-		Removing:   0,
-		Dead:       0,
-		Stopped:    0,
+		Created:          0,
+		Running:          0,
+		RunningHealthy:   0,
+		RunningUnhealthy: 0,
+		Paused:           0,
+		Restarting:       0,
+		Exited:           0,
+		Removing:         0,
+		Dead:             0,
+		Stopped:          0,
 	}
 	for index := range containerStructs {
-		switch serviceContainers[index].State {
+		container := serviceContainers[index]
+		switch container.State.Status {
 		case "created":
 			status.Created++
 		case "running":
@@ -180,13 +176,37 @@ func ExtractStatus(containerStructs []Container, serviceContainers []types.Conta
 		case "stopped":
 			status.Stopped++
 		}
+		healthPointer := container.State.Health
+		if healthPointer != nil {
+			health := *healthPointer
+			switch health.Status {
+			case "healthy":
+				status.RunningHealthy++
+			case "unhealthy":
+				status.RunningUnhealthy++
+			}
+		}
+
+	}
+	if status.Running == len(containerStructs) {
+		if status.Running == status.RunningHealthy {
+			status.Summary = RunningHealthy
+		} else if status.Running == status.RunningUnhealthy {
+			status.Summary = RunningUnhealthy
+		} else {
+			status.Summary = Running
+		}
+	} else if status.Paused+status.Stopped+status.Exited+status.Dead == len(containerStructs) {
+		status.Summary = NotRunning
+	} else {
+		status.Summary = Other
 	}
 	return status
 }
 
-func ExtractDependsOn(container types.Container) []string {
-	dependsOn := []string{}
-	if dependsOnString, ok := container.Labels["com.docker.compose.depends_on"]; ok {
+func ExtractDependsOn(container types.ContainerJSON) []string {
+	var dependsOn []string
+	if dependsOnString, ok := container.Config.Labels["com.docker.compose.depends_on"]; ok {
 		if dependsOnString != "" {
 			dependsOn = strings.Split(dependsOnString, ",")
 			for i, service := range dependsOn {

@@ -64,14 +64,14 @@
                                 <thead>
                                 <tr>
                                     <th>Container ID</th>
-                                    <th>Names</th>
+                                    <th>Name</th>
                                     <th>Status</th>
                                 </tr>
                                 </thead>
                                 {{ range .Containers }}
                                     <tr class="container">
                                         <td><code>{{ .ID }}</code> {{ template "clipboard" }}</td>
-                                        <td>{{ range $index, $name := .Names}}{{ if $index }}, {{ end }}{{ $name }}{{ end }}</td>
+                                        <td>{{ .Name }}</td>
                                         <td>{{ .Status }}</td>
                                     </tr>
                                 {{ end }}

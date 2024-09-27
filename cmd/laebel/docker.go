@@ -62,3 +62,17 @@ func IsPartOfComposeProject(containerID string) (string, error) {
 
 	return projectName, nil
 }
+
+func InspectContainer(containerID string) (types.ContainerJSON, error) {
+	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+	if err != nil {
+		return types.ContainerJSON{}, err
+	}
+
+	containerInfo, err := cli.ContainerInspect(context.Background(), containerID)
+	if err != nil {
+		return types.ContainerJSON{}, err
+	}
+
+	return containerInfo, nil
+}

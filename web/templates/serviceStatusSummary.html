@@ -1,0 +1,6 @@
+{{ define "serviceStatusSummary" }}<span class="summary">{{ if eq .Summary 0 }}<span
+            class="running" title="The service is running, but has no health information.">▶️</span>{{ else if eq .Summary 1 }}<span
+            class="healthy" title="The service is running and is healthy. 😀">🟢</span>{{ else if eq .Summary 2 }}<span
+            class="unhealthy" title="The service is running but unhealthy! ☹️">❌</span>{{ else if eq .Summary 3 }}<span
+            class="not-running" title="The service is currently paused, stopped, exited, or dead.">⏹️</span>{{ else }}<span
+            class="other" title="The system is in a temporary state, such as created or restarting, or has containers with different states.">*️⃣</span>{{ end }}</span>{{ end }}
