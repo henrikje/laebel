@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/client"
 	"log"
 	"net/http"
 	"os"
@@ -9,7 +10,7 @@ import (
 
 var projectName string
 
-func RenderDocumentation(w http.ResponseWriter, r *http.Request) {
+func RenderDocumentation(w http.ResponseWriter, r *http.Request, dockerClient *client.Client) {
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
 		return
@@ -25,7 +26,7 @@ func RenderDocumentation(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Check if it’s part of a Compose project
-		newProjectName, err := IsPartOfComposeProject(containerID)
+		newProjectName, err := IsPartOfComposeProject(containerID, dockerClient)
 		if err != nil {
 			reportInternalServerError(w, err, "Could not determine current project name", "Ensure Laebel has the Docker socket mounted as a volume: \"/var/run/docker.sock:/var/run/docker.sock:ro\"")
 			return
@@ -42,7 +43,7 @@ func RenderDocumentation(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Get all containers
-	containers, err := GetAllContainers()
+	containers, err := GetAllContainers(dockerClient)
 	if err != nil {
 		reportInternalServerError(w, err, "Unable to list containers", "")
 		return
@@ -54,7 +55,7 @@ func RenderDocumentation(w http.ResponseWriter, r *http.Request) {
 	// Inspect each remaining container
 	var projectContainersWithDetails []types.ContainerJSON
 	for _, container := range projectContainers {
-		containerDetails, err := InspectContainer(container.ID)
+		containerDetails, err := InspectContainer(container.ID, dockerClient)
 		if err != nil {
 			reportInternalServerError(w, err, "Unable to inspect container", "")
 			return

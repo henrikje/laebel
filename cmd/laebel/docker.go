@@ -28,13 +28,8 @@ func GetContainerID() (string, error) {
 	return "", nil
 }
 
-func GetAllContainers() ([]types.Container, error) {
-	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
-	if err != nil {
-		return nil, err
-	}
-
-	containers, err := cli.ContainerList(context.Background(), container.ListOptions{
+func GetAllContainers(dockerClient *client.Client) ([]types.Container, error) {
+	containers, err := dockerClient.ContainerList(context.Background(), container.ListOptions{
 		All: true,
 	})
 	if err != nil {
@@ -44,13 +39,8 @@ func GetAllContainers() ([]types.Container, error) {
 }
 
 // IsPartOfComposeProject checks if the container is part of a Docker Compose cluster
-func IsPartOfComposeProject(containerID string) (string, error) {
-	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
-	if err != nil {
-		return "", err
-	}
-
-	containerInfo, err := cli.ContainerInspect(context.Background(), containerID)
+func IsPartOfComposeProject(containerID string, dockerClient *client.Client) (string, error) {
+	containerInfo, err := dockerClient.ContainerInspect(context.Background(), containerID)
 	if err != nil {
 		return "", err
 	}
@@ -63,13 +53,8 @@ func IsPartOfComposeProject(containerID string) (string, error) {
 	return projectName, nil
 }
 
-func InspectContainer(containerID string) (types.ContainerJSON, error) {
-	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
-	if err != nil {
-		return types.ContainerJSON{}, err
-	}
-
-	containerInfo, err := cli.ContainerInspect(context.Background(), containerID)
+func InspectContainer(containerID string, dockerClient *client.Client) (types.ContainerJSON, error) {
+	containerInfo, err := dockerClient.ContainerInspect(context.Background(), containerID)
 	if err != nil {
 		return types.ContainerJSON{}, err
 	}
