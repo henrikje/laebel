@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/client"
 	"os"
 	"regexp"
@@ -28,14 +29,28 @@ func GetContainerID() (string, error) {
 	return "", nil
 }
 
-func GetAllContainers(dockerClient *client.Client) ([]types.Container, error) {
+func GetAllContainersInProject(projectName string, dockerClient *client.Client) ([]types.Container, error) {
 	containers, err := dockerClient.ContainerList(context.Background(), container.ListOptions{
-		All: true,
+		Filters: filters.NewArgs(
+			filters.KeyValuePair{Key: "label", Value: "com.docker.compose.project=" + projectName},
+		),
 	})
 	if err != nil {
 		return nil, err
 	}
 	return containers, nil
+}
+
+func InspectEachContainer(containers []types.Container, dockerClient *client.Client) ([]types.ContainerJSON, error) {
+	var containerInfo []types.ContainerJSON
+	for _, theContainer := range containers {
+		containerInfos, err := dockerClient.ContainerInspect(context.Background(), theContainer.ID)
+		if err != nil {
+			return nil, err
+		}
+		containerInfo = append(containerInfo, containerInfos)
+	}
+	return containerInfo, nil
 }
 
 // IsPartOfComposeProject checks if the container is part of a Docker Compose cluster
@@ -51,13 +66,4 @@ func IsPartOfComposeProject(containerID string, dockerClient *client.Client) (st
 	}
 
 	return projectName, nil
-}
-
-func InspectContainer(containerID string, dockerClient *client.Client) (types.ContainerJSON, error) {
-	containerInfo, err := dockerClient.ContainerInspect(context.Background(), containerID)
-	if err != nil {
-		return types.ContainerJSON{}, err
-	}
-
-	return containerInfo, nil
 }

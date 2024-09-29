@@ -2,33 +2,33 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"github.com/docker/docker/api/types/events"
 	"github.com/docker/docker/client"
 	"github.com/r3labs/sse/v2"
 	"log"
 )
 
-func PublishStatusUpdates(cli *client.Client, server *sse.Server) {
+func PublishStatusUpdates(dockerClient *client.Client, server *sse.Server) {
 	ctx := context.Background()
 
 	println("Registering for Docker events...")
-	// TODO Specify the time we got the initial full response as "since"?
-	eventCh, errCh := cli.Events(ctx, events.ListOptions{})
+	eventCh, errCh := dockerClient.Events(ctx, events.ListOptions{})
 
 	for {
 		select {
 		case event := <-eventCh:
-			if event.Type == events.ContainerEventType {
-				fmt.Println("Received event, type:", event.Type, "action:", event.Action, "actorID:", event.Actor.ID)
-				// TODO Generate proper event data
-				data := fmt.Sprintf("%s: %s", event.Actor.ID, event.Action)
-				server.Publish("status-updates", &sse.Event{
-					Data: []byte(data),
-				})
+			switch {
+			case event.Type == events.ContainerEventType:
+				switch event.Action {
+				case events.ActionCreate, events.ActionStart, events.ActionPause, events.ActionUnPause, events.ActionStop, events.ActionKill, events.ActionDie, events.ActionDestroy, events.ActionHealthStatus, events.ActionHealthStatusHealthy, events.ActionHealthStatusRunning, events.ActionHealthStatusUnhealthy, events.ActionRestart, events.ActionRename:
+					server.Publish("refresh", &sse.Event{
+						Data: []byte(event.Action),
+					})
+					log.Println("Published refresh event.")
+				}
 			}
 		case err := <-errCh:
-			log.Println("Error receiving Docker events:", err)
+			log.Println("Error receiving Docker events.\nCause:", err)
 		}
 	}
 }

@@ -1,0 +1,20 @@
+{{ define "main" }}
+    <main id="services" hx-trigger="sse:message" hx-get="/main" hx-ext="morph" hx-swap="morph">
+        {{ if .ServiceGroups }}
+            <section id="graph">
+                <h2 class="title">Service Graph</h2>
+                {{ template "serviceGraph" .ServiceGroups }}
+            </section>
+            {{ range .ServiceGroups }}
+                <section class="group">
+                    <h2 class="title">{{ .Name }}</h2>
+                    {{ range .Services }}
+                        {{ template "service" . }}
+                    {{ end }}
+                </section>
+            {{ end }}
+        {{ else }}
+            <p id="no-services">The {{ .Name }} project does not contain any services.</p>
+        {{ end }}
+    </main>
+{{ end }}

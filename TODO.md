@@ -20,6 +20,7 @@
 - [ ] Consider adding ports, volumes, and networks to the service details.
   - They can be left out if they are not used, or if all services have the same value (e.g., using the default network).
 - [ ] Is it possible to render the Mermaid graph on the server and send it as an image to the client?
+      This would make it easier to smoothly update the page without flicker.
 - [ ] Sort service groups by topological order; the main service should be at the top with its dependencies below.
 - [ ] Perhaps add a "hidden details" key/value section, which can be used for any additional information that can be useful, but does not deserve permanent space in the main view. Things like maintainer, and version+revision.
 - [ ] Add a "last updated" timestamp to the page.
@@ -27,3 +28,6 @@
 - [ ] Update model so a service can have multiple values for the same label/property.
       For example, image and group name.
       There is no guarantee that all containers based on the same service have the same image.
+- [ ] Add some kind of "debounce" to the event publisher to prevent too many updates in a short time.
+- [ ] Add some kind of disconnected state to the client, so it can show a message when the connection is lost.
+- [ ] Make the Laebel service show up at the bottom of the graph by default.
