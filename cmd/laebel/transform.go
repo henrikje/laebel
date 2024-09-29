@@ -8,58 +8,53 @@ import (
 )
 
 func TransformContainersToProject(projectContainers []types.ContainerJSON, projectName string) Project {
-	// Filter out hidden containers
+	containers := filterOutHiddenContainers(projectContainers)
+	containersByServiceName := groupContainersByServiceName(containers)
+	services := createServiceForEachServiceName(containersByServiceName)
+	serviceGroups := groupServicesByGroup(containers, services)
+	projectLinks := extractProjectLinks()
+	return Project{
+		Name:          projectName,
+		Title:         os.Getenv("LAEBEL_PROJECT_TITLE"),
+		Description:   os.Getenv("LAEBEL_PROJECT_DESCRIPTION"),
+		Links:         projectLinks,
+		Icon:          os.Getenv("LAEBEL_PROJECT_ICON"),
+		ServiceGroups: serviceGroups,
+	}
+}
+
+func filterOutHiddenContainers(projectContainers []types.ContainerJSON) []types.ContainerJSON {
 	noHiddenContainers := make([]types.ContainerJSON, 0)
 	for _, container := range projectContainers {
 		if container.Config.Labels["net.henko.laebel.hidden"] != "true" {
 			noHiddenContainers = append(noHiddenContainers, container)
 		}
 	}
+	return noHiddenContainers
+}
 
-	// Group containers by service name
+func groupContainersByServiceName(containers []types.ContainerJSON) map[string][]types.ContainerJSON {
 	containersByServiceName := make(map[string][]types.ContainerJSON)
-	for _, container := range noHiddenContainers {
+	for _, container := range containers {
 		serviceName := container.Config.Labels["com.docker.compose.service"]
 		containersByServiceName[serviceName] = append(containersByServiceName[serviceName], container)
 	}
+	return containersByServiceName
+}
 
-	// Create a service for each group of containers
+func createServiceForEachServiceName(containersByServiceName map[string][]types.ContainerJSON) []Service {
 	var services []Service
 	for serviceName, serviceContainers := range containersByServiceName {
-		container := serviceContainers[0] // Use the first container to extract metadata
-		links := extractServiceLinks(container)
-		containerStructs := make([]Container, 0)
-		for _, serviceContainer := range serviceContainers {
-			containerHealth := "unknown"
-			if serviceContainer.State.Health != nil {
-				health := *serviceContainer.State.Health
-				containerHealth = health.Status
-			}
-			containerStructs = append(containerStructs, Container{
-				ID:     serviceContainer.ID,
-				Name:   serviceContainer.Name,
-				Status: serviceContainer.State.Status,
-				Health: containerHealth,
-			})
-		}
-		status := extractStatus(containerStructs, serviceContainers)
-		dependsOn := extractDependsOn(container)
-		service := Service{
-			Name:        serviceName,
-			Title:       container.Config.Labels["org.opencontainers.image.title"],
-			Description: container.Config.Labels["org.opencontainers.image.description"],
-			Image:       container.Config.Image,
-			Status:      status,
-			Links:       links,
-			DependsOn:   dependsOn,
-			Containers:  containerStructs,
-		}
+		service := transformContainersToService(serviceContainers, serviceName)
 		services = append(services, service)
 	}
+	return services
+}
 
+func groupServicesByGroup(containers []types.ContainerJSON, services []Service) []ServiceGroup {
 	// Extract group-to-service mapping
 	groupNameByServiceName := make(map[string]string)
-	for _, container := range noHiddenContainers {
+	for _, container := range containers {
 		groupName := container.Config.Labels["net.henko.laebel.group"]
 		serviceName := container.Config.Labels["com.docker.compose.service"]
 		groupNameByServiceName[serviceName] = groupName
@@ -100,18 +95,56 @@ func TransformContainersToProject(projectContainers []types.ContainerJSON, proje
 			}
 		}
 	}
+	return serviceGroups
+}
 
-	projectLinks := extractProjectLinks()
-
-	// Return project
-	return Project{
-		Name:          projectName,
-		Title:         os.Getenv("LAEBEL_PROJECT_TITLE"),
-		Description:   os.Getenv("LAEBEL_PROJECT_DESCRIPTION"),
-		Links:         projectLinks,
-		Icon:          os.Getenv("LAEBEL_PROJECT_ICON"),
-		ServiceGroups: serviceGroups,
+func extractProjectLinks() []Link {
+	projectLinks := make([]Link, 0)
+	url := os.Getenv("LAEBEL_PROJECT_URL")
+	if url != "" {
+		projectLinks = append(projectLinks, Link{Label: "Website", URL: url})
 	}
+	documentation := os.Getenv("LAEBEL_PROJECT_DOCUMENTATION")
+	if documentation != "" {
+		projectLinks = append(projectLinks, Link{Label: "Documentation", URL: documentation})
+	}
+	source := os.Getenv("LAEBEL_PROJECT_SOURCE")
+	if source != "" {
+		projectLinks = append(projectLinks, Link{Label: "Source code", URL: source})
+	}
+	return projectLinks
+}
+
+func transformContainersToService(serviceContainers []types.ContainerJSON, serviceName string) Service {
+	container := serviceContainers[0] // Use the first container to extract metadata
+	links := extractServiceLinks(container)
+	containerStructs := make([]Container, 0)
+	for _, serviceContainer := range serviceContainers {
+		containerHealth := "unknown"
+		if serviceContainer.State.Health != nil {
+			health := *serviceContainer.State.Health
+			containerHealth = health.Status
+		}
+		containerStructs = append(containerStructs, Container{
+			ID:     serviceContainer.ID,
+			Name:   serviceContainer.Name,
+			Status: serviceContainer.State.Status,
+			Health: containerHealth,
+		})
+	}
+	status := extractStatus(containerStructs, serviceContainers)
+	dependsOn := extractDependsOn(container)
+	service := Service{
+		Name:        serviceName,
+		Title:       container.Config.Labels["org.opencontainers.image.title"],
+		Description: container.Config.Labels["org.opencontainers.image.description"],
+		Image:       container.Config.Image,
+		Status:      status,
+		Links:       links,
+		DependsOn:   dependsOn,
+		Containers:  containerStructs,
+	}
+	return service
 }
 
 func extractServiceLinks(container types.ContainerJSON) []Link {
@@ -229,21 +262,4 @@ func extractDependsOn(container types.ContainerJSON) []string {
 		}
 	}
 	return dependsOn
-}
-
-func extractProjectLinks() []Link {
-	projectLinks := make([]Link, 0)
-	url := os.Getenv("LAEBEL_PROJECT_URL")
-	if url != "" {
-		projectLinks = append(projectLinks, Link{Label: "Website", URL: url})
-	}
-	documentation := os.Getenv("LAEBEL_PROJECT_DOCUMENTATION")
-	if documentation != "" {
-		projectLinks = append(projectLinks, Link{Label: "Documentation", URL: documentation})
-	}
-	source := os.Getenv("LAEBEL_PROJECT_SOURCE")
-	if source != "" {
-		projectLinks = append(projectLinks, Link{Label: "Source code", URL: source})
-	}
-	return projectLinks
 }

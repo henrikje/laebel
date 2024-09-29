@@ -24,5 +24,6 @@
 - [ ] Perhaps add a "hidden details" key/value section, which can be used for any additional information that can be useful, but does not deserve permanent space in the main view. Things like maintainer, and version+revision.
 - [ ] Add a "last updated" timestamp to the page.
 - [ ] Consider changing the default port to 8000 as 8080 is often used by other services.
-- [ ] Update model so a service can have multiple images,
-      there is no guarantee that all containers based on the same service have the same image.
+- [ ] Update model so a service can have multiple values for the same label/property.
+      For example, image and group name.
+      There is no guarantee that all containers based on the same service have the same image.
