@@ -31,6 +31,7 @@ func GetContainerID() (string, error) {
 
 func GetAllContainersInProject(projectName string, dockerClient *client.Client) ([]types.Container, error) {
 	containers, err := dockerClient.ContainerList(context.Background(), container.ListOptions{
+		All: true,
 		Filters: filters.NewArgs(
 			filters.KeyValuePair{Key: "label", Value: "com.docker.compose.project=" + projectName},
 		),
