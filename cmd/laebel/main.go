@@ -101,7 +101,7 @@ func registerEventPublisher(dockerClient *client.Client) {
 	sseServer.Headers = map[string]string{
 		"Content-Type": "text/event-stream; charset=utf-8",
 	}
-	sseServer.CreateStream("refresh")
+	sseServer.CreateStream("updates")
 	http.HandleFunc("/events", sseServer.ServeHTTP)
 	go PublishStatusUpdates(dockerClient, sseServer)
 }

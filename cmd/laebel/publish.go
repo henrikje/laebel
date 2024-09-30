@@ -20,11 +20,21 @@ func PublishStatusUpdates(dockerClient *client.Client, server *sse.Server) {
 			switch {
 			case event.Type == events.ContainerEventType:
 				switch event.Action {
-				case events.ActionCreate, events.ActionStart, events.ActionPause, events.ActionUnPause, events.ActionStop, events.ActionKill, events.ActionDie, events.ActionDestroy, events.ActionHealthStatus, events.ActionHealthStatusHealthy, events.ActionHealthStatusRunning, events.ActionHealthStatusUnhealthy, events.ActionRestart, events.ActionRename:
-					server.Publish("refresh", &sse.Event{
-						Data: []byte(event.Action),
+				case events.ActionCreate, events.ActionDestroy:
+					println("Received event:", event.Action)
+					server.Publish("updates", &sse.Event{
+						Event: []byte("main"),
+						Data:  []byte("refresh"), // TODO Can we avoid having to send data?
 					})
-					log.Println("Published refresh event.")
+					log.Println("Published main event.")
+				case events.ActionStart, events.ActionPause, events.ActionUnPause, events.ActionStop, events.ActionKill, events.ActionDie, events.ActionHealthStatus, events.ActionHealthStatusHealthy, events.ActionHealthStatusRunning, events.ActionHealthStatusUnhealthy, events.ActionRestart, events.ActionRename:
+					println("Received event:", event.Action)
+					serviceName := event.Actor.Attributes["com.docker.compose.service"]
+					server.Publish("updates", &sse.Event{
+						Event: []byte(serviceName),
+						Data:  []byte("refresh"),
+					})
+					log.Println("Published service event.")
 				}
 			}
 		case err := <-errCh:

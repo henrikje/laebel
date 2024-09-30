@@ -28,6 +28,7 @@
 - [ ] Update model so a service can have multiple values for the same label/property.
       For example, image and group name.
       There is no guarantee that all containers based on the same service have the same image.
-- [ ] Add some kind of "debounce" to the event publisher to prevent too many updates in a short time.
 - [ ] Add some kind of disconnected state to the client, so it can show a message when the connection is lost.
 - [ ] Make the Laebel service show up at the bottom of the graph by default.
+- [ ] Add a nicer presentation of a service which is depended on by another service, but not running.
+- [ ] Update the service graph when the state of a service changes. Can HTMX in combination with Mermaid.js do that? Ideally, I could update just the labels. Otherwise, I may need to refresh the whole graph. Or switch to a server-side rendered graph.

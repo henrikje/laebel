@@ -1,5 +1,5 @@
 {{ define "service" }}
-    <section id="{{.Name }}" class="service">
+    <section id="{{.Name }}" class="service" hx-trigger="sse:{{ .Name }}" hx-get="/service?name={{ .Name }}" hx-swap="morph">
         <h3 class="title">{{ if .Title }}{{ .Title }}{{ else }}<code>{{ .Name }}</code>{{ end }}</h3>
         {{ if .Description }}<p class="description">{{ .Description }}</p>{{ end }}
         <ul>

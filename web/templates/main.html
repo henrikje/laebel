@@ -1,5 +1,5 @@
 {{ define "main" }}
-    <main id="services" hx-trigger="sse:message" hx-get="/main" hx-ext="morph" hx-swap="morph">
+    <main id="services" hx-trigger="sse:main" hx-get="/main" hx-swap="morph">
         {{ if .ServiceGroups }}
             <section id="graph">
                 <h2 class="title">Service Graph</h2>
