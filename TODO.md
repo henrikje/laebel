@@ -34,3 +34,9 @@
 - [ ] Update the service graph when the state of a service changes. Can HTMX in combination with Mermaid.js do that? Ideally, I could update just the labels. Otherwise, I may need to refresh the whole graph. Or switch to a server-side rendered graph.
       I think it should be possible with a HTMX hx-get on the graph parent, triggered by any a "status" event, which loads a page with all statuses for all nodes. Then each node has a selector to update its status. The question is how to get the first htmx attributes into the generated graph. But that should be possible too, I think.
 - [ ] Consider if we can download the external JS files during (Docker) build. That way we don't need to have Mermaid.js and HTMX manually copied into the repository.
+- [ ] Replace the PNG logo with an SVG logo.
+- [ ] Lighthouse: [Enable text compression](https://developer.chrome.com/docs/lighthouse/performance/uses-text-compression/)
+- [ ] Lighthouse: [Eliminate render-blocking resources](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/)
+- [ ] Lighthouse: Image elements do not have explicit width and height
+- [ ] Lighthouse: [Serve static assets with an efficient cache policy](https://developer.chrome.com/docs/lighthouse/performance/uses-long-cache-ttl/)
+- [ ] Lighthouse: [Document does not have a meta description](https://developer.chrome.com/docs/lighthouse/seo/meta-description/)

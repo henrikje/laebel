@@ -25,7 +25,7 @@ func main() {
 	registerEventPublisher(dockerClient)
 
 	// Start the server
-	startServer()
+	startServer(projectName)
 }
 
 func determineCurrentProjectName(dockerClient *client.Client) string {
@@ -38,15 +38,14 @@ func determineCurrentProjectName(dockerClient *client.Client) string {
 	// Check if it’s part of a Compose project
 	projectName, err := IsPartOfComposeProject(containerID, dockerClient)
 	if err != nil {
-		fatal(err, "Could not determine current project name", "Ensure Laebel has the Docker socket mounted as a volume: \"/var/run/docker.sock:/var/run/docker.sock:ro\"")
+		fatal(err, "Could not determine Docker Compose project name", "Ensure Laebel has the Docker socket mounted as a volume: \"/var/run/docker.sock:/var/run/docker.sock:ro\"")
 	}
 	if projectName == "" {
 		projectName = os.Getenv("COMPOSE_PROJECT_NAME")
 	}
 	if projectName == "" {
-		fatal(nil, "Current container is not part of a Docker Compose project.", "Add Laebel as a service in your Docker Compose project.", "If you want to run Laebel as a stand-alone container, specify the COMPOSE_PROJECT_NAME environment variable.")
+		fatal(nil, "No Docker Compose project detected.", "Add Laebel as a service in your Docker Compose project.", "If you want to run Laebel as a stand-alone container, specify the COMPOSE_PROJECT_NAME environment variable.")
 	}
-	log.Println("Current project name:", projectName)
 	return projectName
 }
 
@@ -99,12 +98,12 @@ func registerEventPublisher(dockerClient *client.Client) {
 	go PublishStatusUpdates(dockerClient, sseServer)
 }
 
-func startServer() {
+func startServer(projectName string) {
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8000"
 	}
-	log.Println("Serving Laebel documentation site at:")
+	log.Printf("Serving Laebel documentation site for project '%s' at:\n", projectName)
 	log.Println("")
 	log.Println("  http://localhost:" + port + "/")
 	log.Println("")
