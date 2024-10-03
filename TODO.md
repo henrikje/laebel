@@ -32,3 +32,5 @@
 - [ ] Make the Laebel service show up at the bottom of the graph by default.
 - [ ] Add a nicer presentation of a service which is depended on by another service, but not running.
 - [ ] Update the service graph when the state of a service changes. Can HTMX in combination with Mermaid.js do that? Ideally, I could update just the labels. Otherwise, I may need to refresh the whole graph. Or switch to a server-side rendered graph.
+      I think it should be possible with a HTMX hx-get on the graph parent, triggered by any a "status" event, which loads a page with all statuses for all nodes. Then each node has a selector to update its status. The question is how to get the first htmx attributes into the generated graph. But that should be possible too, I think.
+- [ ] Consider if we can download the external JS files during (Docker) build. That way we don't need to have Mermaid.js and HTMX manually copied into the repository.

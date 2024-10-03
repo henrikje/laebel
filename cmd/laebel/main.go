@@ -32,26 +32,19 @@ func determineCurrentProjectName(dockerClient *client.Client) string {
 	// Get the current container ID
 	containerID, err := GetContainerID()
 	if err != nil {
-		// TODO Extract helper function for logging and hinting
-		log.Fatalf("Could not determine current container ID\n"+
-			"Cause: %s\n"+
-			"Hint: Are you sure you are running Laebel as a container?", err)
+		fatal(err, "Could not determine current container ID", "Are you sure you are running Laebel as a container?")
 	}
 
 	// Check if it’s part of a Compose project
 	projectName, err := IsPartOfComposeProject(containerID, dockerClient)
 	if err != nil {
-		log.Fatalf("Could not determine current project name\n"+
-			"Cause: %s\n"+
-			"Hint: Ensure Laebel has the Docker socket mounted as a volume: \"/var/run/docker.sock:/var/run/docker.sock:ro\"", err)
+		fatal(err, "Could not determine current project name", "Ensure Laebel has the Docker socket mounted as a volume: \"/var/run/docker.sock:/var/run/docker.sock:ro\"")
 	}
 	if projectName == "" {
 		projectName = os.Getenv("COMPOSE_PROJECT_NAME")
 	}
 	if projectName == "" {
-		log.Fatal("BAD REQUEST: Current container is not part of a Docker Compose project.\n" +
-			"Hint: Add Laebel as a service in your Docker Compose project.\n" +
-			"Hint: If you want to run Laebel as a stand-alone container, specify the COMPOSE_PROJECT_NAME environment variable.")
+		fatal(nil, "Current container is not part of a Docker Compose project.", "Add Laebel as a service in your Docker Compose project.", "If you want to run Laebel as a stand-alone container, specify the COMPOSE_PROJECT_NAME environment variable.")
 	}
 	log.Println("Current project name:", projectName)
 	return projectName
@@ -72,7 +65,7 @@ func loadTemplates() *template.Template {
 		filepath.Join("web", "templates", "clipboard.html"),
 	)
 	if err != nil {
-		log.Fatalf("INTERNAL SERVER ERROR: Unable to load template\nCause: %s", err)
+		fatal(err, "Unable to load template")
 	}
 	return tmpl
 }
@@ -80,7 +73,7 @@ func loadTemplates() *template.Template {
 func createDockerClient() *client.Client {
 	dockerClient, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
 	if err != nil {
-		log.Fatalf("INTERNAL SERVER ERROR: Error creating Docker client\nCause: %s", err)
+		fatal(err, "Error creating Docker client")
 	}
 	return dockerClient
 }
@@ -117,8 +110,6 @@ func startServer() {
 	log.Println("")
 	err := http.ListenAndServe(":"+port, nil)
 	if err != nil {
-		log.Fatalf("INTERNAL SERVER ERROR: Could not start server.\n"+
-			"Cause: %s\n"+
-			"Hint: Bind port %s to another host port, or set the PORT environment variable to change port.", err, port)
+		fatal(err, "Could not start server", "Bind port "+port+" to another host port, or set the PORT environment variable to change port.")
 	}
 }
