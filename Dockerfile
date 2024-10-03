@@ -24,7 +24,7 @@ RUN go build -o bin/laebel ./cmd/laebel
 FROM alpine:latest AS laebel
 
 # Expose the port that the application will listen on
-ENV PORT=8080
+ENV PORT=8000
 EXPOSE $PORT
 
 # Configure a healthcheck

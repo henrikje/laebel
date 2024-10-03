@@ -9,7 +9,8 @@
   - Use HTMX to refresh the parts that have changed.
   - Is it possible to update only the status fields, ideally even without redrawing the Mermaid graph?
 - [ ] Display a banner when the SSE connection is lost, including a link to reconnect.
-
+- [x] Consider changing the default port to 8000 as 8080 is often used by other services.
+- [ ] Remove verbose logging for each response or event.
 ## Future
 
 - [ ] Add support for Markdown.
@@ -24,7 +25,6 @@
 - [ ] Sort service groups by topological order; the main service should be at the top with its dependencies below.
 - [ ] Perhaps add a "hidden details" key/value section, which can be used for any additional information that can be useful, but does not deserve permanent space in the main view. Things like maintainer, and version+revision.
 - [ ] Add a "last updated" timestamp to the page.
-- [ ] Consider changing the default port to 8000 as 8080 is often used by other services.
 - [ ] Update model so a service can have multiple values for the same label/property.
       For example, image and group name.
       There is no guarantee that all containers based on the same service have the same image.

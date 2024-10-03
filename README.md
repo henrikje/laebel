@@ -38,16 +38,16 @@ To get started, add the following service to your Docker Compose project:
 ```yaml
 laebel:
     image: ghcr.io/henrikje/laebel:latest
-    # Expose port 8080 to access the Laebel website (or change to another port if you prefer).
+    # Expose port 8000 to access the Laebel website (or change to another port if you prefer).
     ports:
-    - "8080:8080"
+    - "8000:8000"
     # Mount the Docker socket in read-only mode.
     # This allows Laebel to read information about the services in your project.
     volumes:
     - "/var/run/docker.sock:/var/run/docker.sock:ro"
 ```
 
-Then run `docker compose up` and open your browser at http://localhost:8080/ (or the host and port you use).
+Then run `docker compose up` and open your browser at http://localhost:8000/ (or the host and port you use).
 
 For a full example, see the [React-Express-MySQL example](./examples/react-express-mysql/README.md).
 
@@ -60,7 +60,7 @@ Then you need to tell Laebel which Compose Project to document using the environ
 docker run \
   -e COMPOSE_PROJECT_NAME=<your-project> \
   -v "/var/run/docker.sock:/var/run/docker.sock:ro" \
-  -p 8080:8080 \
+  -p 8000:8000 \
   ghcr.io/henrikje/laebel:latest
 ```
 

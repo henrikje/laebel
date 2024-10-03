@@ -102,7 +102,7 @@ func registerEventPublisher(dockerClient *client.Client) {
 func startServer() {
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8080"
+		port = "8000"
 	}
 	log.Println("Serving Laebel documentation site at:")
 	log.Println("")

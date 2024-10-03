@@ -2,9 +2,9 @@ services:
   laebel:
     # Use the latest Laebel image.
     image: ghcr.io/henrikje/laebel:latest
-    # Expose port 8080 to access the Laebel website (or change to another port if you prefer).
+    # Expose port 8000 to access the Laebel website (or change to another port if you prefer).
     ports:
-      - "8080:8080"
+      - "8000:8000"
     # Mount the Docker socket in read-only mode.
     # This allows Laebel to read information about the services in your project.
     volumes:
