@@ -28,25 +28,12 @@ func main() {
 	startServer(projectName)
 }
 
-func determineCurrentProjectName(dockerClient *client.Client) string {
-	// Get the current container ID
-	containerID, err := GetContainerID()
+func createDockerClient() *client.Client {
+	dockerClient, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
 	if err != nil {
-		fatal(err, "Could not determine current container ID", "Are you sure you are running Laebel as a container?")
+		fatal(err, "Error creating Docker client")
 	}
-
-	// Check if it’s part of a Compose project
-	projectName, err := IsPartOfComposeProject(containerID, dockerClient)
-	if err != nil {
-		fatal(err, "Could not determine Docker Compose project name", "Ensure Laebel has the Docker socket mounted as a volume: \"/var/run/docker.sock:/var/run/docker.sock:ro\"")
-	}
-	if projectName == "" {
-		projectName = os.Getenv("COMPOSE_PROJECT_NAME")
-	}
-	if projectName == "" {
-		fatal(nil, "No Docker Compose project detected.", "Add Laebel as a service in your Docker Compose project.", "If you want to run Laebel as a stand-alone container, specify the COMPOSE_PROJECT_NAME environment variable.")
-	}
-	return projectName
+	return dockerClient
 }
 
 func loadTemplates() *template.Template {
@@ -69,12 +56,25 @@ func loadTemplates() *template.Template {
 	return tmpl
 }
 
-func createDockerClient() *client.Client {
-	dockerClient, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+func determineCurrentProjectName(dockerClient *client.Client) string {
+	// Get the current container ID
+	containerID, err := GetContainerID()
 	if err != nil {
-		fatal(err, "Error creating Docker client")
+		fatal(err, "Could not determine current container ID", "Are you sure you are running Laebel as a container?")
 	}
-	return dockerClient
+
+	// Check if it’s part of a Compose project
+	projectName, err := IsPartOfComposeProject(containerID, dockerClient)
+	if err != nil {
+		fatal(err, "Could not determine Docker Compose project name", "Ensure Laebel has the Docker socket mounted as a volume: \"/var/run/docker.sock:/var/run/docker.sock:ro\"")
+	}
+	if projectName == "" {
+		projectName = os.Getenv("COMPOSE_PROJECT_NAME")
+	}
+	if projectName == "" {
+		fatal(nil, "No Docker Compose project detected.", "Add Laebel as a service in your Docker Compose project.", "If you want to run Laebel as a stand-alone container, specify the COMPOSE_PROJECT_NAME environment variable.")
+	}
+	return projectName
 }
 
 func registerStaticFileHandler() {
