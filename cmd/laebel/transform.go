@@ -127,7 +127,7 @@ func transformContainersToService(serviceContainers []types.ContainerJSON, servi
 		}
 		containerStructs = append(containerStructs, Container{
 			ID:     serviceContainer.ID,
-			Name:   serviceContainer.Name,
+			Name:   strings.TrimLeft(serviceContainer.Name, "/"),
 			Status: serviceContainer.State.Status,
 			Health: containerHealth,
 		})

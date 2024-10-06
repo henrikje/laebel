@@ -29,7 +29,7 @@
                 {{ range .Containers }}
                     <tr class="container" id="{{ .ID }}">
                         <td><code>{{ .ID }}</code> {{ template "clipboard" }}</td>
-                        <td>{{ .Name }}</td>
+                        <td><code>{{ .Name }}</code> {{ template "clipboard" }}</td>
                         <td>{{ .Status }}</td>
                         <td>{{ .Health }}</td>
                     </tr>

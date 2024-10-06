@@ -11,6 +11,7 @@
 - [x] Consider changing the default port to 8000 as 8080 is often used by other services.
 - [x] Remove verbose logging for each response or event.
 - [x] Hide the Laebel service from the list. It is probably not interesting to most users, and it adds noise to the graph.
+- [ ] Update the status of each container when the status of a service changes.
 
 ## Future
 
