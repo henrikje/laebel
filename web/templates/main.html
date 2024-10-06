@@ -1,5 +1,6 @@
 {{ define "main" }}
-    <main id="services" hx-trigger="sse:main" hx-get="/main" hx-swap="morph">
+    <main id="services">
+        <div hx-trigger="sse:reload" hx-get="/reload"></div>
         {{ if .ServiceGroups }}
             <section id="graph">
                 <h2 class="title">Service Graph</h2>

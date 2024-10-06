@@ -46,8 +46,8 @@ func loadTemplates() *template.Template {
 		filepath.Join("web", "templates", "main.html"),
 		filepath.Join("web", "templates", "serviceGraph.html"),
 		filepath.Join("web", "templates", "service.html"),
-		filepath.Join("web", "templates", "serviceStatus.html"),
-		filepath.Join("web", "templates", "serviceStatusSummary.html"),
+		filepath.Join("web", "templates", "status.css.html"),
+		filepath.Join("web", "templates", "reload.html"),
 		filepath.Join("web", "templates", "clipboard.html"),
 	)
 	if err != nil {
@@ -93,7 +93,10 @@ func registerEventPublisher(dockerClient *client.Client) {
 	sseServer.Headers = map[string]string{
 		"Content-Type": "text/event-stream; charset=utf-8",
 	}
-	sseServer.CreateStream("updates")
+	stream := sseServer.CreateStream("updates")
+	// AutoReplay is unnecessary as the client starts with up-to-date information.
+	// We also don't want to replay old "reload" events.
+	stream.AutoReplay = false
 	http.HandleFunc("/events", sseServer.ServeHTTP)
 	go PublishStatusUpdates(dockerClient, sseServer)
 }

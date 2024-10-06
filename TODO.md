@@ -2,15 +2,14 @@
 
 ## v0.4.0
 
-- [ ] Automatically refresh the page on changes.
+- [x] Automatically refresh the page on changes.
   - Use the Docker Event API to listen for changes.
   - Regenerate changed parts of the page.
   - Implement SSE to push changes.
   - Use HTMX to refresh the parts that have changed.
   - Is it possible to update only the status fields, ideally even without redrawing the Mermaid graph?
-- [ ] Display a banner when the SSE connection is lost, including a link to reconnect.
 - [x] Consider changing the default port to 8000 as 8080 is often used by other services.
-- [ ] Remove verbose logging for each response or event.
+- [x] Remove verbose logging for each response or event.
 - [x] Hide the Laebel service from the list. It is probably not interesting to most users, and it adds noise to the graph.
 
 ## Future

@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"github.com/docker/docker/api/types/events"
 	"github.com/docker/docker/client"
 	"github.com/r3labs/sse/v2"
@@ -10,8 +11,6 @@ import (
 
 func PublishStatusUpdates(dockerClient *client.Client, server *sse.Server) {
 	ctx := context.Background()
-
-	println("Registering for Docker events...")
 	eventCh, errCh := dockerClient.Events(ctx, events.ListOptions{})
 
 	for {
@@ -21,20 +20,21 @@ func PublishStatusUpdates(dockerClient *client.Client, server *sse.Server) {
 			case event.Type == events.ContainerEventType:
 				switch event.Action {
 				case events.ActionCreate, events.ActionDestroy:
-					println("Received event:", event.Action)
 					server.Publish("updates", &sse.Event{
-						Event: []byte("main"),
-						Data:  []byte("refresh"), // TODO Can we avoid having to send data?
+						Event: []byte("reload"),
+						Data:  []byte(fmt.Sprintf("%s:%s", event.Actor.ID, event.Action)),
 					})
-					log.Println("Published main event.")
+					server.Publish("updates", &sse.Event{
+						Event: []byte("close"),
+						Data:  []byte("No further updates will be sent."),
+					})
+
 				case events.ActionStart, events.ActionPause, events.ActionUnPause, events.ActionStop, events.ActionKill, events.ActionDie, events.ActionHealthStatus, events.ActionHealthStatusHealthy, events.ActionHealthStatusRunning, events.ActionHealthStatusUnhealthy, events.ActionRestart, events.ActionRename:
-					println("Received event:", event.Action)
-					serviceName := event.Actor.Attributes["com.docker.compose.service"]
+					log.Println(server)
 					server.Publish("updates", &sse.Event{
-						Event: []byte(serviceName),
-						Data:  []byte("refresh"),
+						Event: []byte("status"),
+						Data:  []byte(fmt.Sprintf("%s:%s", event.Actor.ID, event.Action)),
 					})
-					log.Println("Published service event.")
 				}
 			}
 		case err := <-errCh:
