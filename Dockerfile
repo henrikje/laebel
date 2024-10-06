@@ -39,7 +39,8 @@ CMD ["./laebel"]
 LABEL org.opencontainers.image.title="Laebel" \
     org.opencontainers.image.description="Automatic documentation site for your Docker Compose project." \
     org.opencontainers.image.authors="Henrik Jernevad <henrik@jernevad.se>" \
-    net.henko.laebel.group="Documentation"
+    net.henko.laebel.group="Documentation" \
+    net.henko.laebel.hidden="true"
 
 # Set the working directory inside the container
 WORKDIR /app

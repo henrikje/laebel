@@ -11,6 +11,8 @@
 - [ ] Display a banner when the SSE connection is lost, including a link to reconnect.
 - [x] Consider changing the default port to 8000 as 8080 is often used by other services.
 - [ ] Remove verbose logging for each response or event.
+- [x] Hide the Laebel service from the list. It is probably not interesting to most users, and it adds noise to the graph.
+
 ## Future
 
 - [ ] Add support for Markdown.
@@ -29,7 +31,6 @@
       For example, image and group name.
       There is no guarantee that all containers based on the same service have the same image.
 - [ ] Add some kind of disconnected state to the client, so it can show a message when the connection is lost.
-- [ ] Make the Laebel service show up at the bottom of the graph by default.
 - [ ] Add a nicer presentation of a service which is depended on by another service, but not running.
 - [ ] Update the service graph when the state of a service changes. Can HTMX in combination with Mermaid.js do that? Ideally, I could update just the labels. Otherwise, I may need to refresh the whole graph. Or switch to a server-side rendered graph.
       I think it should be possible with a HTMX hx-get on the graph parent, triggered by any a "status" event, which loads a page with all statuses for all nodes. Then each node has a selector to update its status. The question is how to get the first htmx attributes into the generated graph. But that should be possible too, I think.
