@@ -169,10 +169,6 @@ summary {
     content: "Copied!"
 }
 
-.summary {
-    cursor: help;
-}
-
 .node:has(.unhealthy) rect {
     fill: #fee !important;
 }
