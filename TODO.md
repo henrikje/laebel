@@ -1,21 +1,5 @@
 # TODO
 
-## v0.4.0
-
-- [x] Automatically refresh the page on changes.
-  - Use the Docker Event API to listen for changes.
-  - Regenerate changed parts of the page.
-  - Implement SSE to push changes.
-  - Use HTMX to refresh the parts that have changed.
-  - Is it possible to update only the status fields, ideally even without redrawing the Mermaid graph?
-- [x] Consider changing the default port to 8000 as 8080 is often used by other services.
-- [x] Remove verbose logging for each response or event.
-- [x] Hide the Laebel service from the list. It is probably not interesting to most users, and it adds noise to the graph.
-- [x] Update the status of each container when the status of a service changes.
-  - Since we have to update the container status block too, we might as well update the whole service block.
-    Let's reintroduce the SSE event for updating each service. 
-    Then the CSS update mechanism can be used only for service status in the service graph.
-
 ## Future
 
 - [ ] Add support for Markdown.
@@ -41,7 +25,6 @@
       The question is how to get the first htmx attributes into the generated graph. But that should be possible too, I think.
 - [ ] Consider if we can download the external JS files during (Docker) build.
       That way we don't need to have Mermaid.js and HTMX manually copied into the repository.
-- [ ] Replace the PNG logo with an SVG logo.
 - [ ] Lighthouse: [Enable text compression](https://developer.chrome.com/docs/lighthouse/performance/uses-text-compression/)
 - [ ] Lighthouse: [Eliminate render-blocking resources](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/)
 - [ ] Lighthouse: Image elements do not have explicit width and height
