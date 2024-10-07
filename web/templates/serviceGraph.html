@@ -15,6 +15,9 @@ end
 {{ end }}{{ end }}{{ end }}
 </pre>
 {{ if $no_links }}
-    <p class="hint">Hint: To add links to the graph, make sure your services declare <code>depends_on</code> relations.</p>
+    <p class="hint">Hint: To add links to the graph, make sure your services declare
+        <code><a href="https://docs.docker.com/reference/compose-file/services/#depends_on">depends_on</a></code>
+        relations.
+    </p>
 {{ end }}
 {{ end }}
