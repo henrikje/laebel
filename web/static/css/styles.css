@@ -59,9 +59,6 @@ td {
 .icon {
     font-family: emoji, "Twemoji Mozilla", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", "EmojiOne Color", "Android Emoji", sans-serif;
 }
-.icon::after {
-    content: "❗️"
-}
 a + .icon {
     margin-left: 0.5em;
 }
