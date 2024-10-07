@@ -1,3 +1,5 @@
 {{ define "serviceGraphStatus" }}{{ range .ServiceGroups }}{{ range .Services
 }}.{{ .Name }}-status.icon::after { content: "{{ .Status.SummaryIcon }}"; }
+{{ if eq .Status.Summary 2 }}.node:has(.{{ .Name }}-status.icon) rect { fill: #efe !important; }{{ end }}
+{{ if eq .Status.Summary 3 }}.node:has(.{{ .Name }}-status.icon) rect { fill: #fee !important; }{{ end }}
 {{ end }}{{ end }}{{ end }}
