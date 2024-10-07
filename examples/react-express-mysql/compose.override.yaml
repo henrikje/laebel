@@ -32,7 +32,7 @@ services:
 
   frontend:
     labels:
-      - "org.opencontainers.image.title=Frontend (React+Nginx)"
+      - "org.opencontainers.image.title=Frontend (React)"
       - "org.opencontainers.image.description=A Nginx server hosts the React-based frontend which displays important messages."
       - "net.henko.laebel.link.website.url=http://localhost:3000/"
       - "net.henko.laebel.link.website.label=Webpage"
