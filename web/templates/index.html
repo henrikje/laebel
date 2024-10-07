@@ -31,8 +31,8 @@
     {{ end }}
 </header>
 {{ template "main" . }}
-<style hx-trigger="sse:status" hx-get="/status.css" hx-swap="innerHTML">
-    {{ template "status" . }}
+<style hx-trigger="sse:status" hx-get="/graph-status.css" hx-swap="innerHTML">
+    {{ template "serviceGraphStatus" . }}
 </style>
 </body>
 <script type="module">

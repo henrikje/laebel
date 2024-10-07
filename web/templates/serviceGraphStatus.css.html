@@ -1,0 +1,3 @@
+{{ define "serviceGraphStatus" }}{{ range .ServiceGroups }}{{ range .Services
+}}.{{ .Name }}-status.icon::after { content: "{{ .Status.SummaryIcon }}"; }
+{{ end }}{{ end }}{{ end }}

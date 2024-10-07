@@ -1,0 +1,20 @@
+{{ define "serviceStatus" }}
+<span class="status">
+<span class="icon" title="{{ .SummaryDescription }}">{{ .SummaryIcon }}</span>
+<span class="details">
+{{ $separate := false }}
+{{ if .Created }}{{ if $separate }}, {{ end }}<span class="created">{{ .Created }} created</span>{{ $separate = true }}{{ end
+}}{{ if .Running }}{{ if $separate }}, {{ end }}<span class="running">{{ .Running }} running</span>{{
+    if or .RunningHealthy .RunningUnhealthy }} ({{ if .RunningHealthy }}{{ .RunningHealthy }} healthy{{ end }}{{
+    if and .RunningHealthy .RunningUnhealthy }}, {{ end }}{{
+    if .RunningUnhealthy }}{{ .RunningUnhealthy }} unhealthy{{ end }}){{ end
+}}{{ $separate = true }}{{ end
+}}{{ if .Paused }}{{ if $separate }}, {{ end }}<span class="paused">{{ .Paused }} paused</span>{{ $separate = true }}{{ $separate = true }}{{ end
+}}{{ if .Restarting }}<span class="restarting">{{ .Restarting }} restarting</span>{{ $separate = true }}{{ end
+}}{{ if .Removing }}<span class="removing">{{ .Removing }} removing</span>{{ $separate = true }}{{ end
+}}{{ if .Exited }}{{ if $separate }}, {{ end }}<span class="exited">{{ .Exited }} exited</span>{{ $separate = true }}{{ end
+}}{{ if .Dead }}{{ if $separate }}, {{ end }}<span class="dead">{{ .Dead }} dead</span>{{ $separate = true }}{{ end
+}}
+</span>
+</span>
+{{ end }}

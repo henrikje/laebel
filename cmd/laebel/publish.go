@@ -22,18 +22,22 @@ func PublishStatusUpdates(dockerClient *client.Client, server *sse.Server) {
 				case events.ActionCreate, events.ActionDestroy:
 					server.Publish("updates", &sse.Event{
 						Event: []byte("reload"),
-						Data:  []byte(fmt.Sprintf("%s:%s", event.Actor.ID, event.Action)),
+						Data:  eventData(event),
 					})
 					server.Publish("updates", &sse.Event{
 						Event: []byte("close"),
 						Data:  []byte("No further updates will be sent."),
 					})
 
-				case events.ActionStart, events.ActionPause, events.ActionUnPause, events.ActionStop, events.ActionKill, events.ActionDie, events.ActionHealthStatus, events.ActionHealthStatusHealthy, events.ActionHealthStatusRunning, events.ActionHealthStatusUnhealthy, events.ActionRestart, events.ActionRename:
-					log.Println(server)
+				case events.ActionStart, events.ActionPause, events.ActionUnPause, events.ActionStop, events.ActionDie, events.ActionHealthStatus, events.ActionHealthStatusHealthy, events.ActionHealthStatusRunning, events.ActionHealthStatusUnhealthy, events.ActionRestart, events.ActionRename:
 					server.Publish("updates", &sse.Event{
 						Event: []byte("status"),
-						Data:  []byte(fmt.Sprintf("%s:%s", event.Actor.ID, event.Action)),
+						Data:  eventData(event),
+					})
+					serviceName := event.Actor.Attributes["com.docker.compose.service"]
+					server.Publish("updates", &sse.Event{
+						Event: []byte("status:" + serviceName),
+						Data:  eventData(event),
 					})
 				}
 			}
@@ -41,4 +45,8 @@ func PublishStatusUpdates(dockerClient *client.Client, server *sse.Server) {
 			log.Println("Error receiving Docker events.\nCause:", err)
 		}
 	}
+}
+
+func eventData(event events.Message) []byte {
+	return []byte(fmt.Sprintf("%s:%s", event.Actor.ID, event.Action))
 }

@@ -43,15 +43,15 @@ func GetAllContainersInProject(projectName string, dockerClient *client.Client) 
 }
 
 func InspectEachContainer(containers []types.Container, dockerClient *client.Client) ([]types.ContainerJSON, error) {
-	var containerInfo []types.ContainerJSON
+	var containerInfos []types.ContainerJSON
 	for _, theContainer := range containers {
-		containerInfos, err := dockerClient.ContainerInspect(context.Background(), theContainer.ID)
+		containerInfo, err := dockerClient.ContainerInspect(context.Background(), theContainer.ID)
 		if err != nil {
 			return nil, err
 		}
-		containerInfo = append(containerInfo, containerInfos)
+		containerInfos = append(containerInfos, containerInfo)
 	}
-	return containerInfo, nil
+	return containerInfos, nil
 }
 
 // IsPartOfComposeProject checks if the container is part of a Docker Compose cluster

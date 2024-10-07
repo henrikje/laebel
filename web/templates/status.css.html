@@ -1,4 +1,0 @@
-{{ define "status" }}{{ range .ServiceGroups }}{{ range .Services
-}}.{{ .Name }}-status.icon::after { content: "{{ .Status.SummaryIcon }}"; }
-.{{ .Name }}-status.summary::after { content: " {{ .Status.Details }}"; }
-{{ end }}{{ end }}{{ end }}

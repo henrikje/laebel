@@ -1,16 +1,17 @@
 {{ define "service" }}
-    <section id="{{.Name }}" class="service">
+    <section id="{{.Name }}" class="service" hx-trigger="sse:status:{{ .Name }}" hx-get="/service?name={{ .Name }}">
         <h3 class="title">{{ if .Title }}{{ .Title }}{{ else }}<code>{{ .Name }}</code>{{ end }}</h3>
         {{ if .Description }}<p class="description">{{ .Description }}</p>{{ end }}
         <ul>
             {{ if .Title }}
-            <li class="name"><strong>Service</strong>: <code>{{ .Name }}</code> {{ template "clipboard" }}{{ end }}
-            <li class="image"><strong>Image</strong>: <code>{{ .Image }}</code> {{ template "clipboard" }}</li>
-            <li class="status"><strong>Status</strong>: <span class="{{ .Name }}-status icon"></span><span class="{{ .Name }}-status summary"></span></li>
+            <li class="name"><strong>Service</strong>:<code>{{ .Name }}</code> {{ template "clipboard" }}{{ end }}
+            <li class="image"><strong>Image</strong>:<code>{{ .Image }}</code> {{ template "clipboard" }}</li>
+            <li class="status"><strong>Status</strong>:{{ template "serviceStatus" .Status }}</li>
             {{ if .Links }}
                 <li class="links">
                     <strong>Links</strong>: {{ range $index, $link := .Links }}{{ if $index }}, {{ end }}
-                    <a href="{{ $link.URL }}">{{ $link.Label }}</a>{{end}}
+                    <a
+                            href="{{ $link.URL }}">{{ $link.Label }}</a>{{end}}
                 </li>
             {{ end }}
         </ul>

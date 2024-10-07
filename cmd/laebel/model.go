@@ -1,10 +1,5 @@
 package main
 
-import (
-	"fmt"
-	"strings"
-)
-
 type Project struct {
 	Name          string // Label: com.docker.compose.project
 	Title         string // Env: LAEBEL_PROJECT_TITLE
@@ -60,41 +55,6 @@ const (
 	Dead
 	Mixed
 )
-
-func (s Status) Details() string {
-	var builder strings.Builder
-	if s.Created > 0 {
-		builder.WriteString(fmt.Sprintf("%d created, ", s.Created))
-	}
-	if s.Running > 0 {
-		builder.WriteString(fmt.Sprintf("%d running", s.Running))
-		if s.RunningHealthy > 0 && s.RunningUnhealthy > 0 {
-			builder.WriteString(fmt.Sprintf(" (%d healthy, %d unhealthy), ", s.RunningHealthy, s.RunningUnhealthy))
-		} else if s.RunningHealthy > 0 {
-			builder.WriteString(fmt.Sprintf(" (%d healthy), ", s.RunningHealthy))
-		} else if s.RunningUnhealthy > 0 {
-			builder.WriteString(fmt.Sprintf(" (%d unhealthy), ", s.RunningUnhealthy))
-		} else {
-			builder.WriteString(", ")
-		}
-	}
-	if s.Paused > 0 {
-		builder.WriteString(fmt.Sprintf("%d paused, ", s.Paused))
-	}
-	if s.Restarting > 0 {
-		builder.WriteString(fmt.Sprintf("%d restarting, ", s.Restarting))
-	}
-	if s.Exited > 0 {
-		builder.WriteString(fmt.Sprintf("%d exited, ", s.Exited))
-	}
-	if s.Removing > 0 {
-		builder.WriteString(fmt.Sprintf("%d removing, ", s.Removing))
-	}
-	if s.Dead > 0 {
-		builder.WriteString(fmt.Sprintf("%d dead, ", s.Dead))
-	}
-	return strings.TrimSuffix(builder.String(), ", ")
-}
 
 func (s Status) SummaryIcon() string {
 	switch s.Summary {

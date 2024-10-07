@@ -44,10 +44,11 @@ func loadTemplates() *template.Template {
 		}).ParseFiles(
 		filepath.Join("web", "templates", "index.html"),
 		filepath.Join("web", "templates", "main.html"),
-		filepath.Join("web", "templates", "serviceGraph.html"),
-		filepath.Join("web", "templates", "service.html"),
-		filepath.Join("web", "templates", "status.css.html"),
 		filepath.Join("web", "templates", "reload.html"),
+		filepath.Join("web", "templates", "serviceGraph.html"),
+		filepath.Join("web", "templates", "serviceGraphStatus.css.html"),
+		filepath.Join("web", "templates", "service.html"),
+		filepath.Join("web", "templates", "serviceStatus.html"),
 		filepath.Join("web", "templates", "clipboard.html"),
 	)
 	if err != nil {
