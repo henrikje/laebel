@@ -22,7 +22,7 @@ type Service struct {
 	Status      Status
 	Links       []Link
 	Ports       []Port
-	DependsOn   []string // Label: com.docker.compose.depends_on
+	DependsOn   []string
 	Containers  []Container
 }
 
@@ -112,13 +112,13 @@ func (s Status) SummaryDescription() string {
 }
 
 type Link struct {
-	Label string // Label: net.henko.laebel.link.<key>.label
+	Title string // Label: net.henko.laebel.link.<key>.title
 	URL   string // Label: net.henko.laebel.link.<key>.url
 }
 
 type Port struct {
-	Number string
-	Label  string // Label: net.henko.laebel.port.<number>.label
+	Number      string
+	Description string // Label: net.henko.laebel.port.<number>.description
 }
 
 type Container struct {

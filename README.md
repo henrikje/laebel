@@ -102,12 +102,12 @@ These are great for linking to documentation, administration interfaces, or othe
 Each link is specified with two labels, where `<key>` can be any string:
 
 - `net.henko.laebel.link.<key>.url`: The URL of the link.
-- `net.henko.laebel.link.<key>.label`: The title of the link.
+- `net.henko.laebel.link.<key>.title`: The title of the link.
 
 Finally, you can document the ports that are bound to the service.
 This is especially helpful when it is not a well-known port.
 
-- `net.henko.laebel.<port>.label`: A description of the purpose of the port.
+- `net.henko.laebel.<port>.description`: A description of the purpose of the port.
 
 See the [full example](./examples/react-express-mysql/README.md) for examples on how to use these labels.
 

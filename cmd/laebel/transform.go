@@ -105,15 +105,15 @@ func extractProjectLinks() []Link {
 	projectLinks := make([]Link, 0)
 	url := os.Getenv("LAEBEL_PROJECT_URL")
 	if url != "" {
-		projectLinks = append(projectLinks, Link{Label: "Website", URL: url})
+		projectLinks = append(projectLinks, Link{Title: "Website", URL: url})
 	}
 	documentation := os.Getenv("LAEBEL_PROJECT_DOCUMENTATION")
 	if documentation != "" {
-		projectLinks = append(projectLinks, Link{Label: "Documentation", URL: documentation})
+		projectLinks = append(projectLinks, Link{Title: "Documentation", URL: documentation})
 	}
 	source := os.Getenv("LAEBEL_PROJECT_SOURCE")
 	if source != "" {
-		projectLinks = append(projectLinks, Link{Label: "Source code", URL: source})
+		projectLinks = append(projectLinks, Link{Title: "Source code", URL: source})
 	}
 	return projectLinks
 }
@@ -169,8 +169,8 @@ func extractServicePorts(containers []types.ContainerJSON) []Port {
 		for _, portBindings := range container.HostConfig.PortBindings {
 			for _, portBinding := range portBindings {
 				port := Port{
-					Number: portBinding.HostPort,
-					Label:  container.Config.Labels["net.henko.laebel.port."+portBinding.HostPort+".label"],
+					Number:      portBinding.HostPort,
+					Description: container.Config.Labels["net.henko.laebel.port."+portBinding.HostPort+".description"],
 				}
 				ports = append(ports, port)
 			}
@@ -218,29 +218,29 @@ func extractServiceLinks(container types.ContainerJSON) []Link {
 	// Extract OpenContainers links
 	url := container.Config.Labels["org.opencontainers.image.url"]
 	if url != "" {
-		links = append(links, Link{Label: "Website", URL: url})
+		links = append(links, Link{Title: "Website", URL: url})
 	}
 	documentation := container.Config.Labels["org.opencontainers.image.documentation"]
 	if documentation != "" {
-		links = append(links, Link{Label: "Documentation", URL: documentation})
+		links = append(links, Link{Title: "Documentation", URL: documentation})
 	}
 	source := container.Config.Labels["org.opencontainers.image.source"]
 	if source != "" {
-		links = append(links, Link{Label: "Source code", URL: source})
+		links = append(links, Link{Title: "Source code", URL: source})
 	}
 	// Extract laebel links
 	// net.henko.laebel.link.<key>.url
-	// net.henko.laebel.link.<key>.label
+	// net.henko.laebel.link.<key>.title
 	for key, value := range container.Config.Labels {
 		if len(key) > 22 && key[:22] == "net.henko.laebel.link." {
 			linkKey := key[22:]
 			if linkKey[len(linkKey)-4:] == ".url" {
-				labelKey := "net.henko.laebel.link." + linkKey[:len(linkKey)-4] + ".label"
-				label := container.Config.Labels[labelKey]
-				if label == "" {
-					label = linkKey[:len(linkKey)-4]
+				titleKey := "net.henko.laebel.link." + linkKey[:len(linkKey)-4] + ".title"
+				title := container.Config.Labels[titleKey]
+				if title == "" {
+					title = linkKey[:len(linkKey)-4]
 				}
-				links = append(links, Link{Label: label, URL: value})
+				links = append(links, Link{Title: title, URL: value})
 			}
 		}
 	}

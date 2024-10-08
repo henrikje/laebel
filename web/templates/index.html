@@ -25,7 +25,7 @@
         <ul>
             <li class="links">
                 <strong>Links</strong>: {{ range $index, $link := .Links }}{{ if $index }}, {{ end }}<a
-                href="{{ $link.URL }}">{{ $link.Label }}</a>{{end}}
+                href="{{ $link.URL }}">{{ $link.Title }}</a>{{end}}
             </li>
         </ul>
     {{ end }}

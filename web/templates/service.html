@@ -11,12 +11,12 @@
                 <li class="links">
                     <strong>Links</strong>: {{ range $index, $link := .Links }}{{ if $index }}, {{ end }}
                     <a
-                            href="{{ $link.URL }}">{{ $link.Label }}</a>{{end}}
+                            href="{{ $link.URL }}">{{ $link.Title }}</a>{{end}}
                 </li>
             {{ end }}
             {{ if .Ports }}
                 <li class="ports">
-                    <strong>Ports</strong>: <ul>{{ range $port := .Ports }}<li><code>{{ $port.Number }}</code>{{ if $port.Label }}: {{ $port.Label }}{{ end }}</li>{{ end }}</ul>
+                    <strong>Ports</strong>: <ul>{{ range $port := .Ports }}<li><code>{{ $port.Number }}</code>{{ if $port.Description }}: {{ $port.Description }}{{ end }}</li>{{ end }}</ul>
                 </li>
             {{ end }}
         </ul>
