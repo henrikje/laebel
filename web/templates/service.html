@@ -14,6 +14,11 @@
                             href="{{ $link.URL }}">{{ $link.Label }}</a>{{end}}
                 </li>
             {{ end }}
+            {{ if .Ports }}
+                <li class="ports">
+                    <strong>Ports</strong>: <ul>{{ range $port := .Ports }}<li><code>{{ $port.Number }}</code>{{ if $port.Label }}: {{ $port.Label }}{{ end }}</li>{{ end }}</ul>
+                </li>
+            {{ end }}
         </ul>
         <details class="containers">
             {{ $count := len .Containers }}
@@ -23,16 +28,20 @@
                 <tr>
                     <th>Container ID</th>
                     <th>Name</th>
+                    <th>Created</th>
                     <th>Status</th>
                     <th>Health</th>
+                    <th>Port Bindings</th>
                 </tr>
                 </thead>
                 {{ range .Containers }}
                     <tr class="container" id="{{ .ID }}">
                         <td><code>{{ .ID }}</code> {{ template "clipboard" }}</td>
                         <td><code>{{ .Name }}</code> {{ template "clipboard" }}</td>
+                        <td>{{ .Created }}</td>
                         <td>{{ .Status }}</td>
                         <td>{{ .Health }}</td>
+                        <td>{{ range $index, $port := .Ports }}{{ if $index }}, {{ end }}{{ $port }}{{ else }}none{{end}}</td>
                     </tr>
                 {{ end }}
             </table>

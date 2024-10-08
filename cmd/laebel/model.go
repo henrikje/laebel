@@ -21,6 +21,7 @@ type Service struct {
 	Image       string
 	Status      Status
 	Links       []Link
+	Ports       []Port
 	DependsOn   []string // Label: com.docker.compose.depends_on
 	Containers  []Container
 }
@@ -115,9 +116,16 @@ type Link struct {
 	URL   string // Label: net.henko.laebel.link.<key>.url
 }
 
+type Port struct {
+	Number string
+	Label  string // Label: net.henko.laebel.port.<number>.label
+}
+
 type Container struct {
-	ID     string
-	Name   string
-	Status string
-	Health string
+	ID      string
+	Name    string
+	Created string
+	Status  string
+	Health  string
+	Ports   []string
 }

@@ -1,5 +1,10 @@
 # TODO
 
+## v0.5.0
+
+- [x] Add a `net.henko.laebel.<port>.description` label to describe the purpose of a bound port. It is often hard to know what a port is used for.
+  For example, Jaeger exposes 14269, 16686, 4317, and 4318.
+
 ## Future
 
 - [ ] Add support for Markdown.

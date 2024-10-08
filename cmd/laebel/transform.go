@@ -2,9 +2,12 @@ package main
 
 import (
 	"github.com/docker/docker/api/types"
+	"github.com/docker/go-connections/nat"
 	"os"
 	"sort"
+	"strconv"
 	"strings"
+	"time"
 )
 
 func TransformContainersToProject(projectContainers []types.ContainerJSON, projectName string) Project {
@@ -125,11 +128,23 @@ func transformContainersToService(serviceContainers []types.ContainerJSON, servi
 			health := *serviceContainer.State.Health
 			containerHealth = health.Status
 		}
+		parsedDate, err := time.Parse(time.RFC3339Nano, serviceContainer.Created)
+		var created string
+		if err != nil {
+			created = serviceContainer.Created
+		} else {
+			created = parsedDate.Format(time.DateTime)
+		}
 		containerStructs = append(containerStructs, Container{
-			ID:     serviceContainer.ID,
-			Name:   strings.TrimLeft(serviceContainer.Name, "/"),
-			Status: serviceContainer.State.Status,
-			Health: containerHealth,
+			ID:      serviceContainer.ID[:12],
+			Name:    strings.TrimLeft(serviceContainer.Name, "/"),
+			Created: created,
+			Status:  serviceContainer.State.Status,
+			Health:  containerHealth,
+			Ports:   extractContainerPorts(serviceContainer.HostConfig.PortBindings),
+		})
+		sort.Slice(containerStructs, func(i, j int) bool {
+			return containerStructs[i].Name < containerStructs[j].Name
 		})
 	}
 	status := extractStatus(containerStructs, serviceContainers)
@@ -141,10 +156,61 @@ func transformContainersToService(serviceContainers []types.ContainerJSON, servi
 		Image:       container.Config.Image,
 		Status:      status,
 		Links:       links,
+		Ports:       extractServicePorts(serviceContainers),
 		DependsOn:   dependsOn,
 		Containers:  containerStructs,
 	}
 	return service
+}
+
+func extractServicePorts(containers []types.ContainerJSON) []Port {
+	ports := make([]Port, 0)
+	for _, container := range containers {
+		for _, portBindings := range container.HostConfig.PortBindings {
+			for _, portBinding := range portBindings {
+				port := Port{
+					Number: portBinding.HostPort,
+					Label:  container.Config.Labels["net.henko.laebel.port."+portBinding.HostPort+".label"],
+				}
+				ports = append(ports, port)
+			}
+		}
+	}
+	sort.Slice(ports, func(i, j int) bool {
+		inum, err := strconv.Atoi(ports[i].Number)
+		if err != nil {
+			return false
+		}
+		jnum, err := strconv.Atoi(ports[j].Number)
+		if err != nil {
+			return true
+		}
+		return inum < jnum
+	})
+	return ports
+}
+
+func extractContainerPorts(portMap nat.PortMap) []string {
+	ports := make([]string, 0)
+	for port, portBinding := range portMap {
+		for _, hostPort := range portBinding {
+			var hostString string
+			if hostPort.HostIP == "" {
+				hostString = ""
+			} else {
+				hostString = hostPort.HostIP + ":"
+			}
+			var portString string
+			if hostPort.HostPort == port.Port() {
+				portString = string(port)
+			} else {
+				portString = hostPort.HostPort + "->" + string(port)
+			}
+			portString = strings.TrimSuffix(portString, "/tcp")
+			ports = append(ports, hostString+portString)
+		}
+	}
+	return ports
 }
 
 func extractServiceLinks(container types.ContainerJSON) []Link {
