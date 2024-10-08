@@ -22,17 +22,33 @@ services:
     labels:
       - "org.opencontainers.image.title=Backend (Express.js)"
       - "org.opencontainers.image.description=The backend server running Express.js on Node.js, serving the frontend with messages."
+      - "net.henko.laebel.group= Services"
       - "net.henko.laebel.link.api.url=http://localhost/"
       - "net.henko.laebel.link.api.label=API Endpoint"
+      - "net.henko.laebel.port.80.label=Public HTTP"
+      - "net.henko.laebel.port.9229.label=Node.js Debugging"
+      - "net.henko.laebel.port.9230.label=Node.js Profiling"
 
   db:
     labels:
       - "org.opencontainers.image.title=Database (MariaDB)"
       - "org.opencontainers.image.description=The primary database, serving the backend with data. Running MySQL-compatible MariaDB."
+      - "net.henko.laebel.group= Services"
 
   frontend:
     labels:
       - "org.opencontainers.image.title=Frontend (React)"
       - "org.opencontainers.image.description=A Nginx server hosts the React-based frontend which displays important messages."
+      - "net.henko.laebel.group= Services"
       - "net.henko.laebel.link.website.url=http://localhost:3000/"
       - "net.henko.laebel.link.website.label=Webpage"
+      - "net.henko.laebel.port.3000.label=Public HTTP"
+
+  phpMyAdmin:
+    labels:
+      - "org.opencontainers.image.title=Database Admin UI"
+      - "org.opencontainers.image.description=phpMyAdmin is a web-based database management tool for MariaDB."
+      - "net.henko.laebel.group=Back Office"
+      - "net.henko.laebel.link.phpmyadmin.url=http://localhost:8080/"
+      - "net.henko.laebel.link.phpmyadmin.label=phpMyAdmin"
+      - "net.henko.laebel.port.8080.label=Internal HTTP"

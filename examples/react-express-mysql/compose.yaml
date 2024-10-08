@@ -57,6 +57,15 @@ services:
       - public
     depends_on:
       - backend
+  phpMyAdmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"
+    networks:
+      - private
+    depends_on:
+      - db
 networks:
   public:
   private:
