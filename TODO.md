@@ -13,6 +13,7 @@
 - [ ] Is it possible to render the Mermaid graph on the server and send it as an image to the client?
       This would make it easier to smoothly update the page without flicker.
 - [ ] Sort service groups by topological order; the main service should be at the top with its dependencies below.
+      Perhaps a topographical order of services within each group too?
 - [ ] Perhaps add a "hidden details" key/value section, which can be used for any additional useful information, 
       that does not deserve permanent space in the main view. Things like maintainer, and version+revision.
 - [ ] Add a "last updated" timestamp to the page.
@@ -32,3 +33,5 @@
 - [ ] Lighthouse: [Document does not have a meta description](https://developer.chrome.com/docs/lighthouse/seo/meta-description/)
 - [ ] Add "icon description" title and help cursor, just like the status summary icon in the service section has.
 - [ ] Why does HTMX request the `hx-get` for the services multiple times? It should only be once per service status event.
+- [ ] Display a banner when the SSE connection is lost (e.g. Laebel is shut down) to indicate that the status is no longer live-updated.
+      Perhaps replace all status icons with a "live update lost" (e.g. ❓) icon. (Or is it helpful to know the last known status?)
