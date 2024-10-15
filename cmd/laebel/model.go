@@ -7,6 +7,8 @@ type Project struct {
 	Links         []Link // Env: LAEBEL_PROJECT_URL, LAEBEL_PROJECT_DOCUMENTATION, LAEBEL_PROJECT_SOURCE
 	Icon          string // Env: LAEBEL_PROJECT_ICON
 	ServiceGroups []ServiceGroup
+	Volumes       []Volume
+	Networks      []Network
 }
 
 type ServiceGroup struct {
@@ -22,8 +24,26 @@ type Service struct {
 	Status      Status
 	Links       []Link
 	Ports       []Port
+	Volumes     []Volume
+	Networks    []Network
 	DependsOn   []string
 	Containers  []Container
+}
+
+type Volume struct {
+	Name        string
+	Title       string // Label: net.henko.laebel.volume.<name>.title
+	Description string // Label: net.henko.laebel.volume.<name>.description
+	Driver      string
+	Services    []string
+}
+
+type Network struct {
+	Name        string
+	Title       string // Label: net.henko.laebel.network.<name>.title
+	Description string // Label: net.henko.laebel.network.<name>.description
+	Driver      string
+	Services    []string
 }
 
 type Status struct {

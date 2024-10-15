@@ -163,3 +163,13 @@ summary {
 .clipboard:active::after {
     content: "Copied!"
 }
+
+#graph .ports::before {
+    content: "ports: ";
+}
+#graph .volume::before {
+    content: "volume: ";
+}
+#graph .network::before {
+    content: "network: ";
+}

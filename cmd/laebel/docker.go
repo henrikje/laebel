@@ -5,6 +5,8 @@ import (
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/filters"
+	"github.com/docker/docker/api/types/network"
+	"github.com/docker/docker/api/types/volume"
 	"github.com/docker/docker/client"
 	"os"
 	"regexp"
@@ -40,6 +42,30 @@ func GetAllContainersInProject(projectName string, dockerClient *client.Client) 
 		return nil, err
 	}
 	return containers, nil
+}
+
+func GetAllVolumesInProject(projectName string, dockerClient *client.Client) ([]*volume.Volume, error) {
+	volumeResponse, err := dockerClient.VolumeList(context.Background(), volume.ListOptions{
+		Filters: filters.NewArgs(
+			filters.KeyValuePair{Key: "label", Value: "com.docker.compose.project=" + projectName},
+		),
+	})
+	if err != nil {
+		return nil, err
+	}
+	return volumeResponse.Volumes, nil
+}
+
+func GetAllNetworksInProject(projectName string, dockerClient *client.Client) ([]network.Summary, error) {
+	networks, err := dockerClient.NetworkList(context.Background(), network.ListOptions{
+		Filters: filters.NewArgs(
+			filters.KeyValuePair{Key: "label", Value: "com.docker.compose.project=" + projectName},
+		),
+	})
+	if err != nil {
+		return nil, err
+	}
+	return networks, nil
 }
 
 func InspectEachContainer(containers []types.Container, dockerClient *client.Client) ([]types.ContainerJSON, error) {

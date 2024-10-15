@@ -43,8 +43,22 @@ func ServeFromProjectTemplate(w http.ResponseWriter, projectName string, templat
 		return
 	}
 
+	// Get all volumes
+	projectVolumes, err := GetAllVolumesInProject(projectName, dockerClient)
+	if err != nil {
+		reportInternalServerError(w, err, "Unable to list volumes", "")
+		return
+	}
+
+	// Get all networks
+	projectNetworks, err := GetAllNetworksInProject(projectName, dockerClient)
+	if err != nil {
+		reportInternalServerError(w, err, "Unable to list networks", "")
+		return
+	}
+
 	// Transform containers to project
-	project := TransformContainersToProject(projectContainerInfos, projectName)
+	project := TransformContainersToProject(projectContainerInfos, projectVolumes, projectNetworks, projectName)
 
 	// Render template
 	err = tmpl.ExecuteTemplate(w, templateName, project)
@@ -70,8 +84,22 @@ func ServeFromServiceTemplate(w http.ResponseWriter, projectName string, service
 		return
 	}
 
+	// Get all volumes
+	projectVolumes, err := GetAllVolumesInProject(projectName, dockerClient)
+	if err != nil {
+		reportInternalServerError(w, err, "Unable to list volumes", "")
+		return
+	}
+
+	// Get all networks
+	projectNetworks, err := GetAllNetworksInProject(projectName, dockerClient)
+	if err != nil {
+		reportInternalServerError(w, err, "Unable to list networks", "")
+		return
+	}
+
 	// Transform containers to project
-	project := TransformContainersToProject(projectContainerInfos, projectName)
+	project := TransformContainersToProject(projectContainerInfos, projectVolumes, projectNetworks, projectName)
 
 	// Select service
 	var activeService Service

@@ -14,6 +14,22 @@
                     {{ end }}
                 </section>
             {{ end }}
+            {{ if .Volumes }}
+                <section class="group">
+                    <h2 class="title">Volumes</h2>
+                    {{ range .Volumes }}
+                        {{ template "volume" . }}
+                    {{ end }}
+                </section>
+            {{ end }}
+            {{ if .Networks }}
+                <section class="group">
+                    <h2 class="title">Networks</h2>
+                    {{ range .Networks }}
+                        {{ template "network" . }}
+                    {{ end }}
+                </section>
+            {{ end }}
         {{ else }}
             <p id="no-services">The {{ .Name }} project does not contain any services.</p>
         {{ end }}

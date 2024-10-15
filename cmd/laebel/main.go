@@ -49,6 +49,8 @@ func loadTemplates() *template.Template {
 		filepath.Join("web", "templates", "serviceGraphStatus.css.html"),
 		filepath.Join("web", "templates", "service.html"),
 		filepath.Join("web", "templates", "serviceStatus.html"),
+		filepath.Join("web", "templates", "volume.html"),
+		filepath.Join("web", "templates", "network.html"),
 		filepath.Join("web", "templates", "clipboard.html"),
 	)
 	if err != nil {

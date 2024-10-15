@@ -1,0 +1,13 @@
+{{ define "volume" }}
+    <section id="{{.Name }}" class="volume">
+        <h3 class="title">{{ if .Title }}{{ .Title }}{{ else }}<code>{{ .Name }}</code>{{ end }}</h3>
+        {{ if .Description }}<p class="description">{{ .Description }}</p>{{ end }}
+        <ul>
+            {{ if .Title }}
+            <li class="name"><strong>Name</strong>: <code>{{ .Name }}</code> {{ template "clipboard" }}{{ end }}
+            <li class="driver">
+                <strong>Driver</strong>: <code>{{ .Driver }}</code>
+            </li>
+        </ul>
+    </section>
+{{ end }}

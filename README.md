@@ -86,7 +86,7 @@ This is used to describe the services in more detail than just the image name an
 The following [OpenContainers Annotations Spec](https://specs.opencontainers.org/image-spec/annotations/) labels are supported:
 
 - `org.opencontainers.image.title`: A human-readable title of the service.
-- `org.opencontainers.image.description`: A description of the service.
+- `org.opencontainers.image.description`: A longer description of the service.
 - `org.opencontainers.image.url`: A URL to the service's homepage.
 - `org.opencontainers.image.documentation`: A URL to the documentation of the service.
 - `org.opencontainers.image.source`: A URL to the source code of the service.
@@ -110,6 +110,15 @@ This is especially helpful when it is not a well-known port.
 - `net.henko.laebel.<port>.description`: A description of the purpose of the port.
 
 See the [full example](./examples/react-express-mysql/README.md) for examples on how to use these labels.
+
+### Volume and network metadata through labels
+
+Laebel also supports adding metadata to volumes and networks.
+
+The following labels are supported:
+
+- `net.henko.laebel.title`: A human-readable title of the volume.
+- `net.henko.laebel.description`: A longer description of the volume.
 
 ### Project metadata through environment variables
 

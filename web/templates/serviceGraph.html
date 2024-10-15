@@ -9,7 +9,10 @@ config:
 graph LR
 {{ range . }}subgraph "{{ .Name | escape }}"
     direction LR{{ range .Services }}
-    {{ .Name }}[<a href="#{{ .Name }}">{{ if .Title }}{{ .Title | escape }}{{ else }}{{ .Name }}{{ end }}</a><span class="{{ .Name }}-status icon"></span>]{{ end }}
+    {{ .Name }}[<a href="#{{ .Name }}">{{ if .Title }}{{ .Title | escape }}{{ else }}{{ .Name }}{{ end }}</a><span class="{{ .Name }}-status icon"></span>{{
+    if .Ports }}<br><small class="ports">{{ range $index, $port := .Ports }}{{ if $index }}, {{ end }}{{ $port.Number }}{{end}}</small>{{ end }}{{
+    range .Volumes }}<br><small class="volume">{{ .Name | escape }}</small>{{ end }}{{
+    range .Networks }}<br><small class="network">{{ .Name | escape }}</small>{{ end }}]{{ end }}
 end
 {{ end }}{{ range . }}{{ range .Services }}{{ $thisServiceName := .Name }}{{ range $index, $otherServiceName := .DependsOn }}{{ $no_links = false }}{{ $thisServiceName }} --> {{ $otherServiceName }}
 {{ end }}{{ end }}{{ end }}

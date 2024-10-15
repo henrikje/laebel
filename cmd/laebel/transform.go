@@ -2,20 +2,28 @@ package main
 
 import (
 	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/network"
+	"github.com/docker/docker/api/types/volume"
 	"github.com/docker/go-connections/nat"
+	"maps"
 	"os"
+	"slices"
 	"sort"
 	"strconv"
 	"strings"
 	"time"
 )
 
-func TransformContainersToProject(projectContainers []types.ContainerJSON, projectName string) Project {
+func TransformContainersToProject(projectContainers []types.ContainerJSON, projectVolumes []*volume.Volume, projectNetworks []network.Summary, projectName string) Project {
 	containers := filterOutHiddenContainers(projectContainers)
 	containersByServiceName := groupContainersByServiceName(containers)
-	services := createServiceForEachServiceName(containersByServiceName)
+	volumesByName := extractVolumes(projectVolumes)
+	networksByID := extractNetworks(projectNetworks)
+	services := createServiceForEachServiceName(containersByServiceName, volumesByName, networksByID)
 	serviceGroups := groupServicesByGroup(containers, services)
 	projectLinks := extractProjectLinks()
+	volumes := slices.Collect(maps.Values(volumesByName))
+	networks := slices.Collect(maps.Values(networksByID))
 	return Project{
 		Name:          projectName,
 		Title:         os.Getenv("LAEBEL_PROJECT_TITLE"),
@@ -23,7 +31,41 @@ func TransformContainersToProject(projectContainers []types.ContainerJSON, proje
 		Links:         projectLinks,
 		Icon:          os.Getenv("LAEBEL_PROJECT_ICON"),
 		ServiceGroups: serviceGroups,
+		Volumes:       volumes,
+		Networks:      networks,
 	}
+}
+
+func extractVolumes(projectVolumes []*volume.Volume) map[string]Volume {
+	volumes := make(map[string]Volume)
+	for _, projectVolume := range projectVolumes {
+		volumes[projectVolume.Name] = Volume{
+			Name:        projectVolume.Labels["com.docker.compose.volume"],
+			Title:       projectVolume.Labels["net.henko.laebel.title"],
+			Description: projectVolume.Labels["net.henko.laebel.description"],
+			Driver:      projectVolume.Driver,
+			Services:    []string{}, // TODO Implement
+		}
+	}
+	return volumes
+}
+
+func extractNetworks(projectNetworks []network.Summary) map[string]Network {
+	networks := make(map[string]Network)
+	for _, projectNetwork := range projectNetworks {
+		networks[projectNetwork.ID] = Network{
+			Name:        projectNetwork.Labels["com.docker.compose.network"],
+			Title:       projectNetwork.Labels["net.henko.laebel.title"],
+			Description: projectNetwork.Labels["net.henko.laebel.description"],
+			Driver:      projectNetwork.Driver,
+			Services:    []string{}, // TODO Implement - use projectNetwork.Containers
+		}
+	}
+	if len(networks) == 1 && networks[slices.Collect(maps.Keys(networks))[0]].Name == "default" {
+		// Remove default network if it's the only one
+		return nil
+	}
+	return networks
 }
 
 func filterOutHiddenContainers(projectContainers []types.ContainerJSON) []types.ContainerJSON {
@@ -45,10 +87,10 @@ func groupContainersByServiceName(containers []types.ContainerJSON) map[string][
 	return containersByServiceName
 }
 
-func createServiceForEachServiceName(containersByServiceName map[string][]types.ContainerJSON) []Service {
+func createServiceForEachServiceName(containersByServiceName map[string][]types.ContainerJSON, volumesByName map[string]Volume, networksByID map[string]Network) []Service {
 	var services []Service
 	for serviceName, serviceContainers := range containersByServiceName {
-		service := transformContainersToService(serviceContainers, serviceName)
+		service := transformContainersToService(serviceContainers, serviceName, volumesByName, networksByID)
 		services = append(services, service)
 	}
 	return services
@@ -118,7 +160,7 @@ func extractProjectLinks() []Link {
 	return projectLinks
 }
 
-func transformContainersToService(serviceContainers []types.ContainerJSON, serviceName string) Service {
+func transformContainersToService(serviceContainers []types.ContainerJSON, serviceName string, name map[string]Volume, byName map[string]Network) Service {
 	container := serviceContainers[0] // Use the first container to extract metadata
 	links := extractServiceLinks(container)
 	containerStructs := make([]Container, 0)
@@ -149,6 +191,22 @@ func transformContainersToService(serviceContainers []types.ContainerJSON, servi
 	}
 	status := extractStatus(containerStructs, serviceContainers)
 	dependsOn := extractDependsOn(container)
+	var volumes []Volume
+	for _, containerMount := range container.Mounts {
+		if containerMount.Type == "volume" {
+			projectVolume, found := name[containerMount.Name]
+			if found {
+				volumes = append(volumes, projectVolume)
+			}
+		}
+	}
+	var networks []Network
+	for _, containerNetwork := range container.NetworkSettings.Networks {
+		projectNetwork, found := byName[containerNetwork.NetworkID]
+		if found {
+			networks = append(networks, projectNetwork)
+		}
+	}
 	service := Service{
 		Name:        serviceName,
 		Title:       container.Config.Labels["org.opencontainers.image.title"],
@@ -157,6 +215,8 @@ func transformContainersToService(serviceContainers []types.ContainerJSON, servi
 		Status:      status,
 		Links:       links,
 		Ports:       extractServicePorts(serviceContainers),
+		Volumes:     volumes,
+		Networks:    networks,
 		DependsOn:   dependsOn,
 		Containers:  containerStructs,
 	}

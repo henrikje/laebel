@@ -1,12 +1,12 @@
 {{ define "service" }}
-    <section id="{{.Name }}" class="service" hx-trigger="sse:status:{{ .Name }}" hx-get="/service?name={{ .Name }}">
+    <section id="{{ .Name }}" class="service" hx-trigger="sse:status:{{ .Name }}" hx-get="/service?name={{ .Name }}">
         <h3 class="title">{{ if .Title }}{{ .Title }}{{ else }}<code>{{ .Name }}</code>{{ end }}</h3>
         {{ if .Description }}<p class="description">{{ .Description }}</p>{{ end }}
         <ul>
             {{ if .Title }}
-            <li class="name"><strong>Service</strong>:<code>{{ .Name }}</code> {{ template "clipboard" }}{{ end }}
-            <li class="image"><strong>Image</strong>:<code>{{ .Image }}</code> {{ template "clipboard" }}</li>
-            <li class="status"><strong>Status</strong>:{{ template "serviceStatus" .Status }}</li>
+            <li class="name"><strong>Name</strong>: <code>{{ .Name }}</code> {{ template "clipboard" }}{{ end }}
+            <li class="image"><strong>Image</strong>: <code>{{ .Image }}</code> {{ template "clipboard" }}</li>
+            <li class="status"><strong>Status</strong>: {{ template "serviceStatus" .Status }}</li>
             {{ if .Links }}
                 <li class="links">
                     <strong>Links</strong>: {{ range $index, $link := .Links }}{{ if $index }}, {{ end }}
@@ -16,7 +16,17 @@
             {{ end }}
             {{ if .Ports }}
                 <li class="ports">
-                    <strong>Ports</strong>: <ul>{{ range $port := .Ports }}<li><code>{{ $port.Number }}</code>{{ if $port.Description }}: {{ $port.Description }}{{ end }}</li>{{ end }}</ul>
+                    <strong>Ports</strong>: <ul>{{ range .Ports }}<li><code>{{ .Number }}</code>{{ if .Description }}: {{ .Description }}{{ end }}</li>{{ end }}</ul>
+                </li>
+            {{ end }}
+            {{ if .Volumes }}
+                <li class="volumes">
+                    <strong>Volumes</strong>: <ul>{{ range .Volumes }}<li><code><a href="#{{ .Name }}">{{ .Name }}</a></code>{{ if .Title }}: {{ .Title }}{{ end }}</li>{{ end }}</ul>
+                </li>
+            {{ end }}
+            {{ if .Networks }}
+                <li class="networks">
+                    <strong>Networks</strong>: <ul>{{ range .Networks }}<li><code><a href="#{{ .Name }}">{{ .Name }}</a></code>{{ if .Title }}: {{ .Title }}{{ end }}</li>{{ end }}</ul>
                 </li>
             {{ end }}
         </ul>
