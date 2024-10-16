@@ -11,8 +11,8 @@ graph LR
     direction LR{{ range .Services }}
     {{ .Name }}[<a href="#{{ .Name }}">{{ if .Title }}{{ .Title | escape }}{{ else }}{{ .Name }}{{ end }}</a><span class="{{ .Name }}-status icon"></span><div class="details">{{
     if .Ports }} <small class="ports">{{ range $index, $port := .Ports }}{{ if $index }}, {{ end }}{{ $port.Number }}{{end}}</small>{{ end }}{{
-        range .Volumes }}<small class="volume"><a href="#{{ .Name }}">{{ .Name | escape }}</a></small>{{ end }}{{
-        range .Networks }}<small class="network"><a href="#{{ .Name }}">{{ .Name | escape }}</a></small>{{ end }}</div>]{{ end }}
+        range .Networks }}<small class="network"><a href="#{{ .Name }}">{{ .Name | escape }}</a></small>{{ end }}{{
+        range .Volumes }}<small class="volume"><a href="#{{ .Name }}">{{ .Name | escape }}</a></small>{{ end }}</div>]{{ end }}
 end
 {{ end }}{{ range . }}{{ range .Services }}{{ $thisServiceName := .Name }}{{ range $index, $otherServiceName := .DependsOn }}{{ $no_links = false }}{{ $thisServiceName }} --> {{ $otherServiceName }}
 {{ end }}{{ end }}{{ end }}
