@@ -177,6 +177,14 @@ summary {
     display: inline-block;
     margin: 0 0.5em;
 }
+#graph .volume a, #graph .network a {
+    color: black;
+    text-decoration: none;
+}
+#graph .volume a:hover, #graph .network a:hover {
+    color: rgb(57, 113, 243);
+    text-decoration: underline;
+}
 
 .service .title::before {
     content: "⚙️ "
