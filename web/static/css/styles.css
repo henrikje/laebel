@@ -165,11 +165,19 @@ summary {
 }
 
 #graph .ports::before {
-    content: "ports: ";
+    content: "🔌 ";
 }
-#graph .volume::before {
-    content: "volume: ";
+#graph .volume::before, .volume .title::before {
+    content: "📦 ";
 }
-#graph .network::before {
-    content: "network: ";
+#graph .network::before, .network .title::before {
+    content: "🌐 ";
+}
+#graph .ports, #graph .volume, #graph .network {
+    display: inline-block;
+    margin: 0 0.5em;
+}
+
+.service .title::before {
+    content: "⚙️ "
 }
