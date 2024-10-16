@@ -9,6 +9,8 @@ services:
     # This allows Laebel to read information about the services in your project.
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+      - private
     # Set project metadata using environment variables.
     environment:
       - "LAEBEL_PROJECT_TITLE=Compose sample application"
@@ -52,3 +54,22 @@ services:
       - "net.henko.laebel.link.phpmyadmin.url=http://localhost:8080/"
       - "net.henko.laebel.link.phpmyadmin.title=phpMyAdmin"
       - "net.henko.laebel.port.8080.description=Internal HTTP"
+
+networks:
+  public:
+    labels:
+      - "net.henko.laebel.title=Public Network"
+      - "net.henko.laebel.description=Public network for services that need to be exposed to the internet."
+  private:
+    labels:
+      - "net.henko.laebel.title=Private Network"
+      - "net.henko.laebel.description=Private network for services that should not be exposed to the internet."
+volumes:
+  back-notused:
+    labels:
+      - "net.henko.laebel.title=Backend Storage (Currently Not Used)"
+      - "net.henko.laebel.description=Volume intended for storing backend data."
+  db-data:
+    labels:
+      - "net.henko.laebel.title=Database Storage"
+      - "net.henko.laebel.description=Persistent storage volume for the database."
