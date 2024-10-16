@@ -4,19 +4,23 @@
 
 - [x] Add support for volumes.
 - [x] Add support for networks.
-- [ ] Ensure that a service, a volume, and a networks with the same name are not confused.
 - [x] Document supported volume and network labels.
-- [ ] Consider adding volumes and/or networks to service groups (using `net.henko.laebel.group`).
+- [-] Consider adding volumes and/or networks to service groups (using `net.henko.laebel.group`).
       If so, they should perhaps be renamed "groups" rather than "service groups".
+      _No, networks does not fit in with the service groups. Volumes could, but it is not necessary._
 - [x] Visualize volumes and networks in the service graph.
       - It could feel natural to represent networks as subgraphs, but since an element may not be part of multiple subgraphs, this will not work.
-      - Each network could be represented as its own node, but then there will be a lot o extra edges, making the graph harder to read.
-      - We could add “badges” to the serices which note what networks they use. (This could work for volumes too.) The badges could either have a text prefix (“network: “) or a emoji prefix (e.g. “🌐 “ or “🛜 “ for network, or "🫙 “, “📦 “, or “🛄 ” for volume).
-- [ ] Consider adding status for volumes and networks. What states can they be in? Created/missing?
+      - Each network could be represented as its own node, but then there will be a lot of extra edges, making the graph harder to read.
+      - We could add “badges” to the services which note what networks they use. (This could work for volumes too.) The badges could either have a text prefix (“network: “) or a emoji prefix (e.g. “🌐 “ or “🛜 “ for network, or "🫙 “, “📦 “, or “🛄 ” for volume).
+- [-] Consider adding status for volumes and networks. What states can they be in? Created/missing?
+      _No, volumes and networks are as dynamic as services._
 - [x] Consider suppressing the "default" network if all services are using it.
-- [ ] Avoid showing networks that are not explicitly used by any service.
-- [ ] Display a list of services which use each volume and network.
-- [ ] Add labels for volumes and networks in the react-express-mysql example. Update example.
+- [-] Avoid showing networks that are not explicitly used by any service.
+      _No, apart from the special case of a single network used by all services, all networks should be shown._
+- [x] Display a list of services which use each volume and network.
+- [x] Add labels for volumes and networks in the react-express-mysql example.
+- [ ] Ensure that a service, a volume, and a networks with the same name are not confused.
+- [ ] Update example.
 
 ## Future
 

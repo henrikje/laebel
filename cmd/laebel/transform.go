@@ -17,8 +17,8 @@ import (
 func TransformContainersToProject(projectContainers []types.ContainerJSON, projectVolumes []*volume.Volume, projectNetworks []network.Summary, projectName string) Project {
 	containers := filterOutHiddenContainers(projectContainers)
 	containersByServiceName := groupContainersByServiceName(containers)
-	volumesByName := extractVolumes(projectVolumes)
-	networksByID := extractNetworks(projectNetworks)
+	volumesByName := extractVolumes(projectVolumes, containersByServiceName)
+	networksByID := extractNetworks(projectNetworks, containersByServiceName)
 	services := createServiceForEachServiceName(containersByServiceName, volumesByName, networksByID)
 	serviceGroups := groupServicesByGroup(containers, services)
 	projectLinks := extractProjectLinks()
@@ -36,7 +36,7 @@ func TransformContainersToProject(projectContainers []types.ContainerJSON, proje
 	}
 }
 
-func extractVolumes(projectVolumes []*volume.Volume) map[string]Volume {
+func extractVolumes(projectVolumes []*volume.Volume, containersByServiceName map[string][]types.ContainerJSON) map[string]Volume {
 	volumes := make(map[string]Volume)
 	for _, projectVolume := range projectVolumes {
 		volumes[projectVolume.Name] = Volume{
@@ -44,13 +44,28 @@ func extractVolumes(projectVolumes []*volume.Volume) map[string]Volume {
 			Title:       projectVolume.Labels["net.henko.laebel.title"],
 			Description: projectVolume.Labels["net.henko.laebel.description"],
 			Driver:      projectVolume.Driver,
-			Services:    []string{}, // TODO Implement
+			Services:    servicesUsingVolume(projectVolume.Name, containersByServiceName),
 		}
 	}
 	return volumes
 }
 
-func extractNetworks(projectNetworks []network.Summary) map[string]Network {
+func servicesUsingVolume(volumeName string, containersByServiceName map[string][]types.ContainerJSON) []string {
+	services := make([]string, 0)
+	for serviceName, serviceContainers := range containersByServiceName {
+		for _, container := range serviceContainers {
+			for _, containerMount := range container.Mounts {
+				if containerMount.Type == "volume" && containerMount.Name == volumeName {
+					services = append(services, serviceName)
+					break
+				}
+			}
+		}
+	}
+	return slices.Compact(slices.Sorted(slices.Values(services)))
+}
+
+func extractNetworks(projectNetworks []network.Summary, containersByServiceName map[string][]types.ContainerJSON) map[string]Network {
 	networks := make(map[string]Network)
 	for _, projectNetwork := range projectNetworks {
 		networks[projectNetwork.ID] = Network{
@@ -58,7 +73,7 @@ func extractNetworks(projectNetworks []network.Summary) map[string]Network {
 			Title:       projectNetwork.Labels["net.henko.laebel.title"],
 			Description: projectNetwork.Labels["net.henko.laebel.description"],
 			Driver:      projectNetwork.Driver,
-			Services:    []string{}, // TODO Implement - use projectNetwork.Containers
+			Services:    servicesUsingNetwork(projectNetwork.ID, containersByServiceName),
 		}
 	}
 	if len(networks) == 1 && networks[slices.Collect(maps.Keys(networks))[0]].Name == "default" {
@@ -66,6 +81,21 @@ func extractNetworks(projectNetworks []network.Summary) map[string]Network {
 		return nil
 	}
 	return networks
+}
+
+func servicesUsingNetwork(networkID string, containersByServiceName map[string][]types.ContainerJSON) []string {
+	services := make([]string, 0)
+	for serviceName, serviceContainers := range containersByServiceName {
+		for _, container := range serviceContainers {
+			for containerNetworkID := range container.NetworkSettings.Networks {
+				if containerNetworkID == networkID {
+					services = append(services, serviceName)
+					break
+				}
+			}
+		}
+	}
+	return slices.Compact(slices.Sorted(slices.Values(services)))
 }
 
 func filterOutHiddenContainers(projectContainers []types.ContainerJSON) []types.ContainerJSON {
