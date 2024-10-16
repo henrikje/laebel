@@ -19,7 +19,7 @@
       _No, apart from the special case of a single network used by all services, all networks should be shown._
 - [x] Display a list of services which use each volume and network.
 - [x] Add labels for volumes and networks in the react-express-mysql example.
-- [ ] Ensure that a service, a volume, and a networks with the same name are not confused.
+- [x] Ensure that a service, a volume, and a networks with the same name are not confused.
 - [ ] Update example.
 
 ## Future

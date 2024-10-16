@@ -73,7 +73,7 @@ func extractNetworks(projectNetworks []network.Summary, containersByServiceName 
 			Title:       projectNetwork.Labels["net.henko.laebel.title"],
 			Description: projectNetwork.Labels["net.henko.laebel.description"],
 			Driver:      projectNetwork.Driver,
-			Services:    servicesUsingNetwork(projectNetwork.ID, containersByServiceName),
+			Services:    servicesUsingNetwork(projectNetwork.Name, containersByServiceName),
 		}
 	}
 	if len(networks) == 1 && networks[slices.Collect(maps.Keys(networks))[0]].Name == "default" {
@@ -83,12 +83,12 @@ func extractNetworks(projectNetworks []network.Summary, containersByServiceName 
 	return networks
 }
 
-func servicesUsingNetwork(networkID string, containersByServiceName map[string][]types.ContainerJSON) []string {
+func servicesUsingNetwork(networkName string, containersByServiceName map[string][]types.ContainerJSON) []string {
 	services := make([]string, 0)
 	for serviceName, serviceContainers := range containersByServiceName {
 		for _, container := range serviceContainers {
-			for containerNetworkID := range container.NetworkSettings.Networks {
-				if containerNetworkID == networkID {
+			for containerNetworkName := range container.NetworkSettings.Networks {
+				if containerNetworkName == networkName {
 					services = append(services, serviceName)
 					break
 				}
