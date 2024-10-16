@@ -1,5 +1,5 @@
 {{ define "service" }}
-    <section id="{{ .Name }}" class="service" hx-trigger="sse:status:{{ .Name }}" hx-get="/service?name={{ .Name }}">
+    <section id="{{ .Name }}-service" class="service" hx-trigger="sse:status:{{ .Name }}" hx-get="/service?name={{ .Name }}">
         <h3 class="title">{{ if .Title }}{{ .Title }}{{ else }}<code>{{ .Name }}</code>{{ end }}</h3>
         {{ if .Description }}<p class="description">{{ .Description }}</p>{{ end }}
         <ul>
@@ -19,14 +19,14 @@
                     <strong>Ports</strong>: <ul>{{ range .Ports }}<li><code>{{ .Number }}</code>{{ if .Description }}: {{ .Description }}{{ end }}</li>{{ end }}</ul>
                 </li>
             {{ end }}
-            {{ if .Volumes }}
-                <li class="volumes">
-                    <strong>Volumes</strong>: <ul>{{ range .Volumes }}<li><code><a href="#{{ .Name }}">{{ .Name }}</a></code>{{ if .Title }}: {{ .Title }}{{ end }}</li>{{ end }}</ul>
-                </li>
-            {{ end }}
             {{ if .Networks }}
                 <li class="networks">
-                    <strong>Networks</strong>: <ul>{{ range .Networks }}<li><code><a href="#{{ .Name }}">{{ .Name }}</a></code>{{ if .Title }}: {{ .Title }}{{ end }}</li>{{ end }}</ul>
+                    <strong>Networks</strong>: <ul>{{ range .Networks }}<li><code><a href="#{{ .Name }}-network">{{ .Name }}</a></code>{{ if .Title }}: {{ .Title }}{{ end }}</li>{{ end }}</ul>
+                </li>
+            {{ end }}
+            {{ if .Volumes }}
+                <li class="volumes">
+                    <strong>Volumes</strong>: <ul>{{ range .Volumes }}<li><code><a href="#{{ .Name }}-volume">{{ .Name }}</a></code>{{ if .Title }}: {{ .Title }}{{ end }}</li>{{ end }}</ul>
                 </li>
             {{ end }}
         </ul>

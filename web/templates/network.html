@@ -1,5 +1,5 @@
 {{ define "network" }}
-    <section id="{{.Name }}" class="network">
+    <section id="{{.Name }}-network" class="network">
         <h3 class="title">{{ if .Title }}{{ .Title }}{{ else }}<code>{{ .Name }}</code>{{ end }}</h3>
         {{ if .Description }}<p class="description">{{ .Description }}</p>{{ end }}
         <ul>
@@ -13,7 +13,7 @@
                     <strong>Services</strong>:
                     <ul>
                         {{ range .Services }}
-                            <li><code><a href="#{{ . }}">{{ . }}</a></code></li>
+                            <li><code><a href="#{{ . }}-service">{{ . }}</a></code></li>
                         {{ end }}
                     </ul>
                 </li>
