@@ -20,7 +20,7 @@
 - [x] Display a list of services which use each volume and network.
 - [x] Add labels for volumes and networks in the react-express-mysql example.
 - [x] Ensure that a service, a volume, and a networks with the same name are not confused.
-- [ ] Update example.
+- [x] Update example.
 
 ## Future
 
