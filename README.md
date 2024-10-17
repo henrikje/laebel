@@ -24,7 +24,8 @@ The goal is to make it feel like someone wrote a nice README for your project, b
 - **Live-updated status**: The status of the services is updated in real-time, so you can see when a service is starting, running, or stopped.
 - **Describes each service in your project**: Lists all services and the important information about them.
   The information includes service name, image name, how many containers are running, and the status of the containers.
-- **Additional user-configurable metadata**: Allows you to describe your services in more detail, 
+- **Describes each volume and network**: Also displays information about each volume and network in your project.
+- **Additional user-configurable metadata**: Allows you to describe your services, volumes, and networks in more detail, 
   using [`labels`](https://docs.docker.com/reference/compose-file/services/#labels) in your Docker Compose project.
   It allows you to specify title, description, group, external links, and more.
   The metadata is based on the [OpenContainers Annotations Spec](https://specs.opencontainers.org/image-spec/annotations/) 
