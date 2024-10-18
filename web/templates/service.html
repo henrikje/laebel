@@ -10,8 +10,7 @@
             {{ if .Links }}
                 <li class="links">
                     <strong>Links</strong>: {{ range $index, $link := .Links }}{{ if $index }}, {{ end }}
-                    <a
-                            href="{{ $link.URL }}">{{ $link.Title }}</a>{{end}}
+                    <a href="{{ $link.URL }}">{{ $link.Title }}</a>{{end}}
                 </li>
             {{ end }}
             {{ if .Ports }}
