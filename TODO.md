@@ -11,8 +11,10 @@
   There is no guarantee that all containers based on the same service have the same image.
 - [ ] Look for more characters that need to be included in the `escape` template function.
 - [ ] Fix reader mode: It should display complete content in reader mode.
-- [ ] Add dark mode: Switch to dark mode automatically when requested.
-- [ ] Display a message when SSE connection is broken.
+- [x] Add dark mode: Switch to dark mode automatically when requested.
+  - [x] Make all links in the graph to be --body-text.
+  - [ ] Adjust colors of the warning dialog in both themes.
+- [x] Ensure service _names_ are always written as codes, even in the service graph.
 
 ## Future
 
@@ -38,4 +40,4 @@
 - [ ] Lighthouse: [Document does not have a meta description](https://developer.chrome.com/docs/lighthouse/seo/meta-description/)
 - [ ] Add "icon description" title and help cursor in the service graph, just like the status summary icon in the service section has.
 - [ ] Why does HTMX request the `hx-get` for the services multiple times? It should only be once per service status event.
-- [-] Add `org.opencontainers.image.authors` support, perhaps displayed as "Image: <image> by <author>". _No, not really necessary. It is not something a human would have added to README.md._
+- [ ] Add an "writer mode" where you can edit all descriptions, and the system produces the labels for you to paste into the compose file.

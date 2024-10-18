@@ -54,7 +54,7 @@ h2 {
     letter-spacing: -0.015em;
 }
 
-h3 {
+h3, .warning h2 {
     font-size: 1.425em;
     font-weight: 600;
     letter-spacing: -0.015em;
@@ -85,14 +85,14 @@ code {
     color: var(--code-text);
     font-size: 0.875em;
 }
-
-code a, code a:visited {
-    color: unset;
+a:has(code), a:visited:has(code) {
+    text-decoration-color: var(--code-text);
 }
-
-code a:hover {
+a:hover code {
     color: var(--link-text);
-    text-decoration: underline;
+}
+a:has(code):hover {
+    text-decoration-color: var(--link-text);
 }
 
 table {
@@ -222,6 +222,13 @@ summary {
 
 .clipboard:active::after {
     content: "Copied!"
+}
+
+#graph a {
+    color: var(--body-text);
+}
+#graph a:hover {
+    color: var(--link-text);
 }
 
 #graph .ports::before {

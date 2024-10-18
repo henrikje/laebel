@@ -20,12 +20,12 @@
             {{ end }}
             {{ if .Networks }}
                 <li class="networks">
-                    <strong>Networks</strong>: <ul>{{ range .Networks }}<li><code><a href="#{{ .Name }}-network">{{ .Name }}</a></code>{{ if .Title }}: {{ .Title }}{{ end }}</li>{{ end }}</ul>
+                    <strong>Networks</strong>: <ul>{{ range .Networks }}<li><a href="#{{ .Name }}-network"><code>{{ .Name }}</code></a>{{ if .Title }}: {{ .Title }}{{ end }}</li>{{ end }}</ul>
                 </li>
             {{ end }}
             {{ if .Volumes }}
                 <li class="volumes">
-                    <strong>Volumes</strong>: <ul>{{ range .Volumes }}<li><code><a href="#{{ .Name }}-volume">{{ .Name }}</a></code>{{ if .Title }}: {{ .Title }}{{ end }}</li>{{ end }}</ul>
+                    <strong>Volumes</strong>: <ul>{{ range .Volumes }}<li><a href="#{{ .Name }}-volume"><code>{{ .Name }}</code></a>{{ if .Title }}: {{ .Title }}{{ end }}</li>{{ end }}</ul>
                 </li>
             {{ end }}
         </ul>
