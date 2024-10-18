@@ -239,6 +239,9 @@ summary {
     fill: var(--node-fill) !important;
     stroke: var(--node-stroke) !important;
 }
+#graph .edgePaths path {
+    stroke: var(--node-stroke) !important;
+}
 #graph code {
     color: var(--code-text) !important;
 }

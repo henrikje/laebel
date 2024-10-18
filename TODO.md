@@ -6,16 +6,16 @@
 - [x] Look up port description based on the _container_ port number, not the _host_ port number.
 - [x] Display a banner when the SSE connection is lost (e.g. Laebel is shut down) to indicate that the status is no longer live-updated.
   Perhaps replace all status icons with a "live update lost" (e.g. ❓) icon. (Or is it helpful to know the last known status?)
+- [x] Add dark mode: Switch to dark mode automatically when requested.
+    - [x] Make all links in the graph to be --body-text.
+    - [x] Adjust colors of the warning dialog in both themes.
+    - [x] Override Mermaid colors using CSS instead, then they can take effect immediately. Then we can pick some nicer colors too.
+- [x] Ensure service _names_ are always written as codes, even in the service graph.
+- [ ] Fix reader mode: It should display complete content in reader mode.
+- [ ] Look for more characters that need to be included in the `escape` template function.
 - [ ] Update model so a service can have multiple values for the same label/property.
   For example, image and group name.
   There is no guarantee that all containers based on the same service have the same image.
-- [ ] Look for more characters that need to be included in the `escape` template function.
-- [ ] Fix reader mode: It should display complete content in reader mode.
-- [x] Add dark mode: Switch to dark mode automatically when requested.
-  - [x] Make all links in the graph to be --body-text.
-  - [x] Adjust colors of the warning dialog in both themes.
-  - [x] Override Mermaid colors using CSS instead, then they can take effect immediately. Then we can pick some nicer colors too.
-- [x] Ensure service _names_ are always written as codes, even in the service graph.
 
 ## Future
 
