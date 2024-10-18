@@ -39,6 +39,9 @@ func TransformContainersToProject(projectContainers []types.ContainerJSON, proje
 func extractVolumes(projectVolumes []*volume.Volume, containersByServiceName map[string][]types.ContainerJSON) map[string]Volume {
 	volumes := make(map[string]Volume)
 	for _, projectVolume := range projectVolumes {
+		if projectVolume.Labels["net.henko.laebel.hidden"] == "true" {
+			continue
+		}
 		volumes[projectVolume.Name] = Volume{
 			Name:        projectVolume.Labels["com.docker.compose.volume"],
 			Title:       projectVolume.Labels["net.henko.laebel.title"],
@@ -68,6 +71,9 @@ func servicesUsingVolume(volumeName string, containersByServiceName map[string][
 func extractNetworks(projectNetworks []network.Summary, containersByServiceName map[string][]types.ContainerJSON) map[string]Network {
 	networks := make(map[string]Network)
 	for _, projectNetwork := range projectNetworks {
+		if projectNetwork.Labels["net.henko.laebel.hidden"] == "true" {
+			continue
+		}
 		networks[projectNetwork.ID] = Network{
 			Name:        projectNetwork.Labels["com.docker.compose.network"],
 			Title:       projectNetwork.Labels["net.henko.laebel.title"],

@@ -118,8 +118,9 @@ Laebel also supports adding metadata to volumes and networks.
 
 The following labels are supported:
 
-- `net.henko.laebel.title`: A human-readable title of the volume.
-- `net.henko.laebel.description`: A longer description of the volume.
+- `net.henko.laebel.title`: A human-readable title of the volume/network.
+- `net.henko.laebel.description`: A longer description of the volume/network.
+- `net.henko.laebel.hidden`: If set to `true`, the label/network will not be included in the generated documentation.
 
 ### Project metadata through environment variables
 
