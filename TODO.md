@@ -3,7 +3,7 @@
 ## v0.7.0
 
 - [x] Support `net.henko.laebel.hidden` flag for volumes and networks
-- [ ] Look up port description based on the _container_ port number, not the _host_ port number.
+- [x] Look up port description based on the _container_ port number, not the _host_ port number.
 - [ ] Display a banner when the SSE connection is lost (e.g. Laebel is shut down) to indicate that the status is no longer live-updated.
   Perhaps replace all status icons with a "live update lost" (e.g. ❓) icon. (Or is it helpful to know the last known status?)
 - [ ] Update model so a service can have multiple values for the same label/property.

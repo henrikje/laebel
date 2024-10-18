@@ -262,11 +262,11 @@ func transformContainersToService(serviceContainers []types.ContainerJSON, servi
 func extractServicePorts(containers []types.ContainerJSON) []Port {
 	ports := make([]Port, 0)
 	for _, container := range containers {
-		for _, portBindings := range container.HostConfig.PortBindings {
+		for exposedPort, portBindings := range container.HostConfig.PortBindings {
 			for _, portBinding := range portBindings {
 				port := Port{
 					Number:      portBinding.HostPort,
-					Description: container.Config.Labels["net.henko.laebel.port."+portBinding.HostPort+".description"],
+					Description: container.Config.Labels["net.henko.laebel.port."+exposedPort.Port()+".description"],
 				}
 				ports = append(ports, port)
 			}
