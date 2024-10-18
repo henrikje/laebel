@@ -94,15 +94,15 @@ a + .icon {
     max-height: 32px;
 }
 
-#reload {
+.warning {
     background-color: #fff5f5;
     border: 1px solid #d7cdcd;
     padding: 1em;
 }
-#reload h2 {
+.warning h2 {
     margin: 0;
 }
-#reload p {
+.warning p {
     margin: 1em 0 0 0;
 }
 

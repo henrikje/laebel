@@ -1,5 +1,17 @@
 {{ define "main" }}
     <main id="services">
+        <div id="error" class="warning" style="display: none">
+            <h2>❗️ Failed to update status.</h2>
+            <p>Cannot connect to the status update endpoint. Is the Laebel service running?</p>
+        </div>
+        <script>
+            document.body.addEventListener('htmx:sseError', () => {
+                document.getElementById('error').style.display = 'block';
+            })
+            document.body.addEventListener('htmx:sseOpen', () => {
+                document.getElementById('error').style.display = 'none';
+            })
+        </script>
         <div hx-trigger="sse:reload" hx-get="/reload"></div>
         {{ if .ServiceGroups }}
             <section id="graph">
