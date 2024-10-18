@@ -14,6 +14,7 @@
 - [x] Add dark mode: Switch to dark mode automatically when requested.
   - [x] Make all links in the graph to be --body-text.
   - [ ] Adjust colors of the warning dialog in both themes.
+  - [x] Override Mermaid colors using CSS instead, then they can take effect immediately. Then we can pick some nicer colors too.
 - [x] Ensure service _names_ are always written as codes, even in the service graph.
 
 ## Future

@@ -37,9 +37,7 @@
 </body>
 <script type="module">
     import mermaid from '/static/js/mermaid.esm.min.mjs';
-    const darkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const theme = darkMode ? 'dark' : 'default';
-    mermaid.initialize({ theme });
+    mermaid.initialize();
 </script>
 <script>
     function copyPreviousText(button) {

@@ -12,6 +12,10 @@
     --warning-border: #d7cdcd;
     --dimmed-text: rgb(109, 109, 109);
     --dimmed-border: rgb(227, 227, 227);
+    --cluster-fill: #ffffde;
+    --cluster-stroke: #aaaa33;
+    --node-fill: #ECECFF;
+    --node-stroke: #9370DB;
 }
 @media (prefers-color-scheme: dark) {
     :where(body) {
@@ -28,9 +32,12 @@
         --warning-border: rgb(255, 102, 102);
         --dimmed-text: rgb(117, 116, 122);
         --dimmed-border: rgb(117, 116, 122);
+        --cluster-fill: #111;
+        --cluster-stroke: gray;
+        --node-fill: rgb(43, 42, 51);
+        --node-stroke: gray;
     }
 }
-
 
 body {
     background-color: var(--body-background);
@@ -209,11 +216,11 @@ summary {
 
 .clipboard::after {
     content: "Copy to clipboard";
-    color: var(--body-background);
+    color: var(--body-text);
     padding: 0.25em 1em 0.25em 0.5em;
     display: none;
     position: absolute;
-    background-color: var(--body-text);
+    background-color: var(--body-background);
 }
 
 .clipboard:hover::after {
@@ -224,6 +231,17 @@ summary {
     content: "Copied!"
 }
 
+#graph .cluster rect {
+    fill: var(--cluster-fill) !important;
+    stroke: var(--cluster-stroke) !important;
+}
+#graph .node rect {
+    fill: var(--node-fill) !important;
+    stroke: var(--node-stroke) !important;
+}
+#graph code {
+    color: var(--code-text) !important;
+}
 #graph a {
     color: var(--body-text);
 }
