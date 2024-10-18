@@ -2,4 +2,9 @@
 }}.{{ .Name }}-status.icon::after { content: "{{ .Status.SummaryIcon }}"; }
 {{ if eq .Status.Summary 2 }}.node:has(.{{ .Name }}-status.icon) rect { fill: #efe !important; }{{ end }}
 {{ if eq .Status.Summary 3 }}.node:has(.{{ .Name }}-status.icon) rect { fill: #fee !important; }{{ end }}
-{{ end }}{{ end }}{{ end }}
+{{ end }}{{ end }}
+@media (prefers-color-scheme: dark) { {{ range .ServiceGroups }}{{ range .Services
+}}{{ if eq .Status.Summary 2 }}.node:has(.{{ .Name }}-status.icon) rect { fill: #130 !important; }{{ end }}
+    {{ if eq .Status.Summary 3 }}.node:has(.{{ .Name }}-status.icon) rect { fill: #300 !important; }{{ end }}
+{{ end }}{{ end }}
+}{{ end }}

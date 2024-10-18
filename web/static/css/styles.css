@@ -1,8 +1,44 @@
+:where(body) {
+    --body-background: Canvas;
+    --body-text: CanvasText;
+    --code-background: rgb(250, 250, 250);
+    --code-text: rgb(92, 92, 92);
+    --link-text: rgb(57, 113, 243);
+    --link-active-text: rgb(238, 0, 0);
+    --link-visited-text: rgb(85, 26, 139);
+    --brand-text: gray;
+    --warning-background: #fff5f5;
+    --warning-text: CanvasText;
+    --warning-border: #d7cdcd;
+    --dimmed-text: rgb(109, 109, 109);
+    --dimmed-border: rgb(227, 227, 227);
+}
+@media (prefers-color-scheme: dark) {
+    :where(body) {
+        --body-background: rgb(30, 30, 30);
+        --body-text: rgb(251, 251, 254);
+        --code-background: rgb(43, 42, 51);
+        --code-text: rgb(170, 170, 170);
+        --link-text: rgb(140, 140, 255);
+        --link-active-text: rgb(255, 102, 102);
+        --link-visited-text: rgb(255, 173, 255);
+        --brand-text: gray;
+        --warning-background: rgb(255, 102, 102);
+        --warning-text: rgb(251, 251, 254);
+        --warning-border: rgb(255, 102, 102);
+        --dimmed-text: rgb(117, 116, 122);
+        --dimmed-border: rgb(117, 116, 122);
+    }
+}
+
+
 body {
+    background-color: var(--body-background);
+    color: var(--body-text);
+    color-scheme: light dark;
     font-family: system-ui, sans-serif;
     font-size: 15px;
     line-height: 1.5;
-    color: rgb(34, 34, 34);
     padding: 0 2em 2em 2em;
 }
 
@@ -34,14 +70,29 @@ strong {
     font-weight: 600;
 }
 
+a {
+    color: var(--link-text);
+}
+a:active {
+    color: var(--link-active-text)
+}
+a:visited {
+    color: var(--link-visited-text)
+}
+
 code {
-    background-color: rgb(250, 250, 250);
-    color: rgb(92, 92, 92);
+    background-color: var(--code-background);
+    color: var(--code-text);
     font-size: 0.875em;
 }
 
-a {
-    color: rgb(57, 113, 243);
+code a, code a:visited {
+    color: unset;
+}
+
+code a:hover {
+    color: var(--link-text);
+    text-decoration: underline;
 }
 
 table {
@@ -59,9 +110,11 @@ td {
 .icon {
     font-family: emoji, "Twemoji Mozilla", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", "EmojiOne Color", "Android Emoji", sans-serif;
 }
+
 a + .icon {
     margin-left: 0.5em;
 }
+
 .service .icon {
     cursor: help;
 }
@@ -72,20 +125,24 @@ a + .icon {
     margin-top: 0.5em;
     margin-right: -1em;
     margin-left: 0.5em;
-    color: gray;
+    color: var(--brand-text);
 }
+
 #brand img {
     max-width: 32px;
     max-height: 32px;
     filter: invert(50%);
 }
+
 #brand p {
     margin-top: 0;
 }
+
 #brand p a {
     color: unset;
     text-decoration: none;
 }
+
 #icon {
     float: left;
     margin-top: 0.15em;
@@ -95,20 +152,23 @@ a + .icon {
 }
 
 .warning {
-    background-color: #fff5f5;
-    border: 1px solid #d7cdcd;
+    background-color: var(--warning-background);
+    color: var(--warning-text);
+    border: 1px solid var(--warning-border);
     padding: 1em;
 }
+
 .warning h2 {
     margin: 0;
 }
+
 .warning p {
     margin: 1em 0 0 0;
 }
 
 .group {
     margin-top: 2em;
-    border-top: 1px solid lightgray;
+    border-top: 1px solid var(--dimmed-border);
 }
 
 .service {
@@ -129,16 +189,16 @@ a + .icon {
 
 footer {
     margin-top: 2em;
-    border-top: 1px solid lightgray;
+    border-top: 1px solid var(--dimmed-border);
     padding-top: 1em;
     font-style: italic;
-    color: rgb(92, 92, 92);
+    color: var(--dimmed-text);
 }
 
 summary {
     font-style: italic;
     cursor: pointer;
-    color: rgb(92, 92, 92);
+    color: var(--dimmed-text);
 }
 
 .clipboard {
@@ -149,11 +209,11 @@ summary {
 
 .clipboard::after {
     content: "Copy to clipboard";
-    color: rgb(92, 92, 92);
+    color: var(--body-background);
     padding: 0.25em 1em 0.25em 0.5em;
     display: none;
     position: absolute;
-    background-color: white;
+    background-color: var(--body-text);
 }
 
 .clipboard:hover::after {
@@ -167,23 +227,23 @@ summary {
 #graph .ports::before {
     content: "🔌 ";
 }
+
 #graph .volume::before, .volume .title::before {
     content: "📦 ";
 }
+
 #graph .network::before, .network .title::before {
     content: "🌐 ";
 }
+
 #graph .ports, #graph .volume, #graph .network {
     display: inline-block;
     margin: 0 0.5em;
 }
-#graph .volume a, #graph .network a {
-    color: black;
-    text-decoration: none;
-}
-#graph .volume a:hover, #graph .network a:hover {
-    color: rgb(57, 113, 243);
-    text-decoration: underline;
+
+#graph code {
+    background-color: unset;
+    color: unset;
 }
 
 .service .title::before {
