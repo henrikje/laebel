@@ -11,8 +11,8 @@
     - [x] Adjust colors of the warning dialog in both themes.
     - [x] Override Mermaid colors using CSS instead, then they can take effect immediately. Then we can pick some nicer colors too.
 - [x] Ensure service _names_ are always written as codes, even in the service graph.
-- [ ] Fix reader mode: It should display complete content in reader mode.
-- [ ] Look for more characters that need to be included in the `escape` template function.
+- [-] Fix reader mode: It should display complete content in reader mode. _Solution is not obvious, and it is not really an important feature._
+- [x] Look for more characters that need to be included in the `escape` template function.
 - [ ] Update model so a service can have multiple values for the same label/property.
   For example, image and group name.
   There is no guarantee that all containers based on the same service have the same image.
@@ -42,3 +42,4 @@
 - [ ] Add "icon description" title and help cursor in the service graph, just like the status summary icon in the service section has.
 - [ ] Why does HTMX request the `hx-get` for the services multiple times? It should only be once per service status event.
 - [ ] Add an "writer mode" where you can edit all descriptions, and the system produces the labels for you to paste into the compose file.
+- [ ] Look into sending out updated Mermaid and use the Mermaid JS API to update the graph.

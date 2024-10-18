@@ -37,7 +37,7 @@ func createDockerClient() *client.Client {
 }
 
 func loadTemplates() *template.Template {
-	var escapeReplacer = strings.NewReplacer(".", "#46;", "(", "#40;", ")", "#41;")
+	var escapeReplacer = strings.NewReplacer(".", "#46;", "(", "#40;", ")", "#41;", "|", "#124;", "[", "#91;", "]", "#93;", "{", "#123;", "}", "#125;", "`", "'")
 	tmpl, err := template.New("index.html").Funcs(
 		template.FuncMap{
 			"escape": func(raw string) string { return escapeReplacer.Replace(raw) },
