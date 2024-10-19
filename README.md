@@ -29,7 +29,8 @@ The goal is to make it feel like someone wrote a nice README for your project, b
   using [`labels`](https://docs.docker.com/reference/compose-file/services/#labels) in your Docker Compose project.
   It allows you to specify title, description, group, external links, and more.
   The metadata is based on the [OpenContainers Annotations Spec](https://specs.opencontainers.org/image-spec/annotations/) 
-  but is extended through a set of Laebel-specific labels. 
+  but is extended through a set of Laebel-specific labels.
+- **Light and dark mode**: Supports both light and dark themes, and automatically switches based on the user's preference.
 
 ## Usage
 
