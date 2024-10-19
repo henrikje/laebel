@@ -3,6 +3,7 @@
         <div id="error" class="warning" style="display: none">
             <h2>❗️ Failed to update status.</h2>
             <p>Cannot connect to the status update endpoint. Is the Laebel service running?</p>
+            <p class="cta"><a href=".">Please reload the page to see the updated status.</a></p>
         </div>
         <script>
             document.body.addEventListener('htmx:sseError', () => {
