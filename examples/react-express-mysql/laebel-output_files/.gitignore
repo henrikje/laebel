@@ -1,0 +1,4 @@
+# Unnecessary dynamic files in example
+# They will produce an "connection failed" error message if included
+htmx.min.js
+sse.js
