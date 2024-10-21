@@ -25,8 +25,10 @@ end
 {{ end }}
 <details class="legend">
     <summary>Legend</summary>
-    <p>Each box in the graph represents a service. It displays the name of the service along with what ports, networks, and volumes it uses.</p>
-    <p>The icon indicates the <a href="https://docs.docker.com/reference/cli/docker/container/ls/#status">status</a> of that service:</p>
+    <h3>What do the icons and colors mean?</h3>
+    <p>Each box in the graph represents a service.</p>
+    <h4>Status</h4>
+    <p>The icon after the service name indicates the <a href="https://docs.docker.com/reference/cli/docker/container/ls/#status">status</a> of that service:</p>
     <dl>
         <dt>🆕 <strong>Created</strong></dt><dd>The service is created, but not yet running.</dd>
         <dt>▶️ <strong>Running</strong></dt><dd>The service is running. (See color for service health.)</dd>
@@ -37,14 +39,20 @@ end
         <dt>💀 <strong>Dead</strong></dt><dd>The service is dead.</dd>
         <dt>*️⃣ <strong>Mixed</strong></dt><dd>The service has containers with different states.</dd>
     </dl>
-    <p>The color of the box indicates the <em>health</em> of the service:</p>
+    <h4>Health</h4>
+    <p>The background color of the box indicates the <em>health</em> of the service:</p>
     <dl>
         <dt>🟩 <strong>Green</strong></dt><dd>The service is healthy. Its configured healthcheck runs successfully.</dd>
         <dt>🟥 <strong>Red</strong></dt><dd>The service is unhealthy. Its configured health check fails.</dd>
         <dt>⬜️ <strong>Gray</strong></dt><dd>The service has no health information. If the service has a healthcheck configured, health status has not yet been established.</dd>
     </dl>
-    <p>
-        Note that the health color is only available for services which have <a href="https://docs.docker.com/reference/dockerfile/#healthcheck">healthchecks</a> configured.
-    </p>
+    <p><em>Note</em>: The health color is only available for services which have <a href="https://docs.docker.com/reference/dockerfile/#healthcheck">healthchecks</a> configured.</p>
+    <h4>Resources</h4>
+    <p>Each service also displays the following pieces of information, when applicable:</p>
+    <dl>
+        <dt>🔌 <strong>Ports</strong></dt><dd>The ports exposed by the service that are bound on the host machine.</dd>
+        <dt>🌐 <strong>Networks</strong></dt><dd>The networks the service is connected to.</dd>
+        <dt>📦 <strong>Volumes</strong></dt><dd>The volumes mounted by the service.</dd>
+    </dl>
 </details>
 {{ end }}
