@@ -1,19 +1,9 @@
 # TODO
 
-## v0.7.0
+## v0.8.0
 
-- [x] Support `net.henko.laebel.hidden` flag for volumes and networks
-- [x] Look up port description based on the _container_ port number, not the _host_ port number.
-- [x] Display a banner when the SSE connection is lost (e.g. Laebel is shut down) to indicate that the status is no longer live-updated.
-  Perhaps replace all status icons with a "live update lost" (e.g. ❓) icon. (Or is it helpful to know the last known status?)
-- [x] Add dark mode: Switch to dark mode automatically when requested.
-    - [x] Make all links in the graph to be --body-text.
-    - [x] Adjust colors of the warning dialog in both themes.
-    - [x] Override Mermaid colors using CSS instead, then they can take effect immediately. Then we can pick some nicer colors too.
-- [x] Ensure service _names_ are always written as codes, even in the service graph.
-- [-] Fix reader mode: It should display complete content in reader mode. _Solution is not obvious, and it is not really an important feature._
-- [x] Look for more characters that need to be included in the `escape` template function.
-- [x] Can we add a "retry" link/button to the "connection lost error" banner that will try to reconnect without reloading the page?
+- [x] Update graph so icons display status, and color displays health.
+- [x] Add a legend to the service graph, explaining what the different colors and icons mean.
 
 ## Future
 

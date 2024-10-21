@@ -23,4 +23,33 @@ end
         relations.
     </p>
 {{ end }}
+<details class="legend">
+    <summary>What do the icons and colors mean?</summary>
+    <p>
+        Each box in the graph represents a service.
+        The icon and color of the box indicates the
+        <a href="https://docs.docker.com/reference/cli/docker/container/ls/#status">status</a> of that service:
+    </p>
+    <dl>
+        <dt>🆕 <strong>Created</strong></dt><dd>The service is created, but not yet running.</dd>
+        <dt>▶️ <strong>Running</strong></dt><dd>The service is running. (See color for service health.)</dd>
+        <dt>⏸️ <strong>Paused</strong></dt><dd>The service is paused.</dd>
+        <dt>🔄 <strong>Restarting</strong></dt><dd>The service is restarting.</dd>
+        <dt>⏹️ <strong>Exited</strong></dt><dd>The service has exited.</dd>
+        <dt>🚮 <strong>Removing</strong></dt><dd>The service is being removed.</dd>
+        <dt>💀 <strong>Dead</strong></dt><dd>The service is dead.</dd>
+        <dt>*️⃣ <strong>Mixed</strong></dt><dd>The service has containers with different states.</dd>
+    </dl>
+    <p>
+        The color of the box indicates the <em>health</em> of the service:
+    </p>
+    <dl>
+        <dt>🟩 <strong>Green</strong></dt><dd>The service is healthy. Its configured healthcheck runs successfully.</dd>
+        <dt>🟥 <strong>Red</strong></dt><dd>The service is unhealthy. Its configured health check fails.</dd>
+        <dt>⬜️ <strong>Gray</strong></dt><dd>The service has no health information. If the service has a healthcheck configured, health status has not yet been established.</dd>
+    </dl>
+    <p>
+        Note that the health color is only available for services which have health checks configured.
+    </p>
+</details>
 {{ end }}

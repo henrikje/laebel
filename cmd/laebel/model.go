@@ -84,9 +84,9 @@ func (s Status) SummaryIcon() string {
 	case Running:
 		return "▶️"
 	case RunningHealthy:
-		return "🟢"
+		return "▶️"
 	case RunningUnhealthy:
-		return "❌"
+		return "▶️"
 	case Paused:
 		return "⏸️"
 	case Restarting:
