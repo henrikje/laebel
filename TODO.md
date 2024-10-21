@@ -19,7 +19,6 @@
 - [ ] Perhaps add a "hidden details" key/value section, which can be used for any additional useful information, 
       that does not deserve permanent space in the main view. Things like maintainer, and version+revision.
 - [ ] Add a "last updated" timestamp to the page.
-- [ ] Add a nicer presentation of a service which is depended on by another service, but not running.
 - [ ] Consider if we can download the external JS files during (Docker) build.
       That way we don't need to have Mermaid.js and HTMX manually copied into the repository.
 - [ ] Lighthouse: [Enable text compression](https://developer.chrome.com/docs/lighthouse/performance/uses-text-compression/)
