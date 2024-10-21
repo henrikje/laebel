@@ -10,7 +10,7 @@ graph LR
 {{ range . }}subgraph "{{ .Name | escape }}"
     direction LR{{ range .Services }}
     {{ .Name }}[<a href="#{{ .Name }}-service">{{ if .Title }}{{ .Title | escape }}{{ else }}<code>{{ .Name }}</code>{{ end }}</a><span class="{{ .Name }}-status icon"></span><div class="details">{{
-    if .Ports }} <small class="ports"><code>{{ range $index, $port := .Ports }}{{ if $index }}, {{ end }}{{ $port.Number }}{{end}}</code></small>{{ end }}{{
+    if .Ports }}<small class="ports"><code>{{ range $index, $port := .Ports }}{{ if $index }}, {{ end }}{{ $port.Number }}{{end}}</code></small>{{ end }}{{
         range .Networks }}<small class="network"><a href="#{{ .Name }}-network"><code>{{ .Name | escape }}</code></a></small>{{ end }}{{
         range .Volumes }}<small class="volume"><a href="#{{ .Name }}-volume"><code>{{ .Name | escape }}</code></a></small>{{ end }}</div>]{{ end }}
 end
@@ -25,8 +25,8 @@ end
 {{ end }}
 <details class="legend">
     <summary>Legend</summary>
-    <h3>What do the icons and colors mean?</h3>
-    <p>Each box in the graph represents a service.</p>
+    <h3>How do I read the service graph?</h3>
+    <p>Each box in the graph represents a Docker Compose service. The links between them represent <a href="https://docs.docker.com/reference/compose-file/services/#depends_on">depends_on</a> attributes.</p>
     <h4>Status</h4>
     <p>The icon after the service name indicates the <a href="https://docs.docker.com/reference/cli/docker/container/ls/#status">status</a> of that service:</p>
     <dl>

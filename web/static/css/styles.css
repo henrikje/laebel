@@ -150,10 +150,6 @@ a + .icon {
     text-decoration: none;
 }
 
-main {
-    max-width: 65em;
-}
-
 #icon {
     float: left;
     margin-top: 0.15em;
@@ -286,22 +282,21 @@ summary {
 }
 
 #graph .legend {
-    position: relative;
+    padding: 1em 1.5em 0.5em 1.5em;
+    border: 1px solid transparent;
+    margin-bottom: -1em;
 }
 
 #graph .legend[open] {
-    padding: 0 1.5em 0.5em 1.5em;
     border: 1px solid var(--dimmed-border);
+    margin-bottom: 0;
 }
 
 #graph .legend summary {
-    position: absolute;
-    top: -4em;
-    right: 0;
     background-color: var(--body-background);
     text-align: right;
 }
 
-svg.flowchart {
-    max-width: unset !important;
+#graph .legend h3 {
+    margin-top: -1em;
 }
