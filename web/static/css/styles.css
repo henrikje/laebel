@@ -269,11 +269,32 @@ summary {
     margin: 0 0.5em;
 }
 
+.service .title::before {
+    content: "⚙️ "
+}
+
 #graph code {
     background-color: unset;
     color: unset;
 }
 
-.service .title::before {
-    content: "⚙️ "
+#graph {
+    position: relative;
+}
+
+#graph .legend {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: white;
+    padding: 1em 1.5em 0 1.5em;
+    border: 1px solid transparent;
+}
+
+#graph .legend[open] {
+    border-color: var(--dimmed-border);
+}
+
+#graph .legend summary {
+    text-align: right;
 }

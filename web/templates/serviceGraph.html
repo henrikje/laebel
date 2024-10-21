@@ -24,12 +24,9 @@ end
     </p>
 {{ end }}
 <details class="legend">
-    <summary>What do the icons and colors mean?</summary>
-    <p>
-        Each box in the graph represents a service.
-        The icon and color of the box indicates the
-        <a href="https://docs.docker.com/reference/cli/docker/container/ls/#status">status</a> of that service:
-    </p>
+    <summary>Legend</summary>
+    <p>Each box in the graph represents a service. It displays the name of the service along with what ports, networks, and volumes it uses.</p>
+    <p>The icon indicates the <a href="https://docs.docker.com/reference/cli/docker/container/ls/#status">status</a> of that service:</p>
     <dl>
         <dt>🆕 <strong>Created</strong></dt><dd>The service is created, but not yet running.</dd>
         <dt>▶️ <strong>Running</strong></dt><dd>The service is running. (See color for service health.)</dd>
@@ -40,9 +37,7 @@ end
         <dt>💀 <strong>Dead</strong></dt><dd>The service is dead.</dd>
         <dt>*️⃣ <strong>Mixed</strong></dt><dd>The service has containers with different states.</dd>
     </dl>
-    <p>
-        The color of the box indicates the <em>health</em> of the service:
-    </p>
+    <p>The color of the box indicates the <em>health</em> of the service:</p>
     <dl>
         <dt>🟩 <strong>Green</strong></dt><dd>The service is healthy. Its configured healthcheck runs successfully.</dd>
         <dt>🟥 <strong>Red</strong></dt><dd>The service is unhealthy. Its configured health check fails.</dd>
