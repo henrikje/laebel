@@ -7,7 +7,8 @@
         </div>
         <script>
             document.body.addEventListener('htmx:sseError', () => {
-                document.getElementById('error').style.display = 'block';
+                // Show the error message after a short delay to avoid flickering.
+                setTimeout(() => document.getElementById('error').style.display = 'block', 500);
             })
             document.body.addEventListener('htmx:sseOpen', () => {
                 document.getElementById('error').style.display = 'none';
