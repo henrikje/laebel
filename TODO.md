@@ -1,9 +1,13 @@
 # TODO
 
-## v0.8.0
+## Next
 
-- [x] Update graph so icons display status, and color displays health.
-- [x] Add a legend to the service graph, explaining what the different colors and icons mean.
+Reimplement!
+
+- Use the new design based on Simple.css. See `new-design` directory.
+- Update only status when possible, otherwise update everything (skip the "structural changes warning").
+- Intercept the new Mermaid source and render it to SVG before updating the page.
+- Move as much view logic as possible to the server. Templates should be used for rendering.
 
 ## Future
 
@@ -37,4 +41,5 @@
 - [ ] Update model so a service can have multiple values for the same label/property.
   For example, image and group name.
   There is no guarantee that all containers based on the same service have the same image.
-  Alternatively, we can log a warning if a service has multiple values for the same label and only use the first one. 
+  Alternatively, we can log a warning if a service has multiple values for the same label and only use the first one.
+- [ ] Add a `net.henko.laebel.shape` property to the service, so we can specify the graphical shape of the service.
