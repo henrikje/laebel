@@ -39,8 +39,6 @@
                     <th>Name</th>
                     <th>Created</th>
                     <th>Status</th>
-                    <th>Health</th>
-                    <th>Port Bindings</th>
                 </tr>
                 </thead>
                 {{ range .Containers }}
@@ -48,9 +46,7 @@
                         <td><code>{{ .ID }}</code> {{ template "clipboard" }}</td>
                         <td><code>{{ .Name }}</code> {{ template "clipboard" }}</td>
                         <td>{{ .Created }}</td>
-                        <td>{{ .Status }}</td>
-                        <td>{{ .Health }}</td>
-                        <td>{{ range $index, $port := .Ports }}{{ if $index }}, {{ end }}{{ $port }}{{ else }}none{{end}}</td>
+                        <td>{{ .Status }}{{ if not (eq "unknown" .Health) }} ({{ .Health }}){{ end }}</td>
                     </tr>
                 {{ end }}
             </table>
