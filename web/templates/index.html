@@ -13,7 +13,7 @@
 <body hx-ext="sse" sse-connect="/events?stream=updates" sse-close="close">
 <header>
     <h1 class="title">
-        {{ if .Icon }}<img src="{{ .Icon }}" alt="{{ .Name }} logo" id="icon" style="">{{ end }}
+        {{ if .Logo }}<img src="{{ .Logo }}" alt="{{ .Name }} logo" id="logo">{{ end }}
         {{ if .Title }}{{ .Title }}{{ else }}<code>{{ .Name }}</code>{{ end }}
     </h1>
     {{ if .Description }}<p class="description">{{ .Description }}</p>{{ end }}

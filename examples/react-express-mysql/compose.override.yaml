@@ -16,7 +16,7 @@ services:
       - "LAEBEL_PROJECT_TITLE=Compose sample application"
       - "LAEBEL_PROJECT_DESCRIPTION=React application with a NodeJS backend and a MySQL database."
       - "LAEBEL_PROJECT_SOURCE=https://github.com/docker/awesome-compose/tree/master/react-express-mysql"
-      - "LAEBEL_PROJECT_ICON=https://raw.githubusercontent.com/docker/awesome-compose/master/react-express-mysql/frontend/public/favicon.ico"
+      - "LAEBEL_PROJECT_LOGO=https://raw.githubusercontent.com/docker/awesome-compose/master/react-express-mysql/frontend/public/favicon.ico"
 
   # Sets metadata labels for services, networks, and volumes
   # Metadata includes title, description, links, and more.

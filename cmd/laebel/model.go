@@ -5,7 +5,7 @@ type Project struct {
 	Title         string // Env: LAEBEL_PROJECT_TITLE
 	Description   string // Env: LAEBEL_PROJECT_DESCRIPTION
 	Links         []Link // Env: LAEBEL_PROJECT_URL, LAEBEL_PROJECT_DOCUMENTATION, LAEBEL_PROJECT_SOURCE
-	Icon          string // Env: LAEBEL_PROJECT_ICON
+	Logo          string // Env: LAEBEL_PROJECT_LOGO
 	ServiceGroups []ServiceGroup
 	Volumes       []Volume
 	Networks      []Network

@@ -6,7 +6,7 @@
   - Inspired by Simple.css.
   - The design still has a README feel to it.
 - [ ] Basic semantic markup as a good foundation to build on.
-- [ ] Rename project "icon" to "logo" to avoid confusion with status icons.
+- [x] Rename project "icon" to "logo" to avoid confusion with status icons.
 - [ ] Ensure the design looks good even when there are no metadata labels. (Or with no services at all.)
 - [x] Make the instance table more narrow so it fits in the design.
   - Remove the "Port Bindings" column from the container table to make it fit better.

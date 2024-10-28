@@ -29,7 +29,7 @@ func TransformContainersToProject(projectContainers []types.ContainerJSON, proje
 		Title:         os.Getenv("LAEBEL_PROJECT_TITLE"),
 		Description:   os.Getenv("LAEBEL_PROJECT_DESCRIPTION"),
 		Links:         projectLinks,
-		Icon:          os.Getenv("LAEBEL_PROJECT_ICON"),
+		Logo:          os.Getenv("LAEBEL_PROJECT_LOGO"),
 		ServiceGroups: serviceGroups,
 		Volumes:       volumes,
 		Networks:      networks,
