@@ -80,8 +80,12 @@ func determineCurrentProjectName(dockerClient *client.Client) string {
 }
 
 func registerStaticFileHandler() {
-	fs := http.FileServer(http.Dir("web/static"))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	fileHandler := http.FileServer(http.Dir("web/static"))
+	cachingHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Cache-Control", "max-age=31536000") // 1 year
+		fileHandler.ServeHTTP(w, r)
+	})
+	http.Handle("/static/", http.StripPrefix("/static/", cachingHandler))
 }
 
 func registerPageHandler(projectName string, tmpl *template.Template, dockerClient *client.Client) {

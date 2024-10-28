@@ -5,15 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ if .Title }}{{ .Title }}{{ else }}{{ .Name }}{{ end }} – Laebel</title>
+    <meta name="description" content="Documentation site for {{ if .Title }}{{ .Title }}{{ else }}{{ .Name }}{{ end }}. {{ .Description }}">
     <link rel="stylesheet" href="/static/css/styles.css">
     <link rel="icon" type="image/png" href="/static/img/laebel.svg">
-    <script src="/static/js/htmx.min.js"></script>
-    <script src="/static/js/sse.js"></script>
 </head>
 <body hx-ext="sse" sse-connect="/events?stream=updates" sse-close="close">
 <header>
     <h1>
-        {{ if .Logo }}<img src="{{ .Logo }}" alt="{{ .Name }} logo">{{ end }}
+        {{ if .Logo }}<img src="{{ .Logo }}" alt="{{ .Name }} logo" width="32px" height="32px">{{ end }}
         {{ if .Title }}{{ .Title }}{{ else }}<code>{{ .Name }}</code>{{ end }}
     </h1>
     {{ if .Description }}<p>{{ .Description }}</p>{{ end }}
@@ -81,6 +80,8 @@
     {{ template "serviceGraphStatus" . }}
 </style>
 </body>
+<script src="/static/js/htmx.min.js"></script>
+<script src="/static/js/sse.js"></script>
 <script type="module">
     import mermaid from '/static/js/mermaid.esm.min.mjs';
     mermaid.initialize();

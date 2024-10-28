@@ -11,11 +11,11 @@
 - [x] Make the instance table more narrow so it fits in the design.
   - Remove the "Port Bindings" column from the container table to make it fit better.
   - Merge the "Status" and "Health" columns into one. Like "running (healthy)".
-- [ ] Lighthouse: [Enable text compression](https://developer.chrome.com/docs/lighthouse/performance/uses-text-compression/)
-- [ ] Lighthouse: [Eliminate render-blocking resources](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/)
-- [ ] Lighthouse: Image elements do not have explicit width and height
-- [ ] Lighthouse: [Serve static assets with an efficient cache policy](https://developer.chrome.com/docs/lighthouse/performance/uses-long-cache-ttl/)
-- [ ] Lighthouse: [Document does not have a meta description](https://developer.chrome.com/docs/lighthouse/seo/meta-description/)
+- [-] Lighthouse: [Enable text compression](https://developer.chrome.com/docs/lighthouse/performance/uses-text-compression/)
+- [x] Lighthouse: [Eliminate render-blocking resources](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/)
+- [x] Lighthouse: Image elements do not have explicit width and height
+- [x] Lighthouse: [Serve static assets with an efficient cache policy](https://developer.chrome.com/docs/lighthouse/performance/uses-long-cache-ttl/)
+- [x] Lighthouse: [Document does not have a meta description](https://developer.chrome.com/docs/lighthouse/seo/meta-description/)
 
 ## v0.10.0 Optimized updating
 
