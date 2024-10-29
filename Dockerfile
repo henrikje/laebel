@@ -1,9 +1,10 @@
 # Step 1: Download JS dependencies
 FROM node AS js-dependencies
 
-COPY package.json ./
+# Necessary to avoid https://stackoverflow.com/a/65443098/106918
+WORKDIR /js
 
-RUN npm install
+RUN npm install htmx.org@1.9.12 mermaid@11.3.0
 
 # Step 2: Build the Go binary
 FROM golang:1.23.1-alpine AS builder
@@ -60,9 +61,9 @@ COPY --from=builder /app/bin/laebel .
 COPY --from=builder /app/web ./web
 
 # Copy Mermaid dependencies
-COPY --from=js-dependencies /node_modules/mermaid/dist/mermaid.esm.min.mjs ./web/static/js/mermaid.esm.min.mjs
-COPY --from=js-dependencies /node_modules/mermaid/dist/chunks/mermaid.esm.min/* ./web/static/js/chunks/mermaid.esm.min/
+COPY --from=js-dependencies /js/node_modules/mermaid/dist/mermaid.esm.min.mjs ./web/static/js/mermaid.esm.min.mjs
+COPY --from=js-dependencies /js/node_modules/mermaid/dist/chunks/mermaid.esm.min/* ./web/static/js/chunks/mermaid.esm.min/
 
 # Copy HTMX dependencies
-COPY --from=js-dependencies /node_modules/htmx.org/dist/htmx.min.js ./web/static/js/htmx.min.js
-COPY --from=js-dependencies /node_modules/htmx.org/dist/ext/sse.js ./web/static/js/sse.js
+COPY --from=js-dependencies /js/node_modules/htmx.org/dist/htmx.min.js ./web/static/js/htmx.min.js
+COPY --from=js-dependencies /js/node_modules/htmx.org/dist/ext/sse.js ./web/static/js/sse.js
