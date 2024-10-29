@@ -1,4 +1,11 @@
-# Step 1: Build the Go binary
+# Step 1: Download JS dependencies
+FROM node AS js-dependencies
+
+COPY package.json ./
+
+RUN npm install
+
+# Step 2: Build the Go binary
 FROM golang:1.23.1-alpine AS builder
 
 # Install Git and required dependencies
@@ -20,7 +27,7 @@ COPY web/ ./web/
 # Build the Go binary
 RUN go build -o bin/laebel ./cmd/laebel
 
-# Step 2: Create a minimal image to run the application
+# Step 3: Create a minimal image to run the application
 FROM alpine:latest AS laebel
 
 # Expose the port that the application will listen on
@@ -51,3 +58,11 @@ COPY --from=builder /app/bin/laebel .
 
 # Copy the web folder with templates and static files
 COPY --from=builder /app/web ./web
+
+# Copy Mermaid dependencies
+COPY --from=js-dependencies /node_modules/mermaid/dist/mermaid.esm.min.mjs ./web/static/js/mermaid.esm.min.mjs
+COPY --from=js-dependencies /node_modules/mermaid/dist/chunks/mermaid.esm.min/* ./web/static/js/chunks/mermaid.esm.min/
+
+# Copy HTMX dependencies
+COPY --from=js-dependencies /node_modules/htmx.org/dist/htmx.min.js ./web/static/js/htmx.min.js
+COPY --from=js-dependencies /node_modules/htmx.org/dist/ext/sse.js ./web/static/js/sse.js

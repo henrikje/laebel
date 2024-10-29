@@ -1,0 +1,9 @@
+{
+  "name": "laebel-web-dependencies",
+  "description": "A helper project to download the web-based dependencies for the Laebel project.",
+  "private": true,
+  "dependencies": {
+    "htmx.org": "1.9.12",
+    "mermaid": "11.3.0"
+  }
+}

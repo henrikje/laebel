@@ -16,6 +16,8 @@
 - [x] Lighthouse: Image elements do not have explicit width and height
 - [x] Lighthouse: [Serve static assets with an efficient cache policy](https://developer.chrome.com/docs/lighthouse/performance/uses-long-cache-ttl/)
 - [x] Lighthouse: [Document does not have a meta description](https://developer.chrome.com/docs/lighthouse/seo/meta-description/)
+- [x] Consider if we can download the external JS files during (Docker) build.
+  That way we don't need to have Mermaid.js and HTMX manually copied into the repository.
 
 ## v0.10.0 Optimized updating
 
@@ -23,12 +25,6 @@
 - [ ] Update everything when necessary (no "reload" notice).
 - [ ] Intercept the new Mermaid source and render it to SVG before updating the page. 
 - [ ] Move as much view logic as possible to the server. Templates should be used for rendering only.
-
-## v0.11.0 Improved build
-
-- [ ] Optimize Dockerfile for caching.
-- [ ] Consider if we can download the external JS files during (Docker) build.
-  That way we don't need to have Mermaid.js and HTMX manually copied into the repository.
 
 ## v1.0.0-rc1 Stability
 
