@@ -1,5 +1,7 @@
 # TODO
 
+This document acts as a roadmap and primitive issue tracker for the project.
+
 ## v0.10.0 Optimized updating
 
 - [ ] Update only status when possible.
@@ -11,7 +13,7 @@
 
 Focus on making it as stable as possible, fixing bugs, and handling edge cases.
 
-## Future
+## Future ideas
 
 - [ ] Add support for Markdown.
 - [ ] Write unit tests for the project.
