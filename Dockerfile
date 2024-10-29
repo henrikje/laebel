@@ -1,5 +1,5 @@
 # Step 1: Download JS dependencies
-FROM node AS js-dependencies
+FROM node:23.1.0-alpine3.20 AS js-dependencies
 
 # Necessary to avoid https://stackoverflow.com/a/65443098/106918
 WORKDIR /js
@@ -9,7 +9,7 @@ RUN npm install htmx.org@1.9.12
 RUN npm install mermaid@11.3.0
 
 # Step 2: Build the Go binary
-FROM golang:1.23.1-alpine AS builder
+FROM golang:1.23.2-alpine3.20 AS builder
 
 # Install Git and required dependencies
 RUN apk add --no-cache git
@@ -31,7 +31,7 @@ COPY web/ ./web/
 RUN go build -o bin/laebel ./cmd/laebel
 
 # Step 3: Create a minimal image to run the application
-FROM alpine:latest AS laebel
+FROM alpine:3.20.3 AS laebel
 
 # Expose the port that the application will listen on
 ENV PORT=8000
