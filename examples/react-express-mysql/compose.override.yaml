@@ -54,7 +54,7 @@ services:
       - "net.henko.laebel.group=Back Office"
       - "net.henko.laebel.link.phpmyadmin.url=http://localhost:8080/"
       - "net.henko.laebel.link.phpmyadmin.title=phpMyAdmin"
-      - "net.henko.laebel.port.8080.description=Internal HTTP"
+      - "net.henko.laebel.port.80.description=Internal HTTP"
 
 networks:
   public:

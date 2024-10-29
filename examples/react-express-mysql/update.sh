@@ -21,9 +21,10 @@ echo "Opening the screenshot..."
 open laebel-example-screenshot.png
 
 # The web page is updated manually:
-# 1. Open http://localhost:8000/ in Firefox
-# 2. Right-click the page and select "Save Page As..."
-# 3. Click Cmd+Shift+G, and navigate to "/Users/henrikjernevad/Dropbox/Development/Go/laebel/examples/react-express-mysql"
-# 4. Enter "laebel-output.html" as name, and click Save.
-# 5. Click "Replace".
+# 1. Open a new Private browsing window in Firefox (to avoid extensions polluting the HTML)
+# 2. Navigate to http://localhost:8000/
+# 3. Right-click the page and select "Save Page As..."
+# 4. Click Cmd+Shift+G, and enter: /Users/henrikjernevad/Dropbox/Development/Go/laebel/examples/react-express-mysql
+# 5. Enter "laebel-output.html" as name, and click Save.
+# 6. Click "Replace".
 echo "Don't forget to update the web page manually."
