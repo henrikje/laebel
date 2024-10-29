@@ -42,11 +42,11 @@ To get started, add the following service to your Docker Compose project:
 ```yaml
 laebel:
     image: ghcr.io/henrikje/laebel:latest
-    # Expose port 8000 to access the Laebel website (or change to another port if you prefer).
+    # Expose port 8000 to access the Laebel website
     ports:
     - "8000:8000"
-    # Mount the Docker socket in read-only mode.
-    # This allows Laebel to read information about the services in your project.
+    # Mount the Docker socket in read-only mode
+    # This allows Laebel to detect the services in your project
     volumes:
     - "/var/run/docker.sock:/var/run/docker.sock:ro"
 ```
