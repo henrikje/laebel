@@ -4,7 +4,9 @@ FROM node AS js-dependencies
 # Necessary to avoid https://stackoverflow.com/a/65443098/106918
 WORKDIR /js
 
-RUN npm install htmx.org@1.9.12 mermaid@11.3.0
+# Install the required dependencies
+RUN npm install htmx.org@1.9.12
+RUN npm install mermaid@11.3.0
 
 # Step 2: Build the Go binary
 FROM golang:1.23.1-alpine AS builder
