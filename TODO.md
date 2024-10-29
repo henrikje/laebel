@@ -1,24 +1,5 @@
 # TODO
 
-## v0.9.0 New design
-
-- [x] New cleaner and more readable design.
-  - Inspired by Simple.css.
-  - The design still has a README feel to it.
-- [x] Basic semantic markup as a good foundation to build on.
-- [x] Rename project "icon" to "logo" to avoid confusion with status icons.
-- [x] Ensure the design looks good even when there are no metadata labels. (Or with no services at all.)
-- [x] Make the instance table more narrow so it fits in the design.
-  - Remove the "Port Bindings" column from the container table to make it fit better.
-  - Merge the "Status" and "Health" columns into one. Like "running (healthy)".
-- [-] Lighthouse: [Enable text compression](https://developer.chrome.com/docs/lighthouse/performance/uses-text-compression/)
-- [x] Lighthouse: [Eliminate render-blocking resources](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/)
-- [x] Lighthouse: Image elements do not have explicit width and height
-- [x] Lighthouse: [Serve static assets with an efficient cache policy](https://developer.chrome.com/docs/lighthouse/performance/uses-long-cache-ttl/)
-- [x] Lighthouse: [Document does not have a meta description](https://developer.chrome.com/docs/lighthouse/seo/meta-description/)
-- [x] Consider if we can download the external JS files during (Docker) build.
-  That way we don't need to have Mermaid.js and HTMX manually copied into the repository.
-
 ## v0.10.0 Optimized updating
 
 - [ ] Update only status when possible.
