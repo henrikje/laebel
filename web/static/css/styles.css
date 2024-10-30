@@ -271,6 +271,12 @@ CLIPBOARD
 /*
 GRAPH
 */
+#graph .mermaid:not([data-processed]) {
+    color: white;
+}
+#graph .mermaid:not([data-processed]) * {
+    display: none;
+}
 
 #graph .mermaid {
     text-align: center;
