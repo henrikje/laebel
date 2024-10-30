@@ -24,10 +24,6 @@ func PublishStatusUpdates(dockerClient *client.Client, server *sse.Server) {
 						Event: []byte("reload"),
 						Data:  eventData(event),
 					})
-					server.Publish("updates", &sse.Event{
-						Event: []byte("close"),
-						Data:  []byte("No further updates will be sent."),
-					})
 
 				case events.ActionStart, events.ActionPause, events.ActionUnPause, events.ActionStop, events.ActionDie, events.ActionHealthStatus, events.ActionHealthStatusHealthy, events.ActionHealthStatusRunning, events.ActionHealthStatusUnhealthy, events.ActionRestart, events.ActionRename:
 					server.Publish("updates", &sse.Event{

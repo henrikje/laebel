@@ -20,8 +20,6 @@ func HandleRequest(w http.ResponseWriter, r *http.Request, projectName string, t
 		ServeFromServiceTemplate(w, projectName, serviceName, tmpl, dockerClient)
 	case "/graph-status.css":
 		ServeFromProjectTemplate(w, projectName, "serviceGraphStatus", tmpl, dockerClient)
-	case "/reload":
-		ServeFromProjectTemplate(w, projectName, "reload", tmpl, dockerClient)
 	default:
 		http.NotFound(w, r)
 	}
