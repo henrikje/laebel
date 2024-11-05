@@ -41,7 +41,7 @@
             </script>
         </section>
         {{ if .ServiceGroups }}
-            <section id="graph">
+            <section id="graph" hx-trigger="sse:reload" hx-get="/graph.mmd" hx-swap="none" hx-target=".mermaid">
                 {{ template "graph" . }}
             </section>
         {{ end }}
@@ -74,11 +74,10 @@
                 const result = await mermaid.render('generatedGraph', mermaidSource);
                 // Update an off-screen clone of the target element with the rendered SVG
                 // We do this to avoid flickering when updating the element
-                //const targetClone = event.target.cloneNode(false);
-                //targetClone.innerHTML = result.svg
+                const targetClone = event.target.cloneNode(false);
+                targetClone.innerHTML = result.svg
                 // Swap the original element with the clone
-                //event.target.replaceWith(targetClone);
-                event.target.innerHTML = result.svg
+                event.target.replaceWith(targetClone);
             }
         });
     </script>
