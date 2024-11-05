@@ -1,0 +1,29 @@
+{{ define "resources" }}
+    {{ if .ServiceGroups }}
+        {{ range .ServiceGroups }}
+            <section class="group">
+                <h2>{{ .Name }}</h2>
+                {{ range .Services }}{{ template "service" . }}{{ end }}
+            </section>
+        {{ end }}
+        {{ if .Networks }}
+            <section class="group">
+                <h2>Networks</h2>
+                {{ range .Networks }}{{ template "network" . }}{{ end }}
+            </section>
+        {{ end }}
+        {{ if .Volumes }}
+            <section class="group">
+                <h2>Volumes</h2>
+                {{ range .Volumes }}{{ template "volume" . }}{{ end }}
+            </section>
+        {{ end }}
+    {{ else }}
+        <section class="notice">
+            <h2>No services found</h2>
+            <p>The {{ if .Title }}<em>{{ .Title }}</em>{{ else }}<code>{{ .Name }}</code>{{ end }} project does
+                not seem to contain any services.</p>
+            <p class="cta"><a href=".">Please reload the page to check again.</a></p>
+        </section>
+    {{ end }}
+{{ end }}

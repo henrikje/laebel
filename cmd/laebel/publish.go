@@ -19,20 +19,10 @@ func PublishStatusUpdates(dockerClient *client.Client, server *sse.Server) {
 			switch {
 			case event.Type == events.ContainerEventType:
 				switch event.Action {
-				case events.ActionCreate, events.ActionDestroy:
+				case events.ActionCreate, events.ActionDestroy,
+					events.ActionStart, events.ActionPause, events.ActionUnPause, events.ActionStop, events.ActionDie, events.ActionHealthStatus, events.ActionHealthStatusHealthy, events.ActionHealthStatusRunning, events.ActionHealthStatusUnhealthy, events.ActionRestart, events.ActionRename:
 					server.Publish("updates", &sse.Event{
 						Event: []byte("reload"),
-						Data:  eventData(event),
-					})
-
-				case events.ActionStart, events.ActionPause, events.ActionUnPause, events.ActionStop, events.ActionDie, events.ActionHealthStatus, events.ActionHealthStatusHealthy, events.ActionHealthStatusRunning, events.ActionHealthStatusUnhealthy, events.ActionRestart, events.ActionRename:
-					server.Publish("updates", &sse.Event{
-						Event: []byte("status"),
-						Data:  eventData(event),
-					})
-					serviceName := event.Actor.Attributes["com.docker.compose.service"]
-					server.Publish("updates", &sse.Event{
-						Event: []byte("status:" + serviceName),
 						Data:  eventData(event),
 					})
 				}

@@ -20,6 +20,8 @@ THEME
     --cluster-stroke: rgb(170, 170, 51);
     --node-fill: rgb(236, 236, 255);
     --node-stroke: rgb(147, 112, 219);
+    --node-healthy-fill: #efe;
+    --node-unhealthy-fill: #fee;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -41,6 +43,8 @@ THEME
         --cluster-stroke: rgb(128, 128, 128);
         --node-fill: rgb(43, 42, 51);
         --node-stroke: rgb(128, 128, 128);
+        --node-healthy-fill: #130;
+        --node-unhealthy-fill: #300;
     }
 }
 
@@ -294,6 +298,14 @@ GRAPH
 #graph .node rect {
     fill: var(--node-fill) !important;
     stroke: var(--node-stroke) !important;
+}
+
+#graph .node:has(.healthy) rect {
+    fill: var(--node-healthy-fill) !important;
+}
+
+#graph .node:has(.unhealthy) rect {
+    fill: var(--node-unhealthy-fill) !important;
 }
 
 #graph .edgePaths path {

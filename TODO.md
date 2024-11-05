@@ -4,9 +4,10 @@ This document acts as a roadmap and primitive issue tracker for the project.
 
 ## v0.10.0 Optimized updating
 
-- [ ] Update only status when possible.
-- [ ] Update everything when necessary (no "reload" notice).
-- [ ] Intercept the new Mermaid source and render it to SVG before updating the page. 
+- [x] Update everything on any event, to ensure the presented view stays consistent.
+- [ ] Use idiomorph to ensure minimal changes to the DOM.
+- [x] Intercept the new Mermaid source and render it to SVG before updating the page.
+- [ ] Avoid flickering when updating the graph.
 - [ ] Move as much view logic as possible to the server. Templates should be used for rendering only.
 
 ## v1.0.0-rc1 Stability

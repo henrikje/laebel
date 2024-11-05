@@ -1,28 +1,22 @@
-{{ define "serviceGraph" }}
-{{ $no_links := true }}
-<pre class="mermaid">
+{{ define "graph" }}
+<pre class="mermaid" hx-trigger="sse:reload" hx-get="/graph.mmd" hx-swap="none">
 ---
 config:
     fontFamily: "system-ui, sans-serif"
     fontSize: 15px
 ---
-graph LR
-{{ range . }}subgraph "{{ .Name | escape }}"
-    direction LR{{ range .Services }}
-    {{ .Name }}[<a href="#{{ .Name }}-service">{{ if .Title }}{{ .Title | escape }}{{ else }}<code>{{ .Name }}</code>{{ end }}</a><span class="{{ .Name }}-status icon"></span><div class="details">{{
-    if .Ports }}<small class="ports"><code>{{ range $index, $port := .Ports }}{{ if $index }}, {{ end }}{{ $port.Number }}{{end}}</code></small>{{ end }}{{
-        range .Networks }}<small class="network"><a href="#{{ .Name }}-network"><code>{{ .Name | escape }}</code></a></small>{{ end }}{{
-        range .Volumes }}<small class="volume"><a href="#{{ .Name }}-volume"><code>{{ .Name | escape }}</code></a></small>{{ end }}</div>]{{ end }}
-end
-{{ end }}{{ range . }}{{ range .Services }}{{ $thisServiceName := .Name }}{{ range $index, $otherServiceName := .DependsOn }}{{ $no_links = false }}{{ $thisServiceName }} --> {{ $otherServiceName }}
-{{ end }}{{ end }}{{ end }}
+{{ template "graph.mmd" . }}
 </pre>
+
+{{ $no_links := true }}
+{{ range .ServiceGroups }}{{ range .Services }}{{ range .DependsOn }}{{ $no_links = false }}{{ end }}{{ end }}{{ end }}
 {{ if $no_links }}
     <p class="hint">Hint: To add links to the graph, make sure your services declare
         <code><a href="https://docs.docker.com/reference/compose-file/services/#depends_on">depends_on</a></code>
         relations.
     </p>
 {{ end }}
+
 <details class="legend">
     <summary>Legend</summary>
     <h3>How do I read the service graph?</h3>

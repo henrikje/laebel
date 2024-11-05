@@ -43,8 +43,9 @@ func loadTemplates() *template.Template {
 			"escape": func(raw string) string { return escapeReplacer.Replace(raw) },
 		}).ParseFiles(
 		filepath.Join("web", "templates", "index.html"),
-		filepath.Join("web", "templates", "serviceGraph.html"),
-		filepath.Join("web", "templates", "serviceGraphStatus.css.html"),
+		filepath.Join("web", "templates", "resources.html"),
+		filepath.Join("web", "templates", "graph.html"),
+		filepath.Join("web", "templates", "graph.mmd.html"),
 		filepath.Join("web", "templates", "service.html"),
 		filepath.Join("web", "templates", "serviceStatus.html"),
 		filepath.Join("web", "templates", "volume.html"),
