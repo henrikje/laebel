@@ -67,17 +67,13 @@
         // Render Mermaid diagrams when they are swapped in
         document.body.addEventListener('htmx:beforeSwap', async (event) => {
             if (event.target.className.includes("mermaid")) {
-                event.preventDefault();
+                event.stopPropagation();
                 // Get the Mermaid source from the response
                 let mermaidSource = event.detail.xhr.responseText;
                 // Render the Mermaid source to an SVG
-                const result = await mermaid.render('generatedGraph', mermaidSource);
-                // Update an off-screen clone of the target element with the rendered SVG
-                // We do this to avoid flickering when updating the element
-                const targetClone = event.target.cloneNode(false);
-                targetClone.innerHTML = result.svg
-                // Swap the original element with the clone
-                event.target.replaceWith(targetClone);
+                const result = await mermaid.render("graph-" + new Date().getTime(), mermaidSource);
+                // Update the target element with the rendered SVG
+                event.target.innerHTML = result.svg;
             }
         });
     </script>
