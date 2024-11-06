@@ -276,7 +276,7 @@ CLIPBOARD
 GRAPH
 */
 #graph .mermaid:not([data-processed]) {
-    color: white;
+    color: var(--body-background);
 }
 #graph .mermaid:not([data-processed]) * {
     display: none;
