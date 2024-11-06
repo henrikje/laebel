@@ -23,7 +23,13 @@ func TransformContainersToProject(projectContainers []types.ContainerJSON, proje
 	serviceGroups := groupServicesByGroup(containers, services)
 	projectLinks := extractProjectLinks()
 	volumes := slices.Collect(maps.Values(volumesByName))
+	sort.Slice(volumes, func(i, j int) bool {
+		return volumes[i].Name < volumes[j].Name
+	})
 	networks := slices.Collect(maps.Values(networksByID))
+	sort.Slice(networks, func(i, j int) bool {
+		return networks[i].Name < networks[j].Name
+	})
 	return Project{
 		Name:          projectName,
 		Title:         os.Getenv("LAEBEL_PROJECT_TITLE"),
@@ -236,6 +242,9 @@ func transformContainersToService(serviceContainers []types.ContainerJSON, servi
 			}
 		}
 	}
+	sort.Slice(volumes, func(i, j int) bool {
+		return volumes[i].Name < volumes[j].Name
+	})
 	var networks []Network
 	for _, containerNetwork := range container.NetworkSettings.Networks {
 		projectNetwork, found := byName[containerNetwork.NetworkID]
@@ -243,6 +252,9 @@ func transformContainersToService(serviceContainers []types.ContainerJSON, servi
 			networks = append(networks, projectNetwork)
 		}
 	}
+	sort.Slice(networks, func(i, j int) bool {
+		return networks[i].Name < networks[j].Name
+	})
 	service := Service{
 		Name:        serviceName,
 		Title:       container.Config.Labels["org.opencontainers.image.title"],
