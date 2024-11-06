@@ -23,12 +23,13 @@ COPY go.mod go.sum ./
 # Download Go module dependencies
 RUN go mod download
 
-# Copy the entire project
+# Build the Go binary
 COPY cmd/ ./cmd/
+RUN go build -o bin/laebel ./cmd/laebel
+
+# Copy web resources
 COPY web/ ./web/
 
-# Build the Go binary
-RUN go build -o bin/laebel ./cmd/laebel
 
 # Step 3: Create a minimal image to run the application
 FROM alpine:3.20.3 AS laebel
