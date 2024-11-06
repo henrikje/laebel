@@ -1,49 +1,51 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compose sample application – Laebel</title>
-    <meta name="description" content="Documentation site for Compose sample application. React application with a NodeJS backend and a MySQL database.">
-    <link rel="stylesheet" href="laebel-output_files/styles.css">
-    <link rel="icon" type="image/png" href="laebel-output_files/laebel.svg">
-<style>                      .htmx-indicator{opacity:0}                      .htmx-request .htmx-indicator{opacity:1; transition: opacity 200ms ease-in;}                      .htmx-request.htmx-indicator{opacity:1; transition: opacity 200ms ease-in;}                    </style></head>
-<body hx-ext="sse" sse-connect="/events?stream=updates" sse-close="close">
-<header>
-    <h1>
-        <img src="laebel-output_files/favicon.ico" alt="react-express-mysql logo" width="32px" height="32px">
-        Compose sample application
-    </h1>
-    <p>React application with a NodeJS backend and a MySQL database.</p>
-    
-        <p>
-            <strong>Links</strong>:
-            <a href="https://docs.docker.com/compose/support-and-feedback/samples-for-compose/">Website</a>,
-            <a href="https://github.com/docker/awesome-compose/tree/master/react-express-mysql">Source code</a>
-        </p>
-    
-</header>
-<main>
-    <div hx-trigger="sse:reload" hx-get="/reload"></div>
-    <section id="sse-error" class="notice" style="display: none;">
-        <h2>Failed to update status</h2>
-        <p>Cannot connect to the status update endpoint. Is the Laebel service running?</p>
-        <p class="cta"><a href="http://localhost:8000/">Please reload the page to see the updated status.</a></p>
-        <script>
-            document.body.addEventListener('htmx:sseError', () => {
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Compose sample application – Laebel</title>
+        <meta name="description" content="Documentation site for Compose sample application. React application with a NodeJS backend and a MySQL database.">
+        <link rel="stylesheet" href="laebel-output_files/styles.css">
+        <link rel="icon" type="image/png" href="laebel-output_files/laebel.svg">
+    <style>                      .htmx-indicator{opacity:0}                      .htmx-request .htmx-indicator{opacity:1; transition: opacity 200ms ease-in;}                      .htmx-request.htmx-indicator{opacity:1; transition: opacity 200ms ease-in;}                    </style></head>
+    <body hx-ext="sse" sse-connect="/events?stream=updates" sse-close="close">
+    <header>
+        <h1>
+            <img src="laebel-output_files/favicon.ico" alt="react-express-mysql logo" width="32px" height="32px">
+            Compose sample application
+        </h1>
+        <p>React application with a NodeJS backend and a MySQL database.</p>
+        
+            <p>
+                <strong>Links</strong>:
+                <a href="https://docs.docker.com/compose/support-and-feedback/samples-for-compose/">Website</a>,
+                <a href="https://github.com/docker/awesome-compose/tree/master/react-express-mysql">Source code</a>
+            </p>
+        
+    </header>
+    <main>
+        <section id="sse-error" class="notice" style="display: none;">
+            <h2>Failed to update status</h2>
+            <p>Cannot connect to the status update endpoint. Is the Laebel service running?</p>
+            <p class="cta"><a href="http://localhost:8000/">Please reload the page to see the updated status.</a></p>
+            <script>
+                document.body.addEventListener('htmx:sseError', () => {
+                    
+                    setTimeout(() => document.getElementById('sse-error').style.display = 'block', 500);
+                })
+                document.body.addEventListener('htmx:sseOpen', () => {
+                    document.getElementById('sse-error').style.display = 'none';
+                })
+            </script>
+        </section>
+        
+            <section id="graph" hx-trigger="sse:reload" hx-get="/graph.mmd" hx-swap="none" hx-target=".mermaid">
                 
-                setTimeout(() => document.getElementById('sse-error').style.display = 'block', 500);
-            })
-            document.body.addEventListener('htmx:sseOpen', () => {
-                document.getElementById('sse-error').style.display = 'none';
-            })
-        </script>
-    </section>
-    
-        <section id="graph">
-            
+<pre class="mermaid" data-processed="true"><svg aria-roledescription="flowchart-v2" role="graphics-document document" viewBox="0 0 923.4000244140625 381" style="max-width: 923.4000244140625px;" class="flowchart" xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="100%" id="mermaid-1730933843128"><style>#mermaid-1730933843128{font-family:system-ui,sans-serif;font-size:16px;fill:#333;}#mermaid-1730933843128 .error-icon{fill:#552222;}#mermaid-1730933843128 .error-text{fill:#552222;stroke:#552222;}#mermaid-1730933843128 .edge-thickness-normal{stroke-width:1px;}#mermaid-1730933843128 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1730933843128 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1730933843128 .edge-thickness-invisible{stroke-width:0;fill:none;}#mermaid-1730933843128 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1730933843128 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1730933843128 .marker{fill:#333333;stroke:#333333;}#mermaid-1730933843128 .marker.cross{stroke:#333333;}#mermaid-1730933843128 svg{font-family:system-ui,sans-serif;font-size:16px;}#mermaid-1730933843128 p{margin:0;}#mermaid-1730933843128 .label{font-family:system-ui,sans-serif;color:#333;}#mermaid-1730933843128 .cluster-label text{fill:#333;}#mermaid-1730933843128 .cluster-label span{color:#333;}#mermaid-1730933843128 .cluster-label span p{background-color:transparent;}#mermaid-1730933843128 .label text,#mermaid-1730933843128 span{fill:#333;color:#333;}#mermaid-1730933843128 .node rect,#mermaid-1730933843128 .node circle,#mermaid-1730933843128 .node ellipse,#mermaid-1730933843128 .node polygon,#mermaid-1730933843128 .node path{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#mermaid-1730933843128 .rough-node .label text,#mermaid-1730933843128 .node .label text,#mermaid-1730933843128 .image-shape .label,#mermaid-1730933843128 .icon-shape .label{text-anchor:middle;}#mermaid-1730933843128 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#mermaid-1730933843128 .rough-node .label,#mermaid-1730933843128 .node .label,#mermaid-1730933843128 .image-shape .label,#mermaid-1730933843128 .icon-shape .label{text-align:center;}#mermaid-1730933843128 .node.clickable{cursor:pointer;}#mermaid-1730933843128 .root .anchor path{fill:#333333!important;stroke-width:0;stroke:#333333;}#mermaid-1730933843128 .arrowheadPath{fill:#333333;}#mermaid-1730933843128 .edgePath .path{stroke:#333333;stroke-width:2.0px;}#mermaid-1730933843128 .flowchart-link{stroke:#333333;fill:none;}#mermaid-1730933843128 .edgeLabel{background-color:rgba(232,232,232, 0.8);text-align:center;}#mermaid-1730933843128 .edgeLabel p{background-color:rgba(232,232,232, 0.8);}#mermaid-1730933843128 .edgeLabel rect{opacity:0.5;background-color:rgba(232,232,232, 0.8);fill:rgba(232,232,232, 0.8);}#mermaid-1730933843128 .labelBkg{background-color:rgba(232, 232, 232, 0.5);}#mermaid-1730933843128 .cluster rect{fill:#ffffde;stroke:#aaaa33;stroke-width:1px;}#mermaid-1730933843128 .cluster text{fill:#333;}#mermaid-1730933843128 .cluster span{color:#333;}#mermaid-1730933843128 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:system-ui,sans-serif;font-size:12px;background:hsl(80, 100%, 96.2745098039%);border:1px solid #aaaa33;border-radius:2px;pointer-events:none;z-index:100;}#mermaid-1730933843128 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#333;}#mermaid-1730933843128 rect.text{fill:none;stroke-width:0;}#mermaid-1730933843128 .icon-shape,#mermaid-1730933843128 .image-shape{background-color:rgba(232,232,232, 0.8);text-align:center;}#mermaid-1730933843128 .icon-shape p,#mermaid-1730933843128 .image-shape p{background-color:rgba(232,232,232, 0.8);padding:2px;}#mermaid-1730933843128 .icon-shape rect,#mermaid-1730933843128 .image-shape rect{opacity:0.5;background-color:rgba(232,232,232, 0.8);fill:rgba(232,232,232, 0.8);}#mermaid-1730933843128 :root{--mermaid-font-family:system-ui,sans-serif;}</style><g><marker orient="auto" markerHeight="8" markerWidth="8" markerUnits="userSpaceOnUse" refY="5" refX="5" viewBox="0 0 10 10" class="marker flowchart-v2" id="mermaid-1730933843128_flowchart-v2-pointEnd"><path style="stroke-width: 1px; stroke-dasharray: 1px, 0px;" class="arrowMarkerPath" d="M 0 0 L 10 5 L 0 10 z"></path></marker><marker orient="auto" markerHeight="8" markerWidth="8" markerUnits="userSpaceOnUse" refY="5" refX="4.5" viewBox="0 0 10 10" class="marker flowchart-v2" id="mermaid-1730933843128_flowchart-v2-pointStart"><path style="stroke-width: 1px; stroke-dasharray: 1px, 0px;" class="arrowMarkerPath" d="M 0 5 L 10 10 L 10 0 z"></path></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5" refX="11" viewBox="0 0 10 10" class="marker flowchart-v2" id="mermaid-1730933843128_flowchart-v2-circleEnd"><circle style="stroke-width: 1px; stroke-dasharray: 1px, 0px;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5" refX="-1" viewBox="0 0 10 10" class="marker flowchart-v2" id="mermaid-1730933843128_flowchart-v2-circleStart"><circle style="stroke-width: 1px; stroke-dasharray: 1px, 0px;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5.2" refX="12" viewBox="0 0 11 11" class="marker cross flowchart-v2" id="mermaid-1730933843128_flowchart-v2-crossEnd"><path style="stroke-width: 2px; stroke-dasharray: 1px, 0px;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5.2" refX="-1" viewBox="0 0 11 11" class="marker cross flowchart-v2" id="mermaid-1730933843128_flowchart-v2-crossStart"><path style="stroke-width: 2px; stroke-dasharray: 1px, 0px;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><g class="root"><g class="clusters"><g data-look="classic" id="subGraph1" class="cluster"><rect height="148.5" width="310" y="224.5" x="294.90000915527344" style=""></rect><g transform="translate(407.7666702270508, 224.5)" class="cluster-label"><foreignObject height="24" width="84.26667785644531"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p>Back Office</p></span></div></foreignObject></g></g><g data-look="classic" id="subGraph0" class="cluster"><rect height="196.5" width="907.4000091552734" y="8" x="8" style=""></rect><g transform="translate(430.6750030517578, 8)" class="cluster-label"><foreignObject height="24" width="62.05000305175781"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p>Services</p></span></div></foreignObject></g></g></g><g class="edgePaths"><path marker-end="url(#mermaid-1730933843128_flowchart-v2-pointEnd)" style="" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" id="L_backend_db_0" d="M579.9,106.25L584.067,106.25C588.233,106.25,596.567,106.25,604.9,106.25C613.233,106.25,621.567,106.25,627.817,106.396C634.067,106.542,638.233,106.834,641.735,107.079C645.237,107.324,648.073,107.523,649.491,107.622L650.91,107.722"></path><path marker-end="url(#mermaid-1730933843128_flowchart-v2-pointEnd)" style="" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" id="L_frontend_backend_1" d="M244.9,106.25L249.067,106.25C253.233,106.25,261.567,106.25,269.9,106.25C278.233,106.25,286.567,106.25,292.817,106.25C299.067,106.25,303.233,106.25,306.733,106.25C310.233,106.25,313.067,106.25,314.483,106.25L315.9,106.25"></path><path marker-end="url(#mermaid-1730933843128_flowchart-v2-pointEnd)" style="" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" id="L_phpMyAdmin_db_2" d="M563.892,298.75L570.726,298.75C577.561,298.75,591.231,298.75,602.232,274.854C613.233,250.958,621.567,203.167,627.817,178.7C634.067,154.233,638.233,153.091,641.757,152.125C645.281,151.159,648.162,150.37,649.602,149.975L651.042,149.58"></path></g><g class="edgeLabels"><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div class="labelBkg" xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div class="labelBkg" xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div class="labelBkg" xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g transform="translate(449.90000915527344, 106.25)" id="flowchart-backend-0" class="node default"><rect height="126.5" width="260" y="-63.25" x="-130" style="" class="basic label-container"></rect><g transform="translate(-100, -48.25)" style="" class="label"><rect></rect><foreignObject height="96.5" width="200"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;"><span class="nodeLabel"><p><a href="#backend-service">Backend (Express.js)</a><span title="The service is running and is healthy. 😀" class="icon healthy">▶️</span></p><div class="details"><small class="ports"><code>80, 9229, 9230</code></small><small class="network"><a href="#private-network"><code>private</code></a></small><small class="network"><a href="#public-network"><code>public</code></a></small><small class="volume"><a href="#back-notused-volume"><code>back-notused</code></a></small></div><p></p></span></div></foreignObject></g></g><g transform="translate(772.6500091552734, 116.25)" id="flowchart-db-1" class="node default"><rect height="78.5" width="235.5" y="-39.25" x="-117.75" style="" class="basic label-container"></rect><g transform="translate(-87.75, -24.25)" style="" class="label"><rect></rect><foreignObject height="48.5" width="175.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p><a href="#db-service">Database (MariaDB)</a><span title="The service is running, but has no health information." class="icon">▶️</span></p><div class="details"><small class="network"><a href="#private-network"><code>private</code></a></small><small class="volume"><a href="#db-data-volume"><code>db-data</code></a></small></div><p></p></span></div></foreignObject></g></g><g transform="translate(138.95000457763672, 106.25)" id="flowchart-frontend-2" class="node default"><rect height="78.5" width="211.90000915527344" y="-39.25" x="-105.95000457763672" style="" class="basic label-container"></rect><g transform="translate(-75.95000457763672, -24.25)" style="" class="label"><rect></rect><foreignObject height="48.5" width="151.90000915527344"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p><a href="#frontend-service">Frontend (React)</a><span title="The service is running, but has no health information." class="icon">▶️</span></p><div class="details"><small class="ports"><code>3000</code></small><small class="network"><a href="#public-network"><code>public</code></a></small></div><p></p></span></div></foreignObject></g></g><g transform="translate(449.90000915527344, 298.75)" id="flowchart-phpMyAdmin-3" class="node default"><rect height="78.5" width="227.98333740234375" y="-39.25" x="-113.99166870117188" style="" class="basic label-container"></rect><g transform="translate(-83.99166870117188, -24.25)" style="" class="label"><rect></rect><foreignObject height="48.5" width="167.98333740234375"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p><a href="#phpMyAdmin-service">Database Admin UI</a><span title="The service is running, but has no health information." class="icon">▶️</span></p><div class="details"><small class="ports"><code>8080</code></small><small class="network"><a href="#private-network"><code>private</code></a></small></div><p></p></span></div></foreignObject></g></g></g></g></g></svg></pre>
 
-<pre class="mermaid" data-processed="true"><svg aria-roledescription="flowchart-v2" role="graphics-document document" viewBox="0 0 923.4000244140625 381" style="max-width: 923.4000244140625px;" class="flowchart" xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="100%" id="mermaid-1730237108106"><style>#mermaid-1730237108106{font-family:system-ui,sans-serif;font-size:16px;fill:#333;}#mermaid-1730237108106 .error-icon{fill:#552222;}#mermaid-1730237108106 .error-text{fill:#552222;stroke:#552222;}#mermaid-1730237108106 .edge-thickness-normal{stroke-width:1px;}#mermaid-1730237108106 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1730237108106 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1730237108106 .edge-thickness-invisible{stroke-width:0;fill:none;}#mermaid-1730237108106 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1730237108106 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1730237108106 .marker{fill:#333333;stroke:#333333;}#mermaid-1730237108106 .marker.cross{stroke:#333333;}#mermaid-1730237108106 svg{font-family:system-ui,sans-serif;font-size:16px;}#mermaid-1730237108106 p{margin:0;}#mermaid-1730237108106 .label{font-family:system-ui,sans-serif;color:#333;}#mermaid-1730237108106 .cluster-label text{fill:#333;}#mermaid-1730237108106 .cluster-label span{color:#333;}#mermaid-1730237108106 .cluster-label span p{background-color:transparent;}#mermaid-1730237108106 .label text,#mermaid-1730237108106 span{fill:#333;color:#333;}#mermaid-1730237108106 .node rect,#mermaid-1730237108106 .node circle,#mermaid-1730237108106 .node ellipse,#mermaid-1730237108106 .node polygon,#mermaid-1730237108106 .node path{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#mermaid-1730237108106 .rough-node .label text,#mermaid-1730237108106 .node .label text,#mermaid-1730237108106 .image-shape .label,#mermaid-1730237108106 .icon-shape .label{text-anchor:middle;}#mermaid-1730237108106 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#mermaid-1730237108106 .rough-node .label,#mermaid-1730237108106 .node .label,#mermaid-1730237108106 .image-shape .label,#mermaid-1730237108106 .icon-shape .label{text-align:center;}#mermaid-1730237108106 .node.clickable{cursor:pointer;}#mermaid-1730237108106 .root .anchor path{fill:#333333!important;stroke-width:0;stroke:#333333;}#mermaid-1730237108106 .arrowheadPath{fill:#333333;}#mermaid-1730237108106 .edgePath .path{stroke:#333333;stroke-width:2.0px;}#mermaid-1730237108106 .flowchart-link{stroke:#333333;fill:none;}#mermaid-1730237108106 .edgeLabel{background-color:rgba(232,232,232, 0.8);text-align:center;}#mermaid-1730237108106 .edgeLabel p{background-color:rgba(232,232,232, 0.8);}#mermaid-1730237108106 .edgeLabel rect{opacity:0.5;background-color:rgba(232,232,232, 0.8);fill:rgba(232,232,232, 0.8);}#mermaid-1730237108106 .labelBkg{background-color:rgba(232, 232, 232, 0.5);}#mermaid-1730237108106 .cluster rect{fill:#ffffde;stroke:#aaaa33;stroke-width:1px;}#mermaid-1730237108106 .cluster text{fill:#333;}#mermaid-1730237108106 .cluster span{color:#333;}#mermaid-1730237108106 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:system-ui,sans-serif;font-size:12px;background:hsl(80, 100%, 96.2745098039%);border:1px solid #aaaa33;border-radius:2px;pointer-events:none;z-index:100;}#mermaid-1730237108106 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#333;}#mermaid-1730237108106 rect.text{fill:none;stroke-width:0;}#mermaid-1730237108106 .icon-shape,#mermaid-1730237108106 .image-shape{background-color:rgba(232,232,232, 0.8);text-align:center;}#mermaid-1730237108106 .icon-shape p,#mermaid-1730237108106 .image-shape p{background-color:rgba(232,232,232, 0.8);padding:2px;}#mermaid-1730237108106 .icon-shape rect,#mermaid-1730237108106 .image-shape rect{opacity:0.5;background-color:rgba(232,232,232, 0.8);fill:rgba(232,232,232, 0.8);}#mermaid-1730237108106 :root{--mermaid-font-family:system-ui,sans-serif;}</style><g><marker orient="auto" markerHeight="8" markerWidth="8" markerUnits="userSpaceOnUse" refY="5" refX="5" viewBox="0 0 10 10" class="marker flowchart-v2" id="mermaid-1730237108106_flowchart-v2-pointEnd"><path style="stroke-width: 1px; stroke-dasharray: 1px, 0px;" class="arrowMarkerPath" d="M 0 0 L 10 5 L 0 10 z"></path></marker><marker orient="auto" markerHeight="8" markerWidth="8" markerUnits="userSpaceOnUse" refY="5" refX="4.5" viewBox="0 0 10 10" class="marker flowchart-v2" id="mermaid-1730237108106_flowchart-v2-pointStart"><path style="stroke-width: 1px; stroke-dasharray: 1px, 0px;" class="arrowMarkerPath" d="M 0 5 L 10 10 L 10 0 z"></path></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5" refX="11" viewBox="0 0 10 10" class="marker flowchart-v2" id="mermaid-1730237108106_flowchart-v2-circleEnd"><circle style="stroke-width: 1px; stroke-dasharray: 1px, 0px;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5" refX="-1" viewBox="0 0 10 10" class="marker flowchart-v2" id="mermaid-1730237108106_flowchart-v2-circleStart"><circle style="stroke-width: 1px; stroke-dasharray: 1px, 0px;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5.2" refX="12" viewBox="0 0 11 11" class="marker cross flowchart-v2" id="mermaid-1730237108106_flowchart-v2-crossEnd"><path style="stroke-width: 2px; stroke-dasharray: 1px, 0px;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5.2" refX="-1" viewBox="0 0 11 11" class="marker cross flowchart-v2" id="mermaid-1730237108106_flowchart-v2-crossStart"><path style="stroke-width: 2px; stroke-dasharray: 1px, 0px;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><g class="root"><g class="clusters"><g data-look="classic" id="subGraph1" class="cluster"><rect height="148.5" width="310" y="224.5" x="294.8999938964844" style=""></rect><g transform="translate(407.76666259765625, 224.5)" class="cluster-label"><foreignObject height="24" width="84.26666259765625"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p>Back Office</p></span></div></foreignObject></g></g><g data-look="classic" id="subGraph0" class="cluster"><rect height="196.5" width="907.3999938964844" y="8" x="8" style=""></rect><g transform="translate(430.6749954223633, 8)" class="cluster-label"><foreignObject height="24" width="62.05000305175781"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p>Services</p></span></div></foreignObject></g></g></g><g class="edgePaths"><path marker-end="url(#mermaid-1730237108106_flowchart-v2-pointEnd)" style="" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" id="L_backend_db_0" d="M579.9,106.25L584.067,106.25C588.233,106.25,596.567,106.25,604.9,106.25C613.233,106.25,621.567,106.25,627.817,106.396C634.067,106.542,638.233,106.834,641.735,107.079C645.237,107.324,648.073,107.523,649.491,107.622L650.91,107.722"></path><path marker-end="url(#mermaid-1730237108106_flowchart-v2-pointEnd)" style="" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" id="L_frontend_backend_1" d="M244.9,106.25L249.067,106.25C253.233,106.25,261.567,106.25,269.9,106.25C278.233,106.25,286.567,106.25,292.817,106.25C299.067,106.25,303.233,106.25,306.733,106.25C310.233,106.25,313.067,106.25,314.483,106.25L315.9,106.25"></path><path marker-end="url(#mermaid-1730237108106_flowchart-v2-pointEnd)" style="" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" id="L_phpMyAdmin_db_2" d="M563.892,298.75L570.726,298.75C577.561,298.75,591.231,298.75,602.232,274.854C613.233,250.958,621.567,203.167,627.817,178.7C634.067,154.233,638.233,153.091,641.757,152.125C645.281,151.159,648.162,150.37,649.602,149.975L651.042,149.58"></path></g><g class="edgeLabels"><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div class="labelBkg" xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div class="labelBkg" xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div class="labelBkg" xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g transform="translate(449.8999938964844, 106.25)" id="flowchart-backend-0" class="node default"><rect height="126.5" width="260" y="-63.25" x="-130" style="" class="basic label-container"></rect><g transform="translate(-100, -48.25)" style="" class="label"><rect></rect><foreignObject height="96.5" width="200"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;"><span class="nodeLabel"><p><a href="#backend-service">Backend (Express.js)</a><span class="backend-status icon"></span></p><div class="details"><small class="ports"><code>80, 9229, 9230</code></small><small class="network"><a href="#private-network"><code>private</code></a></small><small class="network"><a href="#public-network"><code>public</code></a></small><small class="volume"><a href="#back-notused-volume"><code>back-notused</code></a></small></div><p></p></span></div></foreignObject></g></g><g transform="translate(772.6499938964844, 116.25)" id="flowchart-db-1" class="node default"><rect height="78.5" width="235.5" y="-39.25" x="-117.75" style="" class="basic label-container"></rect><g transform="translate(-87.75, -24.25)" style="" class="label"><rect></rect><foreignObject height="48.5" width="175.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p><a href="#db-service">Database (MariaDB)</a><span class="db-status icon"></span></p><div class="details"><small class="network"><a href="#private-network"><code>private</code></a></small><small class="volume"><a href="#db-data-volume"><code>db-data</code></a></small></div><p></p></span></div></foreignObject></g></g><g transform="translate(138.9499969482422, 106.25)" id="flowchart-frontend-2" class="node default"><rect height="78.5" width="211.89999389648438" y="-39.25" x="-105.94999694824219" style="" class="basic label-container"></rect><g transform="translate(-75.94999694824219, -24.25)" style="" class="label"><rect></rect><foreignObject height="48.5" width="151.89999389648438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p><a href="#frontend-service">Frontend (React)</a><span class="frontend-status icon"></span></p><div class="details"><small class="ports"><code>3000</code></small><small class="network"><a href="#public-network"><code>public</code></a></small></div><p></p></span></div></foreignObject></g></g><g transform="translate(449.8999938964844, 298.75)" id="flowchart-phpMyAdmin-3" class="node default"><rect height="78.5" width="227.98333740234375" y="-39.25" x="-113.99166870117188" style="" class="basic label-container"></rect><g transform="translate(-83.99166870117188, -24.25)" style="" class="label"><rect></rect><foreignObject height="48.5" width="167.98333740234375"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p><a href="#phpMyAdmin-service">Database Admin UI</a><span class="phpMyAdmin-status icon"></span></p><div class="details"><small class="ports"><code>8080</code></small><small class="network"><a href="#private-network"><code>private</code></a></small></div><p></p></span></div></foreignObject></g></g></g></g></g></svg></pre>
+
+
+
 
 <details class="legend">
     <summary>Legend</summary>
@@ -78,7 +80,11 @@
     </dl>
 </details>
 
-        </section>
+            </section>
+        
+        <section id="resources" hx-trigger="sse:reload" hx-get="/resources" hx-swap="innerHTML">
+            
+    
         
             <section class="group">
                 <h2> Services</h2>
@@ -138,14 +144,14 @@
                 </tr>
                 </thead>
                 
-                    <tbody><tr class="container" id="a8971ab7f5c1">
-                        <td><code>a8971ab7f5c1</code> 
+                    <tbody><tr class="container" id="76e9abd38a8d">
+                        <td><code>76e9abd38a8d</code> 
 <span class="clipboard" onclick="copyPreviousText(this)">📋</span>
 </td>
                         <td><code>react-express-mysql-backend-1</code> 
 <span class="clipboard" onclick="copyPreviousText(this)">📋</span>
 </td>
-                        <td>2024-10-29 20:09:33</td>
+                        <td>2024-11-06 13:55:06</td>
                         <td>running (healthy)</td>
                     </tr>
                 
@@ -199,14 +205,14 @@
                 </tr>
                 </thead>
                 
-                    <tbody><tr class="container" id="9dc7a1ff7b80">
-                        <td><code>9dc7a1ff7b80</code> 
+                    <tbody><tr class="container" id="63b6a9de0856">
+                        <td><code>63b6a9de0856</code> 
 <span class="clipboard" onclick="copyPreviousText(this)">📋</span>
 </td>
                         <td><code>react-express-mysql-db-1</code> 
 <span class="clipboard" onclick="copyPreviousText(this)">📋</span>
 </td>
-                        <td>2024-10-29 20:09:33</td>
+                        <td>2024-11-06 21:53:05</td>
                         <td>running</td>
                     </tr>
                 
@@ -265,14 +271,14 @@
                 </tr>
                 </thead>
                 
-                    <tbody><tr class="container" id="14b6ac830b3a">
-                        <td><code>14b6ac830b3a</code> 
+                    <tbody><tr class="container" id="ffa4db8a7107">
+                        <td><code>ffa4db8a7107</code> 
 <span class="clipboard" onclick="copyPreviousText(this)">📋</span>
 </td>
                         <td><code>react-express-mysql-frontend-1</code> 
 <span class="clipboard" onclick="copyPreviousText(this)">📋</span>
 </td>
-                        <td>2024-10-29 20:09:33</td>
+                        <td>2024-11-06 21:53:05</td>
                         <td>running</td>
                     </tr>
                 
@@ -339,14 +345,14 @@
                 </tr>
                 </thead>
                 
-                    <tbody><tr class="container" id="cf8e1d3da0d7">
-                        <td><code>cf8e1d3da0d7</code> 
+                    <tbody><tr class="container" id="f02a498fbf91">
+                        <td><code>f02a498fbf91</code> 
 <span class="clipboard" onclick="copyPreviousText(this)">📋</span>
 </td>
                         <td><code>react-express-mysql-phpMyAdmin-1</code> 
 <span class="clipboard" onclick="copyPreviousText(this)">📋</span>
 </td>
-                        <td>2024-10-29 21:24:04</td>
+                        <td>2024-11-06 21:53:05</td>
                         <td>running</td>
                     </tr>
                 
@@ -420,30 +426,6 @@
             <section class="group">
                 <h2>Volumes</h2>
                 
-    <section id="db-data-volume" class="volume">
-        <h3 class="title">Database Storage</h3>
-        <p class="description">Persistent storage volume for the database.</p>
-        <ul>
-            
-            <li class="name"><strong>Name</strong>: <code>db-data</code> 
-<span class="clipboard" onclick="copyPreviousText(this)">📋</span>
-
-            </li><li class="driver">
-                <strong>Driver</strong>: <code>local</code>
-            </li>
-            
-                <li class="services">
-                    <strong>Services</strong>:
-                    <ul>
-                        
-                            <li><a href="#db-service"><code>db</code></a></li>
-                        
-                    </ul>
-                </li>
-            
-        </ul>
-    </section>
-
     <section id="back-notused-volume" class="volume">
         <h3 class="title">Backend Storage (Currently Not Used - updated)</h3>
         <p class="description">Volume intended for storing backend data.</p>
@@ -468,56 +450,71 @@
         </ul>
     </section>
 
+    <section id="db-data-volume" class="volume">
+        <h3 class="title">Database Storage</h3>
+        <p class="description">Persistent storage volume for the database.</p>
+        <ul>
+            
+            <li class="name"><strong>Name</strong>: <code>db-data</code> 
+<span class="clipboard" onclick="copyPreviousText(this)">📋</span>
+
+            </li><li class="driver">
+                <strong>Driver</strong>: <code>local</code>
+            </li>
+            
+                <li class="services">
+                    <strong>Services</strong>:
+                    <ul>
+                        
+                            <li><a href="#db-service"><code>db</code></a></li>
+                        
+                    </ul>
+                </li>
+            
+        </ul>
+    </section>
+
             </section>
         
     
-</main>
-<footer>
-    <p>
-        <a href="https://github.com/henrikje/laebel"><img src="laebel-output_files/laebel.svg" alt="Laebel logo" width="32px" height="32px"></a>
-        This documentation site is generated by <a href="https://github.com/henrikje/laebel">Laebel</a>.
-    </p>
-</footer>
-<style hx-trigger="sse:status" hx-get="/graph-status.css" hx-swap="innerHTML">
-    .node .backend-status.icon::after { content: "▶️"; }
-#graph .node:has(.backend-status.icon) rect { fill: #efe !important; }
 
-.node .db-status.icon::after { content: "▶️"; }
-
-
-.node .frontend-status.icon::after { content: "▶️"; }
-
-
-.node .phpMyAdmin-status.icon::after { content: "▶️"; }
-
-
-
-@media (prefers-color-scheme: dark) { #graph .node:has(.backend-status.icon) rect { fill: #130 !important; }
+        </section>
+    </main>
+    <footer>
+        <p>
+            <a href="https://github.com/henrikje/laebel"><img src="laebel-output_files/laebel.svg" alt="Laebel logo" width="32px" height="32px"></a>
+            This documentation site is generated by <a href="https://github.com/henrikje/laebel">Laebel</a>.
+        </p>
+    </footer>
     
+    <script src="laebel-output_files/htmx.min.js"></script>
+    <script src="laebel-output_files/sse.js"></script>
+    <script type="module">
+        
+        import mermaid from '/static/js/mermaid.esm.min.mjs';
+        mermaid.initialize();
 
-    
-
-    
-
-    
-
-}
-</style>
-
-<script src="laebel-output_files/htmx.min.js"></script>
-<script src="laebel-output_files/sse.js"></script>
-<script type="module">
-    import mermaid from '/static/js/mermaid.esm.min.mjs';
-    mermaid.initialize();
-</script>
-<script>
-    function copyPreviousText(button) {
-        const previousElement = button.previousElementSibling;
-        if (previousElement) {
-            const text = previousElement.textContent;
-            navigator.clipboard.writeText(text)
+        
+        document.body.addEventListener('htmx:beforeSwap', async (event) => {
+            if (event.target.className.includes("mermaid")) {
+                event.stopPropagation();
+                
+                let mermaidSource = event.detail.xhr.responseText;
+                
+                const result = await mermaid.render("graph-" + new Date().getTime(), mermaidSource);
+                
+                event.target.innerHTML = result.svg;
+            }
+        });
+    </script>
+    <script>
+        function copyPreviousText(button) {
+            const previousElement = button.previousElementSibling;
+            if (previousElement) {
+                const text = previousElement.textContent;
+                navigator.clipboard.writeText(text)
+            }
         }
-    }
-</script>
-
+    </script>
+    
 <div class="mermaidTooltip" style="opacity: 0;"></div></body></html>

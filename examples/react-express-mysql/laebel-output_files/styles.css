@@ -7,7 +7,7 @@ THEME
     --body-text: CanvasText;
     --code-background: rgb(250, 250, 250);
     --code-text: rgb(92, 92, 92);
-    --link-text: rgb(57, 113, 243);
+    --link-text: rgb(51, 108, 250);
     --link-active-text: rgb(238, 0, 0);
     --link-visited-text: rgb(85, 26, 139);
     --brand-text: rgb(128, 128, 128);
@@ -20,6 +20,8 @@ THEME
     --cluster-stroke: rgb(170, 170, 51);
     --node-fill: rgb(236, 236, 255);
     --node-stroke: rgb(147, 112, 219);
+    --node-healthy-fill: #efe;
+    --node-unhealthy-fill: #fee;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -41,6 +43,8 @@ THEME
         --cluster-stroke: rgb(128, 128, 128);
         --node-fill: rgb(43, 42, 51);
         --node-stroke: rgb(128, 128, 128);
+        --node-healthy-fill: #130;
+        --node-unhealthy-fill: #300;
     }
 }
 
@@ -197,7 +201,7 @@ a + .icon {
     margin-left: 0.5em;
 }
 
-.service .icon {
+.icon {
     cursor: help;
 }
 
@@ -271,6 +275,12 @@ CLIPBOARD
 /*
 GRAPH
 */
+#graph .mermaid:not([data-processed]) {
+    color: var(--body-background);
+}
+#graph .mermaid:not([data-processed]) * {
+    display: none;
+}
 
 #graph .mermaid {
     text-align: center;
@@ -288,6 +298,14 @@ GRAPH
 #graph .node rect {
     fill: var(--node-fill) !important;
     stroke: var(--node-stroke) !important;
+}
+
+#graph .node:has(.healthy) rect {
+    fill: var(--node-healthy-fill) !important;
+}
+
+#graph .node:has(.unhealthy) rect {
+    fill: var(--node-unhealthy-fill) !important;
 }
 
 #graph .edgePaths path {
