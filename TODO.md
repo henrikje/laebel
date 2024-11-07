@@ -2,19 +2,11 @@
 
 This document acts as a roadmap and primitive issue tracker for the project.
 
-## v0.10.0 Optimized updating
-
-- [x] Update everything on any event, to ensure the presented view stays consistent.
-- [-] Use idiomorph to ensure minimal changes to the DOM. _Not really needed._
-- [x] Intercept the new Mermaid source and render it to SVG before updating the page.
-- [x] Avoid flickering when updating the graph.
-- [x] Order graph detail entries to avoid random changes in the graph.
-
 ## v1.0.0-rc1 Stability
 
 Focus on making it as stable as possible, fixing bugs, and handling edge cases.
 
-- [ ] Use Docker API to determine actual port binding for Laebel, so it can be displayed on startup.
+- [x] Use Docker API to determine actual port binding for Laebel, so it can be displayed on startup.
 
 ## Future ideas
 

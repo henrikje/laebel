@@ -1,7 +1,9 @@
 package main
 
 import (
+	"context"
 	"github.com/docker/docker/client"
+	"github.com/docker/go-connections/nat"
 	"github.com/r3labs/sse/v2"
 	"html/template"
 	"log"
@@ -17,7 +19,8 @@ func main() {
 	tmpl := loadTemplates()
 
 	// Determine current project
-	projectName := determineCurrentProjectName(dockerClient)
+	currentContainerID := detectCurrentContainerID()
+	projectName := determineComposeProjectName(dockerClient, currentContainerID)
 
 	// Register handlers
 	registerStaticFileHandler()
@@ -25,7 +28,8 @@ func main() {
 	registerEventPublisher(dockerClient)
 
 	// Start the server
-	startServer(projectName)
+	containerPort, hostPort := detectPorts(dockerClient, currentContainerID)
+	startServer(containerPort, hostPort, projectName)
 }
 
 func createDockerClient() *client.Client {
@@ -58,13 +62,16 @@ func loadTemplates() *template.Template {
 	return tmpl
 }
 
-func determineCurrentProjectName(dockerClient *client.Client) string {
+func detectCurrentContainerID() string {
 	// Get the current container ID
 	containerID, err := GetContainerID()
 	if err != nil {
 		fatal(err, "Could not determine current container ID", "Are you sure you are running Laebel as a container?")
 	}
+	return containerID
+}
 
+func determineComposeProjectName(dockerClient *client.Client, containerID string) string {
 	// Check if it’s part of a Compose project
 	projectName, err := IsPartOfComposeProject(containerID, dockerClient)
 	if err != nil {
@@ -107,17 +114,40 @@ func registerEventPublisher(dockerClient *client.Client) {
 	go PublishStatusUpdates(dockerClient, sseServer)
 }
 
-func startServer(projectName string) {
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8000"
+func detectPorts(dockerClient *client.Client, currentContainerID string) (string, string) {
+	// Determine port exposed from container
+	containerPort := os.Getenv("PORT")
+	if containerPort == "" {
+		containerPort = "8000"
 	}
-	log.Printf("Serving Laebel documentation site for project '%s' at:\n", projectName)
-	log.Println("")
-	log.Println("  http://localhost:" + port + "/")
-	log.Println("")
-	err := http.ListenAndServe(":"+port, nil)
+
+	// Look up the corresponding port exposed on host
+	currentContainer, err := dockerClient.ContainerInspect(context.Background(), currentContainerID)
 	if err != nil {
-		fatal(err, "Could not start server", "Bind port "+port+" to another host port, or set the PORT environment variable to change port.")
+		fatal(err, "Could not inspect current container.", "Ensure Laebel has the Docker socket mounted as a volume: \"/var/run/docker.sock:/var/run/docker.sock:ro\"")
+	}
+	portKey := nat.Port(containerPort + "/tcp")
+	portBindings := currentContainer.NetworkSettings.Ports[portKey]
+	hostPort := ""
+	if len(portBindings) > 0 {
+		hostPort = portBindings[0].HostPort
+	}
+	return containerPort, hostPort
+}
+
+func startServer(containerPort, hostPort, projectName string) {
+	if hostPort == "" {
+		log.Println("Warning: No host port bound to container")
+		log.Printf("Hint: Bind port " + containerPort + " to a port on the host, either using 'ports' in the Docker Compose file or with the -p flag.")
+		hostPort = containerPort
+	} else {
+		log.Printf("Serving Laebel documentation site for project '%s' at:\n", projectName)
+		log.Println("")
+		log.Println("  http://localhost:" + hostPort + "/")
+		log.Println("")
+	}
+	err := http.ListenAndServe(":"+containerPort, nil)
+	if err != nil {
+		fatal(err, "Could not start server", "Bind port "+containerPort+" to another host port than "+hostPort+", or set the PORT environment variable to change the exposed port.")
 	}
 }
