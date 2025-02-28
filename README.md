@@ -76,15 +76,45 @@ You will have to manage those environment variables yourself.
 Laebel will work out of the box and provide useful information about your project.
 However, it really shines when you add additional metadata about your Docker Compose project.
 
+### Documenting a project using labels
+
+Laebel reads metadata about each service, volume, and network from labels in the Docker Compose project.
+This is used to describe the resources in more detail than what can be derived automatically from Docker.
+
+A short example of how to add documentation labels to a service:
+
+```yaml
+services:
+  my-rest-api:
+    image: my-rest-api:latest
+    ports:
+      - 80:80
+    labels:
+      org.opencontainers.image.title: My REST API
+      org.opencontainers.image.description: My amazing REST API service that does cool things.
+      net.henko.laebel.group:  Public Services
+      net.henko.laebel.link.health.url: http://localhost/health
+      net.henko.laebel.link.health.title: Health Check
+      net.henko.laebel.port.80.description: The main HTTP port
+```
+
 The most straight-forward way to add documentation is to add labels in your primary `compose.yaml` file.
 If you want to keep the labels separate from the main configuration, you can use a `compose.override.yaml` file.
 Docker Compose will automatically [merge](https://docs.docker.com/compose/how-tos/multiple-compose-files/merge/) the two files
 when you run `docker compose`.
 
-### Service metadata through labels
+Alternatively, you add labels to a service's `Dockerfile` so they will be built into the image:
 
-Laebel reads metadata about each service from labels in the Docker Compose project.
-This is used to describe the services in more detail than just the image name and status.
+```Dockerfile
+LABEL org.opencontainers.image.title="My REST API" \
+      org.opencontainers.image.description="My amazing REST API service that does cool things." \
+      net.henko.laebel.group="Public Services" \
+      net.henko.laebel.link.health.url="http://localhost/health" \
+      net.henko.laebel.link.health.title="Health Check" \
+      net.henko.laebel.port.80.description="The main HTTP port"
+```
+
+### Available labels for services
 
 The following [OpenContainers Annotations Spec](https://specs.opencontainers.org/image-spec/annotations/) labels are supported:
 
@@ -115,7 +145,7 @@ This is especially helpful when it is not a well-known port.
 
 See the [full example](./examples/react-express-mysql/README.md) for examples on how to use these labels.
 
-### Volume and network metadata through labels
+### Available labels for volumes and networks
 
 Laebel also supports adding metadata to volumes and networks.
 
@@ -146,7 +176,7 @@ If you have any thoughts or questions, please [reach out to me](https://henko.ne
 _Sidenote_: Why the name _Laebel_? 
 It is a reference to the idea that to label something is to explain what it is,
 combined with the fact that Laebel relies on Docker _labels_ to get information about the project and its services.
-However, I also wanted to be a cool kid like Traefik and Jaeger. 😉
+However, I also wanted to be a cool kid and use a [digraph](https://en.wikipedia.org/wiki/Digraph_(orthography)) like Traefik and Jaeger. 😉
 
 ## License
 
