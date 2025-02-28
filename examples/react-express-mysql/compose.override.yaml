@@ -13,66 +13,66 @@ services:
       - private
     # Set project metadata using environment variables.
     environment:
-      - "LAEBEL_PROJECT_TITLE=Compose sample application"
-      - "LAEBEL_PROJECT_DESCRIPTION=React application with a NodeJS backend and a MySQL database."
-      - "LAEBEL_PROJECT_URL=https://docs.docker.com/compose/support-and-feedback/samples-for-compose/"
-      - "LAEBEL_PROJECT_SOURCE=https://github.com/docker/awesome-compose/tree/master/react-express-mysql"
-      - "LAEBEL_PROJECT_LOGO=https://raw.githubusercontent.com/docker/awesome-compose/master/react-express-mysql/frontend/public/favicon.ico"
+      LAEBEL_PROJECT_TITLE: Compose sample application
+      LAEBEL_PROJECT_DESCRIPTION: React application with a NodeJS backend and a MySQL database.
+      LAEBEL_PROJECT_URL: https://docs.docker.com/compose/support-and-feedback/samples-for-compose/
+      LAEBEL_PROJECT_SOURCE: https://github.com/docker/awesome-compose/tree/master/react-express-mysql
+      LAEBEL_PROJECT_LOGO: https://raw.githubusercontent.com/docker/awesome-compose/master/react-express-mysql/frontend/public/favicon.ico
 
   # Sets metadata labels for services, networks, and volumes
   # Metadata includes title, description, links, and more.
 
   backend:
     labels:
-      - "org.opencontainers.image.title=Backend (Express.js)"
-      - "org.opencontainers.image.description=The backend server running Express.js on Node.js, serving the frontend with messages."
-      - "net.henko.laebel.group= Services"
-      - "net.henko.laebel.link.api.url=http://localhost/"
-      - "net.henko.laebel.link.api.title=API Endpoint"
-      - "net.henko.laebel.port.80.description=Public HTTP"
-      - "net.henko.laebel.port.9229.description=Node.js Debugging"
-      - "net.henko.laebel.port.9230.description=Node.js Profiling"
+      org.opencontainers.image.title: Backend (Express.js)
+      org.opencontainers.image.description: The backend server running Express.js on Node.js, serving the frontend with messages.
+      net.henko.laebel.group:  Services
+      net.henko.laebel.link.api.url: http://localhost/
+      net.henko.laebel.link.api.title: API Endpoint
+      net.henko.laebel.port.80.description: Public HTTP
+      net.henko.laebel.port.9229.description: Node.js Debugging
+      net.henko.laebel.port.9230.description: Node.js Profiling
 
   db:
     labels:
-      - "org.opencontainers.image.title=Database (MariaDB)"
-      - "org.opencontainers.image.description=The primary database, serving the backend with data. Running MySQL-compatible MariaDB."
-      - "net.henko.laebel.group= Services"
+      org.opencontainers.image.title: Database (MariaDB)
+      org.opencontainers.image.description: The primary database, serving the backend with data. Running MySQL-compatible MariaDB.
+      net.henko.laebel.group:  Services
 
   frontend:
     labels:
-      - "org.opencontainers.image.title=Frontend (React)"
-      - "org.opencontainers.image.description=A Nginx server hosts the React-based frontend which displays important messages."
-      - "net.henko.laebel.group= Services"
-      - "net.henko.laebel.link.website.url=http://localhost:3000/"
-      - "net.henko.laebel.link.website.title=Webpage"
-      - "net.henko.laebel.port.3000.description=Public HTTP"
+      org.opencontainers.image.title: Frontend (React)
+      org.opencontainers.image.description: A Nginx server hosts the React-based frontend which displays important messages.
+      net.henko.laebel.group:  Services
+      net.henko.laebel.link.website.url: http://localhost:3000/
+      net.henko.laebel.link.website.title: Webpage
+      net.henko.laebel.port.3000.description: Public HTTP
 
   phpMyAdmin:
     labels:
-      - "org.opencontainers.image.title=Database Admin UI"
-      - "org.opencontainers.image.description=phpMyAdmin is a web-based database management tool for MariaDB."
-      - "net.henko.laebel.group=Back Office"
-      - "net.henko.laebel.link.phpmyadmin.url=http://localhost:8080/"
-      - "net.henko.laebel.link.phpmyadmin.title=phpMyAdmin"
-      - "net.henko.laebel.port.80.description=Internal HTTP"
+      org.opencontainers.image.title: Database Admin UI
+      org.opencontainers.image.description: phpMyAdmin is a web-based database management tool for MariaDB.
+      net.henko.laebel.group: Back Office
+      net.henko.laebel.link.phpmyadmin.url: http://localhost:8080/
+      net.henko.laebel.link.phpmyadmin.title: phpMyAdmin
+      net.henko.laebel.port.80.description: Internal HTTP
 
 networks:
   public:
     labels:
-      - "net.henko.laebel.title=Public Network"
-      - "net.henko.laebel.description=Public network for services that need to be exposed to the internet."
+      net.henko.laebel.title: Public Network
+      net.henko.laebel.description: Public network for services that need to be exposed to the internet.
   private:
     labels:
-      - "net.henko.laebel.title=Private Network"
-      - "net.henko.laebel.description=Private network for services that should not be exposed to the internet."
+      net.henko.laebel.title: Private Network
+      net.henko.laebel.description: Private network for services that should not be exposed to the internet.
 
 volumes:
   back-notused:
     labels:
-      - "net.henko.laebel.title=Backend Storage (Currently Not Used)"
-      - "net.henko.laebel.description=Volume intended for storing backend data."
+      net.henko.laebel.title: Backend Storage (Currently Not Used)
+      net.henko.laebel.description: Volume intended for storing backend data.
   db-data:
     labels:
-      - "net.henko.laebel.title=Database Storage"
-      - "net.henko.laebel.description=Persistent storage volume for the database."
+      net.henko.laebel.title: Database Storage
+      net.henko.laebel.description: Persistent storage volume for the database.
