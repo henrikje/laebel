@@ -328,7 +328,7 @@ GRAPH
     color: var(--link-text);
 }
 
-#graph .ports, #graph .volume, #graph .network {
+#graph .ports, #graph .volume, #graph .network, #graph .link {
     cursor: help;
     display: inline-block;
 }
