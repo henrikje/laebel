@@ -3,9 +3,9 @@ graph LR
 {{ range .ServiceGroups }}subgraph "{{ .Name | escape }}"
 direction LR{{ range .Services }}
     {{ .Name }}[<a href="#{{ .Name }}-service">{{ if .Title }}{{ .Title | escape }}{{ else }}<code>{{ .Name }}</code>{{ end }}</a><span class="icon{{ if eq .Status.Summary 2 }} healthy{{ end }}{{ if eq .Status.Summary 3 }} unhealthy{{ end }}" title="{{ .Status.SummaryDescription }}">{{ .Status.SummaryIcon }}</span><div class="details">{{
-        if .Ports }}<small class="ports"><code>{{ range $index, $port := .Ports }}{{ if $index }}, {{ end }}{{ $port.Number }}{{end}}</code></small>{{ end }}{{
-        range .Networks }}<small class="network"><a href="#{{ .Name }}-network"><code>{{ .Name | escape }}</code></a></small>{{ end }}{{
-        range .Volumes }}<small class="volume"><a href="#{{ .Name }}-volume"><code>{{ .Name | escape }}</code></a></small>{{ end }}</div>]{{ end }}
+        if .Ports }}<small class="ports" title="Ports exposed by the service">🔌 <code>{{ range $index, $port := .Ports }}{{ if $index }}, {{ end }}{{ $port.Number }}{{end}}</code></small><br>{{ end }}{{
+        range .Networks }}<small class="network" title="Networks used by the service">📦 <a href="#{{ .Name }}-network"><code>{{ .Name | escape }}</code></a></small><br>{{ end }}{{
+        range .Volumes }}<small class="volume" title="Volumes used by the service">🌐 <a href="#{{ .Name }}-volume"><code>{{ .Name | escape }}</code></a></small>{{ end }}</div>]{{ end }}
 end
 {{ end }}{{ range .ServiceGroups }}{{ range .Services }}{{ $thisServiceName := .Name }}{{ range $index, $otherServiceName := .DependsOn }}{{ $thisServiceName }} --> {{ $otherServiceName }}
 {{ end }}{{ end }}{{ end }}
