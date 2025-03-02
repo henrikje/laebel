@@ -17,11 +17,11 @@
             {{ if .Title }}{{ .Title }}{{ else }}<code>{{ .Name }}</code>{{ end }}
         </h1>
         {{ if .Description }}<p>{{ .Description }}</p>{{ end }}
-        {{ if .Links }}
+        {{ if .Resources }}
             <p>
-                <strong>Links</strong>:
-                {{ range $index, $link := .Links }}{{ if $index }},
-                {{ end }}<a href="{{ $link.URL }}">{{ $link.Title }}</a>{{end}}
+                <strong>Resources</strong>:
+                {{ range $index, $resource := .Resources }}{{ if $index }},
+                {{ end }}<a href="{{ $resource.URL }}">{{ $resource.Title }}</a>{{end}}
             </p>
         {{ end }}
     </header>

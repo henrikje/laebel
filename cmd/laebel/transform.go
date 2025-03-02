@@ -21,7 +21,7 @@ func TransformContainersToProject(projectContainers []types.ContainerJSON, proje
 	networksByID := extractNetworks(projectNetworks, containersByServiceName)
 	services := createServiceForEachServiceName(containersByServiceName, volumesByName, networksByID)
 	serviceGroups := groupServicesByGroup(containers, services)
-	projectLinks := extractProjectLinks()
+	projectResources := extractProjectResources()
 	volumes := slices.Collect(maps.Values(volumesByName))
 	sort.Slice(volumes, func(i, j int) bool {
 		return volumes[i].Name < volumes[j].Name
@@ -34,7 +34,7 @@ func TransformContainersToProject(projectContainers []types.ContainerJSON, proje
 		Name:          projectName,
 		Title:         os.Getenv("LAEBEL_PROJECT_TITLE"),
 		Description:   os.Getenv("LAEBEL_PROJECT_DESCRIPTION"),
-		Links:         projectLinks,
+		Resources:     projectResources,
 		Logo:          os.Getenv("LAEBEL_PROJECT_LOGO"),
 		ServiceGroups: serviceGroups,
 		Volumes:       volumes,
@@ -185,25 +185,26 @@ func groupServicesByGroup(containers []types.ContainerJSON, services []Service) 
 	return serviceGroups
 }
 
-func extractProjectLinks() []Link {
-	projectLinks := make([]Link, 0)
+func extractProjectResources() []Link {
+	projectResources := make([]Link, 0)
 	url := os.Getenv("LAEBEL_PROJECT_URL")
 	if url != "" {
-		projectLinks = append(projectLinks, Link{Title: "Website", URL: url})
+		projectResources = append(projectResources, Link{Title: "Website", URL: url})
 	}
 	documentation := os.Getenv("LAEBEL_PROJECT_DOCUMENTATION")
 	if documentation != "" {
-		projectLinks = append(projectLinks, Link{Title: "Documentation", URL: documentation})
+		projectResources = append(projectResources, Link{Title: "Documentation", URL: documentation})
 	}
 	source := os.Getenv("LAEBEL_PROJECT_SOURCE")
 	if source != "" {
-		projectLinks = append(projectLinks, Link{Title: "Source code", URL: source})
+		projectResources = append(projectResources, Link{Title: "Source code", URL: source})
 	}
-	return projectLinks
+	return projectResources
 }
 
 func transformContainersToService(serviceContainers []types.ContainerJSON, serviceName string, name map[string]Volume, byName map[string]Network) Service {
 	container := serviceContainers[0] // Use the first container to extract metadata
+	resources := extractServiceResources(container)
 	links := extractServiceLinks(container)
 	containerStructs := make([]Container, 0)
 	for _, serviceContainer := range serviceContainers {
@@ -261,6 +262,7 @@ func transformContainersToService(serviceContainers []types.ContainerJSON, servi
 		Description: container.Config.Labels["org.opencontainers.image.description"],
 		Image:       container.Config.Image,
 		Status:      status,
+		Resources:   resources,
 		Links:       links,
 		Ports:       extractServicePorts(serviceContainers),
 		Volumes:     volumes,
@@ -321,24 +323,30 @@ func extractContainerPorts(portMap nat.PortMap) []string {
 	return ports
 }
 
-func extractServiceLinks(container types.ContainerJSON) []Link {
-	links := make([]Link, 0)
-	// Extract OpenContainers links
+func extractServiceResources(container types.ContainerJSON) []Link {
+	resources := make([]Link, 0)
+	// Extract OpenContainers resources
 	url := container.Config.Labels["org.opencontainers.image.url"]
 	if url != "" {
-		links = append(links, Link{Title: "Website", URL: url})
+		resources = append(resources, Link{Title: "Website", URL: url})
 	}
 	documentation := container.Config.Labels["org.opencontainers.image.documentation"]
 	if documentation != "" {
-		links = append(links, Link{Title: "Documentation", URL: documentation})
+		resources = append(resources, Link{Title: "Documentation", URL: documentation})
 	}
 	source := container.Config.Labels["org.opencontainers.image.source"]
 	if source != "" {
-		links = append(links, Link{Title: "Source code", URL: source})
+		resources = append(resources, Link{Title: "Source code", URL: source})
 	}
+	return resources
+}
+
+func extractServiceLinks(container types.ContainerJSON) []Link {
+	links := make([]Link, 0)
 	// Extract laebel links
 	// net.henko.laebel.link.<key>.url
 	// net.henko.laebel.link.<key>.title
+	// net.henko.laebel.link.<key>.description
 	for key, value := range container.Config.Labels {
 		if len(key) > 22 && key[:22] == "net.henko.laebel.link." {
 			linkKey := key[22:]
@@ -348,10 +356,16 @@ func extractServiceLinks(container types.ContainerJSON) []Link {
 				if title == "" {
 					title = linkKey[:len(linkKey)-4]
 				}
-				links = append(links, Link{Title: title, URL: value})
+				descriptionKey := "net.henko.laebel.link." + linkKey[:len(linkKey)-4] + ".description"
+				description := container.Config.Labels[descriptionKey]
+				if descriptionKey == "" {
+					description = value
+				}
+				links = append(links, Link{Title: title, URL: value, Description: description})
 			}
 		}
 	}
+	sort.Slice(links, func(i, j int) bool { return links[i].Title < links[j].Title })
 	return links
 }
 

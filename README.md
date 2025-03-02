@@ -136,6 +136,7 @@ Each link is specified with two labels, where `<key>` can be any string:
 
 - `net.henko.laebel.link.<key>.url`: The URL of the link.
 - `net.henko.laebel.link.<key>.title`: The title of the link.
+- `net.henko.laebel.link.<key>.description`: A description of the link.
 
 Finally, you can document the ports that are bound to the service.
 This is especially helpful when it is not a well-known port.

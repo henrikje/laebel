@@ -10,10 +10,10 @@ This document acts as a roadmap and primitive issue tracker for the project.
   - Turned out to be due to a bug in Docker Desktop. (https://github.com/docker/for-mac/issues/7575)
 - [x] Change container table column "status" to "state".
 - [x] Update the version scheme from "v0.11.0" to "0.11.0".
-- [ ] Split "Links" into "Resources" and "Links".
+- [x] Split "Links" into "Resources" and "Links".
   - "Resources" displays "Website", "Documentation", and "Source code" as a comma-separated list. (Do the same for project links.)
   - "Links" displays all custom links in an unordered list.
-- [ ] Add a description label for links, so they can be displayed `[Title](URL): Description`.
+- [x] Add a description label for links, so they can be displayed `[Title](URL): Description`.
 
 ## 0.12.0 Service logs
 

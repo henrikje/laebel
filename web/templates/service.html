@@ -7,10 +7,18 @@
             <li class="name"><strong>Name</strong>: <code>{{ .Name }}</code> {{ template "clipboard" }}{{ end }}
             <li class="image"><strong>Image</strong>: <code>{{ .Image }}</code> {{ template "clipboard" }}</li>
             <li class="status"><strong>Status</strong>: {{ template "serviceStatus" .Status }}</li>
+            {{ if .Resources }}
+                <li class="resources">
+                    <strong>Resources</strong>: {{ range $index, $resource := .Resources }}{{ if $index }}, {{ end }}
+                    <a href="{{ $resource.URL }}">{{ $resource.Title }}</a>{{end}}
+                </li>
+            {{ end }}
             {{ if .Links }}
                 <li class="links">
-                    <strong>Links</strong>: {{ range $index, $link := .Links }}{{ if $index }}, {{ end }}
-                    <a href="{{ $link.URL }}">{{ $link.Title }}</a>{{end}}
+                    <strong>Links</strong>: <ul>
+                        {{ range $index, $link := .Links }}
+                        <li><a href="{{ $link.URL }}">{{ $link.Title }}</a>{{if $link.Description }}: {{ $link.Description }}{{ end }}</li>{{end}}
+                    </ul>
                 </li>
             {{ end }}
             {{ if .Ports }}

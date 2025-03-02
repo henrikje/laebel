@@ -4,7 +4,7 @@ type Project struct {
 	Name          string // Label: com.docker.compose.project
 	Title         string // Env: LAEBEL_PROJECT_TITLE
 	Description   string // Env: LAEBEL_PROJECT_DESCRIPTION
-	Links         []Link // Env: LAEBEL_PROJECT_URL, LAEBEL_PROJECT_DOCUMENTATION, LAEBEL_PROJECT_SOURCE
+	Resources     []Link // Env: LAEBEL_PROJECT_URL, LAEBEL_PROJECT_DOCUMENTATION, LAEBEL_PROJECT_SOURCE
 	Logo          string // Env: LAEBEL_PROJECT_LOGO
 	ServiceGroups []ServiceGroup
 	Volumes       []Volume
@@ -22,6 +22,7 @@ type Service struct {
 	Description string // Label: org.opencontainers.image.description
 	Image       string
 	Status      Status
+	Resources   []Link
 	Links       []Link
 	Ports       []Port
 	Volumes     []Volume
@@ -132,8 +133,9 @@ func (s Status) SummaryDescription() string {
 }
 
 type Link struct {
-	Title string // Label: net.henko.laebel.link.<key>.title
-	URL   string // Label: net.henko.laebel.link.<key>.url
+	Title       string // Label: net.henko.laebel.link.<key>.title
+	URL         string // Label: net.henko.laebel.link.<key>.url
+	Description string // Label: net.henko.laebel.link.<key>.description
 }
 
 type Port struct {
