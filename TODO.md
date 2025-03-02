@@ -9,7 +9,7 @@ This document acts as a roadmap and primitive issue tracker for the project.
 - [x] Initial render of service graph is slow. What is taking so much time? Can I preload the necessary JS?
   - Turned out to be due to a bug in Docker Desktop. (https://github.com/docker/for-mac/issues/7575)
 - [x] Change container table column "status" to "state".
-- [ ] Update the version scheme from "v0.11.0" to "0.11.0".
+- [x] Update the version scheme from "v0.11.0" to "0.11.0".
 - [ ] Split "Links" into "Resources" and "Links".
   - "Resources" displays "Website", "Documentation", and "Source code" as a comma-separated list. (Do the same for project links.)
   - "Links" displays all custom links in an unordered list.
