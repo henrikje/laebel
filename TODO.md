@@ -2,19 +2,6 @@
 
 This document acts as a roadmap and primitive issue tracker for the project.
 
-## 0.11.0 Better links
-
-- [x] Use Docker API to determine actual port binding for Laebel, so it can be displayed on startup.
-- [x] Layout of the service graph changes after initial render: parts of service nodes become clipped.
-- [x] Initial render of service graph is slow. What is taking so much time? Can I preload the necessary JS?
-  - Turned out to be due to a bug in Docker Desktop. (https://github.com/docker/for-mac/issues/7575)
-- [x] Change container table column "status" to "state".
-- [x] Update the version scheme from "v0.11.0" to "0.11.0".
-- [x] Split "Links" into "Resources" and "Links".
-  - "Resources" displays "Website", "Documentation", and "Source code" as a comma-separated list. (Do the same for project links.)
-  - "Links" displays all custom links in an unordered list.
-- [x] Add a description label for links, so they can be displayed `[Title](URL): Description`.
-
 ## 0.12.0 Service logs
 
 - [ ] Add service log view: a separate page which displays logs for a selected service.
@@ -40,3 +27,4 @@ Focus on making it as stable as possible, fixing bugs, and handling edge cases.
 - [ ] Add "featured links"?
   - Any service could contribute links for more important services.
   - For example, Jaeger could add Jaeger UI, Traefik could add its Dashboard, and client-web-app could link to the web page.
+- [ ] Join multiple networks or volumes into a single comma-separated row in the graph. (Like ports.)
