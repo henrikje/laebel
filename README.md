@@ -1,6 +1,6 @@
 # Laebel
 
-_Automatic README-style documentation site for your Docker Compose project._
+_Automatic documentation site for your Docker Compose project._
 
 Laebel is a small server that runs in your Docker Compose project, serving a website that documents your project.
 
