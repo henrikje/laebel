@@ -54,7 +54,8 @@ services:
       org.opencontainers.image.description: phpMyAdmin is a web-based database management tool for MariaDB.
       net.henko.laebel.group: Back Office
       net.henko.laebel.link.phpmyadmin.url: http://localhost:8080/
-      net.henko.laebel.link.phpmyadmin.title: phpMyAdmin
+      net.henko.laebel.link.phpmyadmin.title: Admin UI
+      net.henko.laebel.link.phpmyadmin.description: Web-based database management tool.
       net.henko.laebel.port.80.description: Internal HTTP
 
 networks:

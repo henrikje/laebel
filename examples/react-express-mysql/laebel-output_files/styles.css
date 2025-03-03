@@ -328,21 +328,9 @@ GRAPH
     color: var(--link-text);
 }
 
-#graph .ports::before {
-    content: "🔌 ";
-}
-
-#graph .volume::before, .volume .title::before {
-    content: "📦 ";
-}
-
-#graph .network::before, .network .title::before {
-    content: "🌐 ";
-}
-
-#graph .ports, #graph .volume, #graph .network {
+#graph .ports, #graph .volume, #graph .network, #graph .link {
+    cursor: help;
     display: inline-block;
-    margin: 0 0.5em;
 }
 
 #graph code {
