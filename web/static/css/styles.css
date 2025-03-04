@@ -369,3 +369,11 @@ GRAPH LEGEND
 #graph .legend h3 {
     margin-top: -1em;
 }
+
+/*
+STATUS
+*/
+
+.icon.exited, .icon.removing, .icon.dead {
+    filter: grayscale(1);
+}

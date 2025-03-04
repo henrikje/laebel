@@ -105,6 +105,33 @@ func (s Status) SummaryIcon() string {
 	}
 }
 
+func (s Status) SummaryClass() string {
+	switch s.Summary {
+	case Created:
+		return "created"
+	case Running:
+		return "running"
+	case RunningHealthy:
+		return "running-healthy"
+	case RunningUnhealthy:
+		return "running-unhealthy"
+	case Paused:
+		return "paused"
+	case Restarting:
+		return "restarting"
+	case Exited:
+		return "exited"
+	case Removing:
+		return "removing"
+	case Dead:
+		return "dead"
+	case Mixed:
+		return "mixed"
+	default:
+		return "unknown"
+	}
+}
+
 func (s Status) SummaryDescription() string {
 	switch s.Summary {
 	case Created:

@@ -1,6 +1,6 @@
 {{ define "serviceStatus" }}
 <span class="status">
-<span class="icon" title="{{ .SummaryDescription }}">{{ .SummaryIcon }}</span>
+<span class="icon {{ .SummaryClass }}" title="{{ .SummaryDescription }}">{{ .SummaryIcon }}</span>
 <span class="details">
 {{ $separate := false }}
 {{ if .Created }}{{ if $separate }}, {{ end }}<span class="created">{{ .Created }} created</span>{{ $separate = true }}{{ end
