@@ -4,8 +4,8 @@ graph LR
 direction LR{{ range .Services }}
     {{ .Name }}[<a href="#{{ .Name }}-service">{{ if .Title }}{{ .Title | escape }}{{ else }}<code>{{ .Name }}</code>{{ end }}</a><span class="icon{{ if eq .Status.Summary 2 }} healthy{{ end }}{{ if eq .Status.Summary 3 }} unhealthy{{ end }}" title="{{ .Status.SummaryDescription }}">{{ .Status.SummaryIcon }}</span><div class="details">{{
         if .Ports }}<small class="ports" title="Ports exposed by the service">🔌 <code>{{ range $index, $port := .Ports }}{{ if $index }}, {{ end }}{{ $port.Number }}{{end}}</code></small><br>{{ end }}{{
-        range .Networks }}<small class="network" title="Networks used by the service">📦 <a href="#{{ .Name }}-network"><code>{{ .Name | escape }}</code></a></small><br>{{ end }}{{
-        range .Volumes }}<small class="volume" title="Volumes used by the service">🌐 <a href="#{{ .Name }}-volume"><code>{{ .Name | escape }}</code></a></small><br>{{ end }}{{
+        if .Networks }}<small class="network" title="Networks used by the service">🌐 <code>{{ range $index, $network := .Networks }}{{ if $index }}, {{ end }}<a href="#{{ $network.Name }}-network">{{ $network.Name | escape }}</a>{{end}}</code></small><br>{{ end }}{{
+        if .Volumes }}<small class="volume" title="Volumes used by the service">📦 <code>{{ range $index, $volume := .Volumes }}{{ if $index }}, {{ end }}<a href="#{{ $volume.Name }}-volume">{{ $volume.Name | escape }}</a>{{end}}</code></small><br>{{ end }}{{
         range .Links }}<small class="link" title="Links to other services">🔗 <a href="{{ .URL }}" title="{{ .Description }}">{{ .Title }}</a></small><br>{{
         end }}</div>]{{ end }}
 end
