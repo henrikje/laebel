@@ -4,10 +4,10 @@ This document acts as a roadmap and primitive issue tracker for the project.
 
 ## 0.11.1 Fixed network and volume presentation
 
-- [ ] Join multiple networks or volumes into a single comma-separated row in the graph. (Like ports.)
-- [ ] Fix mixed-up icons between networks and volumes in the graph.
-- [ ] Volumes (and networks?) have lost their icon in the resource list.
-- [ ] Drop the "Resources:" prefix for project-level resources.
+- [x] Join multiple networks or volumes into a single comma-separated row in the graph. (Like ports.)
+- [x] Fix mixed-up icons between networks and volumes in the graph.
+- [x] Volumes (and networks?) have lost their icon in the resource list.
+- [x] Drop the "Resources:" prefix for project-level resources.
 
 ## 0.12.0 Service logs
 

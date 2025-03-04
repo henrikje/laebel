@@ -19,7 +19,6 @@
         {{ if .Description }}<p>{{ .Description }}</p>{{ end }}
         {{ if .Resources }}
             <p>
-                <strong>Resources</strong>:
                 {{ range $index, $resource := .Resources }}{{ if $index }},
                 {{ end }}<a href="{{ $resource.URL }}">{{ $resource.Title }}</a>{{end}}
             </p>
