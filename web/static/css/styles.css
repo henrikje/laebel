@@ -226,6 +226,14 @@ a + .icon {
     font-style: italic;
 }
 
+.volume .title::before {
+    content: "📦 ";
+}
+
+.network .title::before {
+    content: "🌐 ";
+}
+
 /*
 NOTICE
 */
