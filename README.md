@@ -22,7 +22,7 @@ The goal is to make it feel like someone wrote a nice README for your project, b
 - **Displays a service graph**: An easy-to-understand, visual representation of how the services in your project are connected. 
   It is based on [`depends_on`](https://docs.docker.com/reference/compose-file/services/#depends_on) relations in your Docker Compose project. 
   It also uses icons and color to visualize the status and health of the services.
-- **Live-updated status**: The status of the services is updated in real-time, so you can see when a service is starting, running, or stopped.
+- **Live-updated status**: The status of the services is updated in real-time, so you can see when a service is starting, running, stopped, healthy, or unhealthy.
 - **Describes each service in your project**: Lists all services and the important information about them.
   The information includes service name, image name, how many containers are running, and the status of the containers.
 - **Describes each volume and network**: Also displays information about each volume and network in your project.
