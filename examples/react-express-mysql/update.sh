@@ -4,13 +4,13 @@ set -e
 # Take screenshots of Laebel's home screen
 echo "Taking screenshots of Laebel's home screen..."
 /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
-  --headless --screenshot=laebel-example-screenshot.png --window-size=1024,1024 --hide-scrollbars \
+  --headless --screenshot=laebel-example-screenshot.png --window-size=1024,1100 --hide-scrollbars \
   http://localhost:8000/
 
-# For some odd reason, the graph is not properly rendered if I limit the window height to 868px,
+# For some odd reason, the graph is not properly rendered if I limit the window height to 987px,
 # so I make it larger and crop the image afterwards.
 echo "Cropping the screenshot..."
-magick laebel-example-screenshot.png -crop 1024x863+0+0 laebel-example-screenshot.png
+magick laebel-example-screenshot.png -crop 1024x987+0+0 laebel-example-screenshot.png
 
 # Overlay screenshot on template
 echo "Overlaying the screenshot on the template..."

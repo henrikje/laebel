@@ -22,7 +22,6 @@ services:
       - ./backend/src:/code/src:ro
       - ./backend/package.json:/code/package.json
       - ./backend/package-lock.json:/code/package-lock.json
-      - back-notused:/opt/app/node_modules
     networks:
       - public
       - private
@@ -70,7 +69,6 @@ networks:
   public:
   private:
 volumes:
-  back-notused:
   db-data:
 secrets:
   db-password:
